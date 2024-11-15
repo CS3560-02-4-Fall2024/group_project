@@ -1,3 +1,5 @@
+package com.group4.group_project.models;
+
 public class Appointment {
     // Attributes
     private int appointmentID;
