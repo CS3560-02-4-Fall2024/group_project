@@ -1,3 +1,5 @@
+package com.group4.group_project.models;
+
 public class User {
     // Attributes
     private int userID;

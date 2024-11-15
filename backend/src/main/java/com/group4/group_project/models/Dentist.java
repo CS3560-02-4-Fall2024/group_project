@@ -1,3 +1,5 @@
+package com.group4.group_project.models;
+
 public class Dentist extends User{
     // Attribute specific to Dentist
     private String specialty;

@@ -1,3 +1,5 @@
+package com.group4.group_project.models;
+
 public class Patient extends User {
     // Attributes specific to Patient
     private String dateOfBirth;
