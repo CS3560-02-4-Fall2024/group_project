@@ -3,7 +3,7 @@ function RequestAppt() {
     return (
       <>
           <div>
-              testing  
+              testing
           </div>
       </>
     )
