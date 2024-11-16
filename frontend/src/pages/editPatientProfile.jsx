@@ -7,7 +7,7 @@ function EditPatientProfile() {
       {/*Background*/}
       <div class="w-[100vw] h-[100vh] bg-dg">
         <NavBar />
-        <div class="">
+        <div class="w-[100%] h-[80%] flex items-center justify-center">
           {/*Light Green Block*/}
           <div class="w-1/2 h-3/4 bg-g rounded-3xl flex justify-center mt-20">
             <div class="">
