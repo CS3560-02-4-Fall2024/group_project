@@ -35,7 +35,7 @@ function PastAppointments() {
 
           {/* Middle Container */}
           <div className='w-[100vw] h-[88vh] bg-dg flex flex-col items-center p-6'>
-              <div className="w-[38vw] h-[90%] border-2 border-black flex flex-col overflow-scroll mb-4">
+              <div className="w-[38vw] h-[90%] flex flex-col overflow-scroll mb-4">
                 <p className="text-white font-bold text-4xl"><u>Past Appointments</u></p>
                 <Appt />
                 <Appt />
