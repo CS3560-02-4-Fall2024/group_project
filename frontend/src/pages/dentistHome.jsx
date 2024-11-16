@@ -23,6 +23,8 @@ function Appt() {
   )
 }
 
+
+// main page component
 function DentistHome() {
 
     const goHome = () => {
@@ -34,8 +36,14 @@ function DentistHome() {
           <Navbar />
           {/* Middle Container */}
           <div className='w-[100vw] h-[88vh] bg-dg flex flex-col items-center p-6'>
-              <div className="w-[38vw] h-[90%] border-2 border-black flex flex-col overflow-scroll mb-4">
-                <p className="text-white font-bold text-4xl"><u>Past Appointments</u></p>
+              <div className="w-[38vw] h-[90%] flex flex-col overflow-scroll mb-4">
+                <div className="w-[100%] h-[16%] flex flex-row justify-between">
+                  <p className="text-white font-bold text-4xl justify-self-start ml-4"><u>Upcoming Appointments</u></p>
+                  <select className="rounded-md min-h-[2vh] h-[3.5vh] mr-4 self-center">
+                    <option value="" disabled selected>Select a Date</option>
+                    {/* need to generate the dates here based on whats possible iykwim */}
+                  </select>
+                </div>
                 <Appt />
                 <Appt />
                 <Appt />
