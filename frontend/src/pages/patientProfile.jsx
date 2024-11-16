@@ -2,9 +2,6 @@ function PatientProfile() {
 
     return (
       <>
-          <div>
-              testing  
-          </div>
       </>
     )
   }
