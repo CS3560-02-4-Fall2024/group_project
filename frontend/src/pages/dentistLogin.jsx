@@ -12,11 +12,11 @@ function DentistLogin() {
               <p>Shiny Teeth & Me</p>
               <p>Dentist Login</p>
             </div>
-            {/*Email Address Text*/}
+            {/*Dentist ID Text*/}
             <div class="text-white text-xl mt-6 ml-1 mb-1">
               Dentist ID
             </div>
-            {/*Email Address Input Field*/}
+            {/*Dentist ID Input Field*/}
             <div class="flex items-center justify-center">
               <input class="p-2 w-80 rounded-md bg-tan text-left"></input>
             </div>
