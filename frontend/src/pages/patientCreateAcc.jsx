@@ -9,7 +9,7 @@ function PatientCreateAcc() {
           <div class="">
             {/*Title of Page*/}
             <div class="text-white text-center text-3xl font-bold mt-10">
-              <p>Create Dentist Account</p>
+              <p>Create Patient Account</p>
             </div>
             {/*1st line of inputs*/}
             <div class="flex justify-center">
