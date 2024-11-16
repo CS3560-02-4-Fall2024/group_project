@@ -13,12 +13,12 @@ function WelcomePage() {
               <p>Shiny Teeth & Me</p>
             </div>
             <div class="flex items-center justify-center mt-10">
-              <button class="p-3 bg-dg text-white font-bold text-2xl rounded-xl">
+              <button class="p-3 bg-dg text-white font-bold text-2xl rounded-xl hover:bg-[#587354]">
                 Patient Login
               </button>
             </div>
             <div class="flex items-center justify-center mt-10">
-              <button class="p-3 bg-dg text-white font-bold text-2xl rounded-xl">
+              <button class="p-3 bg-dg text-white font-bold text-2xl rounded-xl hover:bg-[#587354]">
                 Dentist Login
               </button>
             </div>
