@@ -12,13 +12,15 @@ function Appt() {
   const [patEmail, setPatEmail] = useState("lbj@gmail.com");
 
   return(
-    <div className="w-[96%] h-[16vh] min-h-[16vh] border-2 border-black rounded-lg mx-auto mt-6 bg-g">
+    <div className="w-[96%] h-[16vh] min-h-[16vh] border-2 border-black rounded-lg mx-auto mt-6 bg-g flex flex-row">
       <div className="w-1/2 h-[100%] rounded-lg flex flex-col justify-evenly">
         <p className="text-white font-medium text-3xl ml-3">{apptDate} {apptTime}</p>
         <p className="text-white font-normal text-2xl ml-3">{patName}</p>
         <p className="text-white font-normal text-2xl ml-3">{patPhone}</p>
         <p className="text-white font-normal text-2xl ml-3">{patEmail}</p>
       </div>
+      {/* Button */}
+      <button className="w-1/3 h-1/4 border-2 border-black self-center m-auto rounded-lg bg-dg hover:bg-[#587354] text-white">View Profile</button>
     </div>
   )
 }
