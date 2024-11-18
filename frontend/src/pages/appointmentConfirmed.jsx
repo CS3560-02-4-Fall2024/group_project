@@ -14,19 +14,33 @@ function AppointmentConfirmed() {
 
     return (
       <>
-          <Navbar />
-          <div className='w-[100vw] h-[88vh] bg-dg flex flex-col items-center'>
-              {/* Main Display Card */}
-              <div className="w-[32vw] h-[42vh] bg-g rounded-lg border-2 border-black mt-auto flex-col justify-center items-center ">
-                <p className="text-6xl font-bold text-white justify-self-center mt-8">Your Appointment</p>
-                <p className="text-6xl font-bold text-white justify-self-center">has been booked!</p>
-                <p className="text-white font-semibold text-4xl justify-self-center mt-24">Appt.Time:</p>
-                <p className="text-white font-semibold text-4xl justify-self-center mb-4"><em>{date}</em> at <em>{time}</em>.</p>
+        <Navbar />
+        {/*Background*/}
+        <div class="w-[100vw] h-[88vh] bg-dg flex items-center justify-center">
+          {/*Light Green Block*/}
+          <div class="bg-g rounded-3xl flex-flow justify-center items-center py-10 px-20">
+            <div>
+              {/*Title Text*/}
+              <div class="text-center text-white text-4xl font-bold">
+                <p>Your Appointment</p>
+                <p>has been Booked!</p>
               </div>
-
-              {/* Back to Home Button */}
-              <button className="w-[14vw] h-[7vh] bg-g hover:bg-[#587354] rounded-md border-2 border-black mt-32 mb-24 text-2xl text-white font-semibold">Back to Home</button>
+              {/*More Text*/}
+              <div class="text-center text-white text-4xl font-bold mt-10">
+                <p>Appointment Time:</p>
+                {/*Dentist ID Variable*/}
+                <p class="underline">{date} at {time}</p>
+              </div>
+              {/*Go back to login button*/}
+              <div class="flex items-center justify-center mt-10">
+                  <button onClick={goHome} class="p-3 px-10 bg-dg text-white font-bold text-2xl rounded-xl hover:bg-[#587354]">
+                    Return Home
+                  </button>
+                </div>
+            </div>
           </div>
+        </div>
+
       </>
     )
   }

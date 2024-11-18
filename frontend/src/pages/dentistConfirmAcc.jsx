@@ -5,7 +5,7 @@ function DentistConfirmAcc() {
       {/*Background*/}
       <div class="w-[100vw] h-[100vh] bg-dg flex items-center justify-center">
         {/*Light Green Block*/}
-        <div class="w-1/3 h-1/2 bg-g rounded-3xl flex justify-center items-center">
+        <div class="bg-g rounded-3xl flex-flow justify-center items-center py-10 px-20">
           <div>
             {/*Title Text*/}
             <div class="text-center text-white text-4xl font-bold">

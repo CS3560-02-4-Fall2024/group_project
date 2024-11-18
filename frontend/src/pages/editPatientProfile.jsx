@@ -9,7 +9,7 @@ function EditPatientProfile() {
         <NavBar />
         <div class="w-[100%] h-[80%] flex items-center justify-center">
           {/*Light Green Block*/}
-          <div class="w-1/2 h-11/12 bg-g rounded-3xl flex justify-center mt-20">
+          <div class="bg-g rounded-3xl flex-display justify-center mt-20 px-14 pb-6">
             <div class="">
               {/*Title of Page*/}
               <div class="text-white text-center text-3xl font-bold mt-10">

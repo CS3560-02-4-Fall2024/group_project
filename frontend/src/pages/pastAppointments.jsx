@@ -34,17 +34,28 @@ function PastAppointments() {
           <Navbar />
 
           {/* Middle Container */}
-          <div className='w-[100vw] h-[88vh] bg-dg flex flex-col items-center p-6'>
-              <div className="w-[38vw] h-[90%] flex flex-col overflow-scroll mb-4">
-                <p className="text-white font-bold text-4xl"><u>Past Appointments</u></p>
-                <Appt />
-                <Appt />
-                <Appt />
-                <Appt />
-                <Appt />
-                <Appt />
-              </div>  
-              <button onClick={goHome} className="m-auto w-[20vh] h-[6vh] bg-g hover:bg-[#587354] border-2 border-black rounded-lg">Back to Home</button>
+          <div className='w-[100vw] h-[88vh] bg-dg flex justify-center'>
+            <div class="w-1/3 flex-flow justify-center">
+              <p className="text-white font-bold text-4xl"><u>Past Appointments</u></p>
+              <div className="flex overflow-y-scroll">
+                <div class="flex-flow bg-g round-xl py-2 px-3 mt-2 rounded-xl">
+                  <div className="text-xl text-white ">
+                    <p class="font-bold"> jade </p>
+                    <p> jade </p>
+                    <p> jade </p>
+                  </div>
+                  <div className="flex items-center">
+                    <button class="bg-dg text-white font-bold px-4 py-2 rounded-xl">
+                      View Profile
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div className="flex items-center justify-center">
+                <button onClick={goHome} className="bg-g hover:bg-[#587354] rounded-lg p-3 px-10 font-bold text-xl text-white">Back to Home</button>
+              </div>
+            </div>
+            
           </div>
       </>
     )
