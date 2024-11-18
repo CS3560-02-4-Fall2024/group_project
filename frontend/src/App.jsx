@@ -16,12 +16,30 @@ import PatientProfile from './pages/patientProfile.jsx'
 import RequestAppt from './pages/requestAppt.jsx'
 import WelcomePage from './pages/welcomePage.jsx'
 
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
-      <AppointmentConfirmed />
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<WelcomePage/>} />
+          <Route path='/reqAppt' element={<RequestAppt/>} />
+          <Route path='/profile' element={<PatientProfile/>} />
+          <Route path='/login' element={<PatientLogin/>} />
+          <Route path='/home' element={<PatientHome/>} />
+          <Route path='/createAcc' element={<PatientCreateAcc/>} />
+          <Route path='/editProfile' element={<EditPatientProfile/>} />
+          <Route path='/dentistPast' element={<DentistViewPast/>} />
+          <Route path='/dentistLogin' element={<DentistLogin/>} />
+          <Route path='/dentistHome' element={<DentistHome/>} />
+          <Route path='/dentistCreateAcc' element={<DentistCreateAcc/>} />
+          <Route path='/dentistConfirm' element={<DentistConfirmAcc/>} />
+          <Route path='/apptConfirm' element={<AppointmentConfirmed/>} />
+        </Routes>
+      </BrowserRouter>
     </>
   )
 }
