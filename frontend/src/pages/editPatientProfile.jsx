@@ -9,11 +9,11 @@ function EditPatientProfile() {
         <NavBar />
         <div class="w-[100%] h-[80%] flex items-center justify-center">
           {/*Light Green Block*/}
-          <div class="w-1/2 h-3/4 bg-g rounded-3xl flex justify-center mt-20">
+          <div class="w-1/2 h-11/12 bg-g rounded-3xl flex justify-center mt-20">
             <div class="">
               {/*Title of Page*/}
               <div class="text-white text-center text-3xl font-bold mt-10">
-                <p>Create Dentist Account</p>
+                <p>Edit Patient Account</p>
               </div>
               {/*1st line of inputs*/}
               <div class="flex justify-center">
@@ -98,13 +98,13 @@ function EditPatientProfile() {
                 </div>
               </div>
               {/*Create Account Button*/}
-              <div class="flex items-center justify-center mt-10">
+              <div class="flex items-center justify-center mt-5">
                 <button class="p-3 px-10 bg-dg text-white font-bold text-2xl rounded-xl hover:bg-[#587354]">
                   Create Account
                 </button>
               </div>
               {/*Don't Have an Account*/}
-              <div class="flex items-center justify-center mt-5 text-white">
+              <div class="flex items-center justify-center mt-5 mb-5 text-white">
                 <button class="hover:text-[#587354]">
                   <p>Sike! I have an Account</p>
                 </button>
