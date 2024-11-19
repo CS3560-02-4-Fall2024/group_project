@@ -12,10 +12,10 @@ function PatientProfile() {
           <div class="bg-g rounded-3xl flex justify-center px-6">
             <div class="">
               {/*Name of Patient*/}
-              <div class="text-white text-center text-3xl font-bold mt-5 mb-1">
+              <div class="text-white text-center text-5xl font-bold mt-5 mb-1">
                 <p>Name of Patient</p>
               </div>
-              <div class="text-nowrap text-white text-xl">
+              <div class="text-nowrap text-white text-3xl">
                 {/*Phone Number Text*/}
                 <div>
                   <b>Phone Number: </b> dumy text
@@ -38,13 +38,13 @@ function PatientProfile() {
                 </div>
               </div>
               {/*View Past Appointments Button*/}
-              <div class="flex items-center justify-center mt-5">
+              <div class="flex items-center justify-center mt-20">
                 <button class="p-3 px-10 bg-dg text-white font-bold text-2xl rounded-xl hover:bg-[#587354]">
-                  View Past Appointmnets
+                  View Past Appointments
                 </button>
               </div>
               {/*Back to Home*/}
-              <div class="flex items-center justify-center mt-5 mb-5 text-white">
+              <div class="flex items-center justify-center mt-5 mb-5 text-white text-lg">
                 <button class="hover:text-[#587354]">
                   <p>Back To Home</p>
                 </button>

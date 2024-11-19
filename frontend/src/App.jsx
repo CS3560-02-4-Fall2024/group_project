@@ -40,6 +40,7 @@ function App() {
           <Route path='/dentistCreateAcc' element={<DentistCreateAcc/>} />
           <Route path='/dentistConfirm' element={<DentistConfirmAcc/>} />
           <Route path='/apptConfirm' element={<AppointmentConfirmed/>} />
+          <Route path='/pastAppointments' element={<PastAppointments/>} />
         </Routes>
       </BrowserRouter>
     </>
