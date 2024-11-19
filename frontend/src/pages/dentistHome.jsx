@@ -45,14 +45,14 @@ function DentistHome() {
           {/* Middle Container */}
           <div className='w-[100vw] h-[88vh] flex justify-center'>
             <div className="flex-flow">
-              <div className="flex">
+               <div className="flex">
                 <div className="text-white font-bold text-4xl mt-4 mb-2 mr-48 underline">
                   Upcoming Appointments
                 </div>
                 <select className="rounded-md min-h-[2vh] h-[3.5vh] mr-4 self-end mb-2">
                     <option value="" disabled selected>Select a Date</option>
                     {/* need to generate the dates here based on whats possible iykwim */}
-                  </select>
+                </select>
               </div>
               
               <div class="h-3/4 overflow-y-scroll">
