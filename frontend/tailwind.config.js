@@ -10,6 +10,9 @@ export default {
         tan: "#fffcef",
         dg: "#465b43",
         g: "#95b78e",
+      },
+      screens: {
+        'fourkay': { 'raw' : '(min-width: 2200px)'}
       }
     },
   },

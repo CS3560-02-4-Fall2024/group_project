@@ -9,6 +9,7 @@ import DentistHome from './pages/dentistHome.jsx'
 import DentistLogin from './pages/dentistLogin.jsx'
 import DentistViewPast from './pages/dentistViewPast.jsx'
 import EditPatientProfile from './pages/editPatientProfile.jsx'
+import PastAppointments from './pages/pastAppointments.jsx'
 import PatientCreateAcc from './pages/patientCreateAcc.jsx'
 import PatientHome from './pages/patientHome.jsx'
 import PatientLogin from './pages/patientLogin.jsx'
@@ -38,6 +39,7 @@ function App() {
           <Route path='/dentistCreateAcc' element={<DentistCreateAcc/>} />
           <Route path='/dentistConfirm' element={<DentistConfirmAcc/>} />
           <Route path='/apptConfirm' element={<AppointmentConfirmed/>} />
+          <Route path='/pastAppt' element={<PastAppointments/>} />
         </Routes>
       </BrowserRouter>
     </>
