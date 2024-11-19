@@ -1,3 +1,4 @@
+import App from "../App";
 import Navbar from "../components/Navbar";
 import { useState } from "react";
 
@@ -11,16 +12,20 @@ function Appt() {
   const [patPhone, setPatPhone] = useState("(626) 731-3955");
   const [patEmail, setPatEmail] = useState("lbj@gmail.com");
 
+  const goProfile = () => {
+    // TODO: route to profile
+  }
   return(
-    <div className="w-[96%] h-[16vh] min-h-[16vh] border-2 border-black rounded-lg mx-auto mt-6 bg-g flex flex-row">
-      <div className="w-1/2 h-[100%] rounded-lg flex flex-col justify-evenly">
-        <p className="text-white font-medium text-3xl ml-3">{apptDate} {apptTime}</p>
-        <p className="text-white font-normal text-2xl ml-3">{patName}</p>
-        <p className="text-white font-normal text-2xl ml-3">{patPhone}</p>
-        <p className="text-white font-normal text-2xl ml-3">{patEmail}</p>
+    <div className="flex-flow rounded-xl mb-3 bg-g">
+      <div className="pt-2 pl-3 text-white text-xl">
+        <p className="font-bold">{apptDate} {apptTime}</p>
+        <p>{patName}</p>
+        <p>{patPhone}</p>
+        <p>{patEmail}</p>
+      </div> 
+      <div className="flex justify-center">
+        <button onClick={goProfile} className="text-white hover:text-[#587354] rounded-lg font-bold text-lg mb-3">View Profile</button>
       </div>
-      {/* Button */}
-      <button className="w-1/3 h-1/4 border-2 border-black self-center m-auto rounded-lg bg-dg hover:bg-[#587354] text-white">View Profile</button>
     </div>
   )
 }
@@ -35,26 +40,42 @@ function DentistHome() {
 
     return (
       <>
+        <div className="w-[100vw] h-[100vh] bg-dg">
           <Navbar />
           {/* Middle Container */}
-          <div className='w-[100vw] h-[88vh] bg-dg flex flex-col items-center p-6'>
-              <div className="w-[38vw] h-[90%] flex flex-col overflow-scroll mb-4">
-                <div className="w-[100%] h-[16%] flex flex-row justify-between">
-                  <p className="text-white font-bold text-4xl justify-self-start ml-4"><u>Upcoming Appointments</u></p>
-                  <select className="rounded-md min-h-[2vh] h-[3.5vh] mr-4 self-center">
+          <div className='w-[100vw] h-[88vh] flex justify-center'>
+            <div className="flex-flow">
+              <div className="flex">
+                <div className="text-white font-bold text-4xl mt-4 mb-2 mr-48 underline">
+                  Upcoming Appointments
+                </div>
+                <select className="rounded-md min-h-[2vh] h-[3.5vh] mr-4 self-end mb-2">
                     <option value="" disabled selected>Select a Date</option>
                     {/* need to generate the dates here based on whats possible iykwim */}
                   </select>
-                </div>
+              </div>
+              
+              <div class="h-3/4 overflow-y-scroll">
                 <Appt />
                 <Appt />
                 <Appt />
                 <Appt />
                 <Appt />
                 <Appt />
-              </div>  
-              <button onClick={goHome} className="m-auto w-[20vh] h-[6vh] bg-g hover:bg-[#587354] border-2 border-black rounded-lg">Back to Home</button>
+                <Appt />
+                <Appt />
+                <Appt />
+                <Appt />
+                <Appt />
+                <Appt />
+              </div>
+              <div className="flex justify-center">
+                <button onClick={goHome} className="bg-g hover:bg-[#587354] rounded-lg p-3 px-10 font-bold text-xl text-white mt-5">Back to Home</button>
+              </div>
+            </div>
           </div>
+        </div>
+          
       </>
     )
   }
