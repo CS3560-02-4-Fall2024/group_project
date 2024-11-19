@@ -115,12 +115,12 @@ function RequestAppt() {
           <NavBar />
           {/* This is the form */}
           <div className='w-[100vw] h-[88vh] bg-dg flex flex-col items-center'>
-              <div className='w-[38vw] h-[70vh] border-2 border-black mt-auto mb-auto rounded-xl bg-g flex flex-wrap overflow-y-scroll justify-evenly content-start py-8'>
+              <div className='w-[38vw] h-[70vh] mt-auto mb-auto rounded-3xl bg-g flex flex-wrap overflow-y-scroll justify-evenly content-start py-8'>
                 {/* Input Name */}
-                <input onChange={(e) => setPatientName(e.target.value)} placeholder='Enter Name' className='w-[35%] h-8 fourkay:w-[40%] border-2 border-black rounded-md mb-12'></input>
+                <input onChange={(e) => setPatientName(e.target.value)} placeholder='Enter Name' className='w-[35%] h-8 fourkay:w-[40%] rounded-lg mb-12 pl-2'></input>
 
                 {/* Select Dentist Type */}
-                <select onChange={(e) => setDentistType(e.target.value)} className='w-[35%] h-8 fourkay:w-[40%] border-2 border-black rounded-md mb-12' >
+                <select onChange={(e) => setDentistType(e.target.value)} className='w-[35%] h-8 fourkay:w-[40%] rounded-lg mb-12' >
                   <option value="" disabled selected >Select Dentist Type</option>
                   <option value="orthodontist" >Orthodontist</option>
                   <option value="surgeon" >Oral Surgeon</option>
@@ -129,16 +129,16 @@ function RequestAppt() {
 
                 {/* Select Dentist (+ an invisible field to keep the structure) */}
                 <select className='w-[35%] fourkay:w-[40%] h-8 invisible mb-12'></select>
-                <select onChange={(e) => setDentistName(e.target.value)} className='w-[35%] fourkay:w-[40%] h-8 border-2 border-black rounded-md mb-12'>
+                <select onChange={(e) => setDentistName(e.target.value)} className='w-[35%] fourkay:w-[40%] h-8 rounded-lg mb-12'>
                   <option value="" disabled selected >Select Dentist Name</option>
                 </select>
 
-                <div id="picked-date" className='w-[35%] h-8 fourkay:w-[40%] border-2 border-black bg-white flex flex-row' >
+                <div id="picked-date" className='w-[35%] h-8 fourkay:w-[40%] bg-white flex flex-row rounded-lg' >
                   <p className='w-5/6 h-full'>{date}</p>
                   <button  onClick={toggleCalendar} className='w-1/6 h-full hover:bg-[#587354] flex justify-center items-center'><img src={IconCalendar} className='w-[60%] h-auto'></img></button>
                 </div>
 
-                <input onChange={(e) => setTime(e.target.value)} placeholder='HH:MM' className='w-[35%] h-8 fourkay:w-[40%] border-2 border-black ' ></input>
+                <input onChange={(e) => setTime(e.target.value)} placeholder='HH:MM' className='w-[35%] h-8 fourkay:w-[40%] rounded-lg pl-2' ></input>
 
                 <div id="calender-header" className={`flex flex-row flex-wrap content-start w-[250px] h-[190px] mt-2 border-2 border-black rounded-md overflow-hidden ${calendarOpen ? '' : 'invisible'}`} >
                   <div className='flex flex-row w-full h-[15%] justify-between'>
@@ -170,13 +170,13 @@ function RequestAppt() {
                 
                 {/* <select className='w-[100%] h-8 invisible mb-12'></select> */}
                 <div className='w-4/5 h-1/3 flex flex-col items-center min-h-0'>
-                  <p className='text-3xl font-semibold p-1'>Purpose of Visit</p>
-                  <textarea onChange={(e) => setPurpose(e.target.value)} className='w-full h-full border-2 border-black min-h-0'></textarea>
+                  <p className='text-3xl text-white font-semibold p-1'>Purpose of Visit</p>
+                  <textarea onChange={(e) => setPurpose(e.target.value)} className='w-full h-full rounded-xl pl-2 pt-2 min-h-0'></textarea>
                 </div>
               </div>
 
               {/* This is the Schedule Button */}
-              <button onClick={Schedule} className='w-[14vw] h-[7vh] border-2 border-black bg-g hover:bg-[#587354] rounded-lg mb-12 mt-4'>Schedule</button>
+              <button onClick={Schedule} className='w-[14vw] h-[7vh] bg-g hover:bg-[#587354] rounded-lg mb-12 mt-4 text-white font-bold text-2xl'>Schedule</button>
           </div>
       </>
     )
