@@ -8,10 +8,10 @@
 		<version>3.3.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.group4</groupId>
-	<artifactId>group_project</artifactId>
+	<groupId>com.example</groupId>
+	<artifactId>rest-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>group_project</name>
+	<name>rest-service</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
 	<licenses>
@@ -32,19 +32,9 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-thymeleaf</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<scope>runtime</scope>
-			<optional>true</optional>
-		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
