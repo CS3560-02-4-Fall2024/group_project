@@ -111,8 +111,7 @@ function RequestAppt() {
     };
 
     return (
-      <>
-        <div>
+        <>
           <NavBar />
           {/* This is the form */}
           <div className='w-[100vw] h-[88vh] bg-dg flex flex-col items-center'>
