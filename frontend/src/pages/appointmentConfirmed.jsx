@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Navbar from "../components/Navbar";
+import { useNavigate } from "react-router-dom";
 
 function AppointmentConfirmed() {
 
@@ -7,9 +8,11 @@ function AppointmentConfirmed() {
     const [date, setDate] = useState("06/09/24");
     const [time, setTime] = useState("11:11 AM");
 
+    const navigate = useNavigate();
+
     // route back home
     const goHome = () => {
-      // TODO: route back to home page
+      navigate("/home");
     };
 
     return (
