@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import NavBar from '../components/Navbar';
 import IconCalendar from '../assets/calendar-small-page.png'
+import { useNavigate } from 'react-router-dom';
 
 function RequestAppt() {
 
@@ -106,13 +107,15 @@ function RequestAppt() {
       // console.log("total: " + patientName + " " + dentistType + " " + dentistName + " " + date + " " + time + " " + purpose);
     }, [patientName, dentistName, dentistType, date, time, purpose]);
 
+    const navigate = useNavigate();
+
     const Schedule = () => {
-      console.log("scheduled!");
+      navigate("/apptConfirm")
+      //do database storing shit
     };
 
     return (
       <>
-        <div>
           <NavBar />
           {/* This is the form */}
           <div className='w-[100vw] h-[88vh] bg-dg flex flex-col items-center'>
@@ -177,7 +180,7 @@ function RequestAppt() {
               </div>
 
               {/* This is the Schedule Button */}
-              <button onClick={Schedule} className='w-[14vw] h-[7vh] bg-g hover:bg-[#587354] rounded-lg mb-12 mt-4 text-white font-bold text-2xl'>Schedule</button>
+              <button onClick={Schedule} className='w-[14vw] h-[7vh] bg-g hover:bg-[#587354] rounded-xl mb-12 mt-4 text-white font-bold text-3xl'>Schedule</button>
         </div>
       </>
     )

@@ -34,6 +34,11 @@ function Appt() {
 }
 
 function UpcomingAppt() {
+  const navigate = useNavigate();
+
+  const reqAppt = () => {
+    navigate("/reqAppt");
+  };
 
   return (
     <div className="flex justify-center w-[100%] h-[100%] bg-dg">
@@ -41,7 +46,7 @@ function UpcomingAppt() {
         <div className="ml-16 flex text-white font-bold text-4xl mt-4 mb-2 mr-72 underline">
           Upcoming Appointments
         </div>
-        <div class="ml-16 h-[75vh] overflow-y-scroll">
+        <div class="ml-16 h-[60vh] overflow-y-scroll">
           <Appt />
           <Appt />
           <Appt />
@@ -49,10 +54,23 @@ function UpcomingAppt() {
           <Appt />
           <Appt />
         </div>
+        <div class='flex justify-center text-white mt-10'>
+          <button onClick={reqAppt} class="ml-16 py-3 px-5 bg-g rounded-xl hover:bg-[#587354] font-bold text-4xl">Request Appointment</button>
+        </div>
       </div>
       
     </div>
     
+
+  )
+}
+
+function RequestAppt() {
+  const navigate = useNavigate()
+  return (
+    <div>
+      Ur MOM
+    </div>
 
   )
 }
