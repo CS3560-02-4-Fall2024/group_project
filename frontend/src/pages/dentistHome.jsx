@@ -1,6 +1,7 @@
 import App from "../App";
 import Navbar from "../components/Navbar";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 // generate each appt
@@ -12,8 +13,10 @@ function Appt() {
   const [patPhone, setPatPhone] = useState("(626) 731-3955");
   const [patEmail, setPatEmail] = useState("lbj@gmail.com");
 
+  const navigate = useNavigate();
+
   const goProfile = () => {
-    // TODO: route to profile
+    navigate("/profile")
   }
   return(
     <div className="flex-flow rounded-xl mb-3 bg-g">
@@ -33,17 +36,17 @@ function Appt() {
 
 // main page component
 function DentistHome() {
-
-    const goHome = () => {
-      // TODO: route to home
-    }
+    const [dentistName, setDentistName] = useState("urmom");
 
     return (
       <>
         <div className="w-[100vw] h-[100vh] bg-dg">
           <Navbar />
+          <div class="text-left pl-5 pt-5 text-white text-7xl font-bold">
+            Welcome Dr. {dentistName}!
+          </div>
           {/* Middle Container */}
-          <div className='w-[100vw] h-[88vh] flex justify-center'>
+          <div className='w-[100vw] h-[80vh] flex justify-center'>
             <div className="flex-flow">
                <div className="flex">
                 <div className="text-white font-bold text-4xl mt-4 mb-2 mr-48 underline">
@@ -55,7 +58,7 @@ function DentistHome() {
                 </select>
               </div>
               
-              <div class="h-3/4 overflow-y-scroll">
+              <div class="h-4/5 overflow-y-scroll">
                 <Appt />
                 <Appt />
                 <Appt />
@@ -68,9 +71,6 @@ function DentistHome() {
                 <Appt />
                 <Appt />
                 <Appt />
-              </div>
-              <div className="flex justify-center">
-                <button onClick={goHome} className="bg-g hover:bg-[#587354] rounded-lg p-3 px-10 font-bold text-xl text-white mt-5">Back to Home</button>
               </div>
             </div>
           </div>

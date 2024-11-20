@@ -1,22 +1,19 @@
 import Navbar from "../components/Navbar"
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 // generate each appt
 function Appt() {
 
   const [apptDate, setApptDate] = useState("12/30/24");
   const [apptTime, setApptTime] = useState("3:30 PM");
-  const [patName, setPatName] = useState("Lebron Raymone James");
-  const [patPhone, setPatPhone] = useState("(626) 731-3955");
-  const [patEmail, setPatEmail] = useState("lbj@gmail.com");
+  const [pastInfo, setPastInfo] = useState("Root Canal or like cavities filling or some");
 
   return(
     <div className="flex-flow rounded-xl mb-3 bg-g">
       <div className="pt-2 pl-3 pb-2 text-white text-xl">
         <p className="font-bold">{apptDate} {apptTime}</p>
-        <p>{patName}</p>
-        <p>{patPhone}</p>
-        <p>{patEmail}</p>
+        <p>{pastInfo}</p>
       </div> 
     </div>
   )
@@ -24,10 +21,11 @@ function Appt() {
 
 // main page component
 function PastAppointments() {
+    const navigate = useNavigate();
 
     const goHome = () => {
-      // TODO: route to home
-    }
+      navigate("/home");
+    };
 
     return (
       <>

@@ -1,6 +1,16 @@
 import NavBar from '../components/Navbar';
+import { useNavigate } from 'react-router-dom';
 
 function PatientProfile() {
+  const navigate = useNavigate();
+
+  const goHome = () => {
+    navigate("/dentistHome")
+  };
+
+  const viewPast = () => {
+    navigate("/dentistPast")
+  };
 
   return (
     <>
@@ -39,13 +49,13 @@ function PatientProfile() {
               </div>
               {/*View Past Appointments Button*/}
               <div class="flex items-center justify-center mt-20">
-                <button class="p-3 px-10 bg-dg text-white font-bold text-2xl rounded-xl hover:bg-[#587354]">
+                <button onClick={viewPast} class="p-3 px-10 bg-dg text-white font-bold text-2xl rounded-xl hover:bg-[#587354]">
                   View Past Appointments
                 </button>
               </div>
               {/*Back to Home*/}
               <div class="flex items-center justify-center mt-5 mb-5 text-white text-lg">
-                <button class="hover:text-[#587354]">
+                <button onClick={goHome} class="hover:text-[#587354]">
                   <p>Back To Home</p>
                 </button>
               </div>

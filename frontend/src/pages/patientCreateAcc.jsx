@@ -1,5 +1,17 @@
+import { useNavigate } from "react-router-dom";
 function PatientCreateAcc() {
 
+  const navigate = useNavigate();
+
+  {/*Button Functions*/}
+  const goLogin = () => {
+    navigate("/login")
+  };
+
+  const goHome = () => {
+    navigate("/home")
+    // also add storing date in fields ?
+  };
   return (
     <>
       {/*Background*/}
@@ -95,13 +107,13 @@ function PatientCreateAcc() {
             </div>
             {/*Create Account Button*/}
             <div class="flex items-center justify-center mt-10">
-              <button class="p-3 px-10 bg-dg text-white font-bold text-2xl rounded-xl hover:bg-[#587354]">
+              <button onClick={goHome} class="p-3 px-10 bg-dg text-white font-bold text-2xl rounded-xl hover:bg-[#587354]">
                 Create Account
               </button>
             </div>
             {/*Don't Have an Account*/}
             <div class="flex items-center justify-center mt-5 text-white">
-              <button class="hover:text-[#587354]">
+              <button onClick={goLogin} class="hover:text-[#587354]">
                 <p>Sike! I have an Account</p>
               </button>
             </div>

@@ -1,6 +1,17 @@
 import NavBar from '../components/Navbar';
+import { useNavigate } from 'react-router-dom';
 
 function EditPatientProfile() {
+  const navigate = useNavigate();
+
+  const goHome = () => {
+    navigate("/home");
+  };
+
+  const completeEdit = () => {
+    navigate("/home");
+    // make the edits in db
+  };
 
   return (
     <>
@@ -99,14 +110,14 @@ function EditPatientProfile() {
               </div>
               {/*Create Account Button*/}
               <div class="flex items-center justify-center mt-5">
-                <button class="p-3 px-10 bg-dg text-white font-bold text-2xl rounded-xl hover:bg-[#587354]">
-                  Create Account
+                <button onClick={completeEdit} class="p-3 px-10 bg-dg text-white font-bold text-2xl rounded-xl hover:bg-[#587354]">
+                  Edit Account
                 </button>
               </div>
               {/*Don't Have an Account*/}
               <div class="flex items-center justify-center mt-5 mb-5 text-white">
-                <button class="hover:text-[#587354]">
-                  <p>Sike! I have an Account</p>
+                <button onClick={goHome} class="hover:text-[#587354]">
+                  <p>Sike! Take me Home!</p>
                 </button>
               </div>
             </div>

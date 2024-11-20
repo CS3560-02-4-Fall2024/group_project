@@ -1,4 +1,16 @@
+import { useNavigate } from "react-router-dom";
+
 function DentistLogin() {
+
+  const navigate = useNavigate();
+
+  const goHome = () => {
+    navigate("/dentistHome");
+  };
+
+  const goCreate = () => {
+    navigate("/dentistCreateAcc")
+  };
 
   return (
     <>
@@ -30,13 +42,13 @@ function DentistLogin() {
             </div>
             {/*Login Button*/}
             <div class="flex items-center justify-center mt-10">
-              <button class="p-3 px-10 bg-dg text-white font-bold text-2xl rounded-xl hover:bg-[#587354]">
+              <button onClick={goHome} class="p-3 px-10 bg-dg text-white font-bold text-2xl rounded-xl hover:bg-[#587354]">
                 Login
               </button>
             </div>
             {/*Don't Have an Account*/}
             <div class="flex items-center justify-center mt-10 text-white">
-              <button class="hover:text-[#587354]">
+              <button onClick={goCreate} class="hover:text-[#587354]">
                 <p>Don't have an Account?</p>
                 <p>Create a Dentist Account Here</p>
               </button>

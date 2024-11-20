@@ -1,4 +1,19 @@
+import { useNavigate } from "react-router-dom"
+
 function PatientLogin() {
+
+    const navigate = useNavigate();
+
+    {/*Button Fucntions*/}
+    const goHome = () => {
+      navigate("/home")
+      // also add storing date in fields ?
+    };
+
+    const goCreate = () => {
+      navigate("/createAcc")
+      // also add storing date in fields ?
+    };
 
     return (
       <>
@@ -30,13 +45,13 @@ function PatientLogin() {
               </div>
               {/*Login Button*/}
               <div class="flex items-center justify-center mt-10">
-                <button class="p-3 px-10 bg-dg text-white font-bold text-2xl rounded-xl hover:bg-[#587354]">
+                <button onClick={goHome} class="p-3 px-10 bg-dg text-white font-bold text-2xl rounded-xl hover:bg-[#587354]">
                   Login
                 </button>
               </div>
               {/*Don't Have an Account*/}
               <div class="flex items-center justify-center mt-10 text-white">
-                <button class="hover:text-[#587354]">
+                <button onClick={goCreate} class="hover:text-[#587354]">
                   <p>Don't have an Account?</p>
                   <p>Create a Patient Account Here</p>
                 </button>
