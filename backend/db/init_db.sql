@@ -4,35 +4,32 @@ USE groupProject;
 
 CREATE TABLE IF NOT EXISTS patients
 (
-  id              INT unsigned NOT NULL AUTO_INCREMENT, # Unique ID for the record
-  name            VARCHAR(150) NOT NULL,                # Name of the patient
-  phone	          VARCHAR(20) NOT NULL, 				# Patient phone number
-  email           VARCHAR(150) NOT NULL,				# Patient email
-  PRIMARY KEY (id)
+  id              BINARY(16) PRIMARY KEY,
+  name            VARCHAR(150) NOT NULL,
+  phone	          VARCHAR(20) NOT NULL,
+  email           VARCHAR(150) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS offices
 (
-  id              INT unsigned NOT NULL AUTO_INCREMENT,
+  id              BINARY(16) PRIMARY KEY,
   phone	          VARCHAR(20) NOT NULL,
   email           VARCHAR(150) NOT NULL,
   address         VARCHAR(150) NOT NULL,
-  numRooms        INT unsigned NOT NULL,
-  PRIMARY KEY (id)
+  numRooms        INT unsigned NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS dentists
 (
-  id              INT unsigned NOT NULL AUTO_INCREMENT, # Unique ID for the record
-  name            VARCHAR(150) NOT NULL,                # Name of the patient
+  id              BINARY(16) PRIMARY KEY,
+  name            VARCHAR(150) NOT NULL,
   type 			  VARCHAR(150) NOT NULL,
-  officeId        INT unsigned NOT NULL,
-  PRIMARY KEY (id),
+  officeId        BINARY(16) NOT NULL,
   FOREIGN KEY (officeId) REFERENCES offices(id)
 );
 
 CREATE TABLE IF NOT EXISTS availability (
-    dentistId INT UNSIGNED NOT NULL,
+    dentistId BINARY(16) NOT NULL,
     startTime DATETIME NOT NULL,
     endTime DATETIME NOT NULL,
     FOREIGN KEY (dentistId) REFERENCES dentists(id)
@@ -40,10 +37,11 @@ CREATE TABLE IF NOT EXISTS availability (
 
 CREATE TABLE IF NOT EXISTS appointments
 (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    patientId INT unsigned NOT NULL,
-    dentistId INT unsigned NOT NULL,
+    id BINARY(16) PRIMARY KEY,
+    patientId BINARY(16) NOT NULL,
+    dentistId BINARY(16) NOT NULL,
     appointmentTime DATETIME NOT NULL,
     FOREIGN KEY (patientId) REFERENCES patients(id),
     FOREIGN KEY (dentistId) REFERENCES dentists(id)
 );
+
