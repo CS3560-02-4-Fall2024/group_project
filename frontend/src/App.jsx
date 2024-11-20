@@ -16,6 +16,8 @@ import PatientLogin from './pages/patientLogin.jsx'
 import PatientProfile from './pages/patientProfile.jsx'
 import RequestAppt from './pages/requestAppt.jsx'
 import WelcomePage from './pages/welcomePage.jsx'
+import Appt from './pages/dentistHome.jsx'
+import PastAppointments from './pages/pastAppointments.jsx'
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 

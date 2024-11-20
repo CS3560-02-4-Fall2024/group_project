@@ -5,7 +5,7 @@ function WelcomePage() {
   return (
     <>
       <div class="w-[100vw] h-[100vh] bg-dg flex items-center justify-center">
-        <div class="w-1/3 h-3/4 bg-g rounded-3xl flex justify-center">
+        <div class="bg-g rounded-3xl flex-flow justify-center px-14 pb-10">
           <div class="">
             <div class="text-white text-center text-4xl font-bold mt-10">
               <p>Welcome</p>
