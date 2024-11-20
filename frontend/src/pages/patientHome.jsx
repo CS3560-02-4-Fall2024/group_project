@@ -32,7 +32,7 @@ function Appt() {
 function UpcomingAppt() {
 
   return (
-    <div className="flex justify-center w-[100vh]">
+    <div className="flex justify-center w-[100%] h-[100%] bg-dg">
       <div class="flex-flow">
         <div className="ml-16 flex text-white font-bold text-4xl mt-4 mb-2 mr-72 underline">
           Upcoming Appointments

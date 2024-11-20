@@ -112,20 +112,21 @@ function RequestAppt() {
 
     return (
       <>
+        <div>
           <NavBar />
           {/* This is the form */}
           <div className='w-[100vw] h-[88vh] bg-dg flex flex-col items-center'>
-              <div className='w-[38vw] h-[70vh] mt-auto mb-auto rounded-3xl bg-g flex flex-wrap overflow-y-scroll justify-evenly content-start py-8'>
-                {/* Input Name */}
-                <input onChange={(e) => setPatientName(e.target.value)} placeholder='Enter Name' className='w-[35%] h-8 fourkay:w-[40%] rounded-lg mb-12 pl-2'></input>
+            <div className='w-[38vw] h-[70vh] mt-auto mb-auto rounded-3xl bg-g flex flex-wrap overflow-y-scroll justify-evenly content-start py-8'>
+              {/* Input Name */}
+              <input onChange={(e) => setPatientName(e.target.value)} placeholder='Enter Name' className='w-[35%] h-8 fourkay:w-[40%] rounded-lg mb-12 pl-2'></input>
 
-                {/* Select Dentist Type */}
-                <select onChange={(e) => setDentistType(e.target.value)} className='w-[35%] h-8 fourkay:w-[40%] rounded-lg mb-12' >
-                  <option value="" disabled selected >Select Dentist Type</option>
-                  <option value="orthodontist" >Orthodontist</option>
-                  <option value="surgeon" >Oral Surgeon</option>
-                  <option value="general" >General Cleaning</option>
-                </select>
+              {/* Select Dentist Type */}
+              <select onChange={(e) => setDentistType(e.target.value)} className='w-[35%] h-8 fourkay:w-[40%] rounded-lg mb-12' >
+                <option value="" disabled selected >Select Dentist Type</option>
+                <option value="orthodontist" >Orthodontist</option>
+                <option value="surgeon" >Oral Surgeon</option>
+                <option value="general" >General Cleaning</option>
+              </select>
 
                 {/* Select Dentist (+ an invisible field to keep the structure) */}
                 <select className='w-[35%] fourkay:w-[40%] h-8 invisible mb-12'></select>
@@ -208,6 +209,8 @@ function RequestAppt() {
             </div>
             
           </div>
+          </div>
+        </div>
       </>
     )
   }
