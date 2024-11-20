@@ -1,8 +1,10 @@
+import { useNavigate } from "react-router-dom";
 
 function Navbar() {
+    const navigate = useNavigate();
 
     const Logout = () => {
-        console.log("logout the thang");
+        navigate("/")
     }
 
     return (<div className="h-[12vh] w-[100vw] bg-g float-left ml-0 pl-0 flex justify-center">

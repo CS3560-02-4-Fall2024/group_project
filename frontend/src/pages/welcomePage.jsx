@@ -13,6 +13,7 @@ function WelcomePage() {
     navigate("/dentistLogin");
   };
 
+
   return (
     <>
       <div class="w-[100vw] h-[100vh] bg-dg flex items-center justify-center">
@@ -29,7 +30,7 @@ function WelcomePage() {
               </button>
             </div>
             <div class="flex items-center justify-center mt-10">
-              <button onclick={goDentist} class="p-3 bg-dg text-white font-bold text-2xl rounded-xl hover:bg-[#587354]">
+              <button onClick={goDentist} class="p-3 bg-dg text-white font-bold text-2xl rounded-xl hover:bg-[#587354]">
                 Dentist Login
               </button>
             </div>
