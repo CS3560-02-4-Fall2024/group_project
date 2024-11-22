@@ -9,6 +9,14 @@ function Appt() {
   const [apptTime, setApptTime] = useState("3:30 PM");
   const [pastInfo, setPastInfo] = useState("Root Canal or like cavities filling or some");
 
+  // useEffect to get an array of dentist past appts 
+  const query = {
+    'id': '' // dentistId
+  }
+  const returnJSON = [
+    { 'apptId': '', 'date': '', 'time': '', 'purpose': '' }
+  ]
+
   return(
     <div className="flex-flow rounded-xl mb-3 bg-g">
       <div className="pt-2 pl-3 pb-2 text-white text-xl">

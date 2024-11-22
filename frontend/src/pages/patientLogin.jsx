@@ -1,13 +1,27 @@
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 function PatientLogin() {
 
     const navigate = useNavigate();
 
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
     {/*Button Fucntions*/}
-    const goHome = () => {
-      navigate("/home")
-      // also add storing date in fields ?
+    const Login = () => {
+      
+      // post this json and return patient id for localstorage
+      const loginJSON = {
+        'email': email,
+        'password': password
+      };
+
+      const returnJSON = {
+        'id': ''
+      }
+
+      navigate("/home");
     };
 
     const goCreate = () => {
@@ -33,7 +47,7 @@ function PatientLogin() {
               </div>
               {/*Email Address Input Field*/}
               <div class="flex items-center justify-center">
-                <input class="p-2 w-80 rounded-md bg-tan text-left"></input>
+                <input onChange={(e) => setEmail(e.target.value)} class="p-2 w-80 rounded-md bg-tan text-left"></input>
               </div>
               {/*Password Text*/}
               <div class="text-white text-xl mt-5 ml-1 mb-1">
@@ -41,11 +55,11 @@ function PatientLogin() {
               </div>
               {/*Password Input Field*/}
               <div class="flex items-center justify-center">
-                <input class="p-2 w-80 rounded-md bg-tan text-left"></input>
+                <input onChange={(e) => setPassword(e.target.value)} class="p-2 w-80 rounded-md bg-tan text-left"></input>
               </div>
               {/*Login Button*/}
               <div class="flex items-center justify-center mt-10">
-                <button onClick={goHome} class="p-3 px-10 bg-dg text-white font-bold text-2xl rounded-xl hover:bg-[#587354]">
+                <button onClick={Login} class="p-3 px-10 bg-dg text-white font-bold text-2xl rounded-xl hover:bg-[#587354]">
                   Login
                 </button>
               </div>

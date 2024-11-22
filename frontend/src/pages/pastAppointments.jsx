@@ -23,6 +23,14 @@ function Appt() {
 function PastAppointments() {
     const navigate = useNavigate();
 
+    // useEffect to get an array of patient past appts 
+  const query = {
+    'id': '' // patientId
+  }
+  const returnJSON = [
+    { 'apptId': '', 'date': '', 'time': '', 'purpose': '' }
+  ]
+
     const goHome = () => {
       navigate("/home");
     };

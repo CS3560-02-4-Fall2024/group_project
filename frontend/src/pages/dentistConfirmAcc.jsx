@@ -2,8 +2,10 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function DentistConfirmAcc() {
-  const [dentistID, setDentistID] = useState("0001")
+  const [dentistID, setDentistID] = useState("0001");
   const navigate = useNavigate();
+
+  // id can come from localstorage from the createacc page
 
   const goLogin = () => {
     navigate("/dentistLogin")

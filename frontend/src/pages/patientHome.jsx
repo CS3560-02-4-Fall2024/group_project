@@ -36,6 +36,20 @@ function Appt() {
 function UpcomingAppt() {
   const navigate = useNavigate();
 
+  const [appts, setAppts] = useState([]);
+
+  // query parameter is patientId
+  const query = { 'id': ''};
+
+  // GET FROM DB
+  const apptArray = [{
+    'date': '',
+    'time': '',
+    'name': '',
+    'phone': '',
+    'email': ''
+  }]
+
   const reqAppt = () => {
     navigate("/reqAppt");
   };
@@ -82,6 +96,13 @@ function DentistOffice() {
   const [officeEmail, setOfficeEmail] = useState("ckchung@ccp.edu");
   const [officeAddr, setOfficeAddr] = useState("9501 Lemon Ave, Temple City");
 
+  // GET FROM DB (we only have one office, otherwise idk what parameter to use to query unless we make another class attribute to patient)
+  const info = {
+    'phone': "hi",
+    'email': "hi",
+    'address': "hi"
+  };
+
   return (
     <div className="flex-flow items-center justify-center w-[100vh]">
       <div className="ml-16 flex text-white font-bold text-4xl mt-4 mb-2 underline">
@@ -108,6 +129,19 @@ function PatientInfo() {
   const [patIns, setPatIns] = useState("State Farm");
 
   const navigate = useNavigate();
+
+  // query parameter is patient id
+  const query = {'id': ''};
+
+  // GET FROM DB
+  const patientJSON = {
+    'name': '',
+    'phone': '',
+    'email': '',
+    'address': '',
+    'dob': '',
+    'insurance': ''
+  }
 
   const toEditProfile = () => {
     navigate("/editProfile");

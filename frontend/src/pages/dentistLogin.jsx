@@ -1,10 +1,25 @@
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 function DentistLogin() {
 
   const navigate = useNavigate();
 
-  const goHome = () => {
+  const [id, setId] = useState("");
+  const [password, setPassword] = useState("");
+
+  const Login = () => {
+
+    // post this json for login and return a Json with id
+    const loginJSON = {
+      'id': id,
+      'password': password
+    };
+
+    const returnJSON = {
+      'id': id
+    }
+
     navigate("/dentistHome");
   };
 
@@ -30,7 +45,7 @@ function DentistLogin() {
             </div>
             {/*Dentist ID Input Field*/}
             <div class="flex items-center justify-center">
-              <input class="p-2 w-80 rounded-md bg-tan text-left"></input>
+              <input onChange={(e) => setId(e.target.value)} class="p-2 w-80 rounded-md bg-tan text-left"></input>
             </div>
             {/*Password Text*/}
             <div class="text-white text-xl mt-5 ml-1 mb-1">
@@ -38,11 +53,11 @@ function DentistLogin() {
             </div>
             {/*Password Input Field*/}
             <div class="flex items-center justify-center">
-              <input class="p-2 w-80 rounded-md bg-tan text-left"></input>
+              <input onChange={(e) => setPassword(e.target.value)} class="p-2 w-80 rounded-md bg-tan text-left"></input>
             </div>
             {/*Login Button*/}
             <div class="flex items-center justify-center mt-10">
-              <button onClick={goHome} class="p-3 px-10 bg-dg text-white font-bold text-2xl rounded-xl hover:bg-[#587354]">
+              <button onClick={Login} class="p-3 px-10 bg-dg text-white font-bold text-2xl rounded-xl hover:bg-[#587354]">
                 Login
               </button>
             </div>
