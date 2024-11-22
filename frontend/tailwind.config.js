@@ -12,7 +12,8 @@ export default {
         g: "#95b78e",
       },
       screens: {
-        'fourkay': { 'raw' : '(min-width: 2200px)'}
+        'fourkay': { 'raw' : '(min-width: 2200px)'},
+        'twelve': { 'raw' : '(max-width: 700px)'}
       }
     },
   },
