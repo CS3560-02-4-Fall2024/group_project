@@ -103,13 +103,29 @@ function RequestAppt() {
       setCalendarOpen(!calendarOpen);
     }
 
+    // everytime the date is picked, render in the available times for that day
     useEffect(() => {
-      // console.log("total: " + patientName + " " + dentistType + " " + dentistName + " " + date + " " + time + " " + purpose);
-    }, [patientName, dentistName, dentistType, date, time, purpose]);
+      // query for available times given a date
+      const query = {
+        'date': ''
+      }
+      // return an array of appts with their ids and their times
+      const returnJSON = [{'apptid': '', 'time': ''}, {}, {}]
+    }, [date])
 
     const navigate = useNavigate();
 
     const Schedule = () => {
+
+      // post a appt into db
+      const detailsJSON = {
+        'id': '', //patientId
+        'name': '', //dentistName (and then you gotta get the id for the appt table)
+        'type': '',
+        'date': '',
+        'time': '',
+        'purpose': ''
+      }
       navigate("/apptConfirm")
       //do database storing shit
     };

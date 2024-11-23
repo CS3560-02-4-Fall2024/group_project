@@ -1,5 +1,15 @@
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+
 function PatientCreateAcc() {
+
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [number, setNumber] = useState("");
+  const [dob, setDob] = useState("");
+  const [insurance, setInsurance] = useState("");
+  const [address, setAddress] = useState("");
 
   const navigate = useNavigate();
 
@@ -9,6 +19,21 @@ function PatientCreateAcc() {
   };
 
   const goHome = () => {
+
+    // post this json to the db, return a success code and patient id to store in localstorage
+    const createJSON = {
+      'name': '',
+      'password': '',
+      'email': '',
+      'phone': '',
+      'dob': '',
+      'insurance': '',
+      'address': ''
+    }
+    const returnJSON = {
+      'id': ''
+    }
+
     navigate("/home")
     // also add storing date in fields ?
   };

@@ -10,6 +10,18 @@ function AppointmentConfirmed() {
 
     const navigate = useNavigate();
 
+    // make a useEffect to get the appt that was just created
+    // query the latest created appt by this id
+    const query = {
+      'id': '' // patientId, use this to find latest created appt (imo?)
+    }
+    // return
+    const returnJSON = {
+      'id': '', // appt id
+      'date': '',
+      'time': ''
+    }
+
     // route back home
     const goHome = () => {
       navigate("/home");

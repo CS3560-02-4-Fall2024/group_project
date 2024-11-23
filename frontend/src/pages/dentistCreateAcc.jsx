@@ -1,13 +1,30 @@
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 function DentistCreateAcc() {
   const navigate = useNavigate();
+
+  const [name, setName] = useState("");
+  const [type, setType] = useState("");
+  const [password, setPassword] = useState("");
   
   const goLogin = () => {
     navigate("/dentistLogin")
   };
 
   const createAcc = () => {
+
+    // post account info and return a JSON of dentistId for localstorage
+    const infoJSON = {
+      'name': name,
+      'type': type,
+      'password': password
+    }
+
+    const returnJSON = {
+      'id': ''
+    }
+
     navigate("/dentistConfirm")
     //store info in db
   }

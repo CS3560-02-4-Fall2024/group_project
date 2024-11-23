@@ -38,6 +38,26 @@ function Appt() {
 function DentistHome() {
     const [dentistName, setDentistName] = useState("urmom");
 
+    // query using dentist id
+    const query = {
+      'id': '' // dentist id
+    }
+
+    // needs to receive JSON = { 'name' : bob } and 
+    const returnJSON1 = {
+      'name': ''
+    }
+    // an array of all of this dentists' appts 
+    const returnApptsJSON = [{
+    'date': '', 
+    'time': '', 
+    'patientName': '', 
+    'patientPhone': '', 
+    'patientEmail': ''}, 
+    {}, {}]
+
+    // TODO: make a useEffect to get that info on first render and loop through array of appts to render each one with the info
+
     return (
       <>
         <div className="w-[100vw] h-[100vh] bg-dg">
