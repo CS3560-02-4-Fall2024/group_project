@@ -1,0 +1,32 @@
+{
+  "name": "",
+  "version": "0.0.0",
+  "description": "",
+  "main": "build/src/index.js",
+  "types": "build/src/index.d.ts",
+  "files": [
+    "build/src"
+  ],
+  "license": "Apache-2.0",
+  "keywords": [],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "gts lint",
+    "clean": "gts clean",
+    "compile": "tsc",
+    "fix": "gts fix",
+    "build": "npm run lint && gts clean && tsc",
+    "start": "npm run build && node build/src/index.js",
+    "dev": "npx nodemon",
+    "prepare": "npm run compile",
+    "pretest": "npm run compile",
+    "posttest": "npm run lint"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.5",
+    "gts": "^6.0.2",
+    "nodemon": "^3.1.7",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.1.6"
+  }
+}
