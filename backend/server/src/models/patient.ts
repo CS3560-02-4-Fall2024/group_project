@@ -47,6 +47,7 @@ VALUES (?,?,?,?,?,?,?);
         [id],
         (err, res) => {
           if (err) reject(err);
+          else if (res.length == 0) reject('user not found');
           else resolve(res?.[0]);
         },
       );
@@ -60,7 +61,8 @@ VALUES (?,?,?,?,?,?,?);
         [email],
         (err, res) => {
           if (err) reject(err);
-          else resolve(res?.[0]);
+          else if (res.length == 0) reject('user not found');
+          else resolve(res[0]);
         },
       );
     });

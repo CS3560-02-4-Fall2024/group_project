@@ -31,27 +31,34 @@ export const authenticatePatient = async (
   res: Response,
   next: NextFunction,
 ) => {
-  console.log(req.body);
-
   const email: string = req.body.email;
-  
-  // TODO: make this actually check for email's existence
-  const passwordHash: string = (await PatientTable.getByEmail(email))
-    .passwordHash;
   const password: string = req.body.password;
 
-  if (bcrypt.compareSync(password, passwordHash)) {
-    const token: string = jwt.sign(
-      {email: email, type: 'patient'},
-      process.env.TOKEN_SECRET as string,
-      {
-        expiresIn: '1d',
-      },
-    );
-    res.json({authToken: token});
-  } else {
-    res.sendStatus(403);
-  }
+  // TODO: make this actually check for email's existence
+  PatientTable.getByEmail(email)
+    .then((value: Patient) => {
+      return value.passwordHash;
+    })
+    .then((value: string) => {
+      return bcrypt.compare(password, value).then((success: boolean) => {
+        if (success) {
+          const token: string = jwt.sign(
+            {email: email, type: 'patient'},
+            process.env.TOKEN_SECRET as string,
+            {
+              expiresIn: '1d',
+            },
+          );
+          res.json({authToken: token});
+          next();
+        } else {
+          res.sendStatus(403);
+        }
+      });
+    })
+    .catch((reason: any) => {
+      res.sendStatus(403);
+    });
 };
 
 export const authorizePatient = (
@@ -68,14 +75,12 @@ export const authorizePatient = (
     token,
     process.env.TOKEN_SECRET as string,
     (err: any, user: any) => {
-      if (err || user.type !== 'patient'
-        || req.body.email !== user.email
-      ) return res.sendStatus(403);
+      if (err || user.type !== 'patient' || req.body.email !== user.email)
+        return res.sendStatus(403);
 
       res.locals.user = user;
 
-      next();
-      return;
+      return next();
     },
   );
 };
