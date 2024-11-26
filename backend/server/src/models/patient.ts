@@ -13,7 +13,7 @@ export interface Patient extends RowDataPacket {
 }
 
 export abstract class PatientTable {
-  static save(patient: Patient): Promise<Patient> {
+  static insert(patient: Patient): Promise<Patient> {
     return new Promise((resolve, reject) => {
       db.query<ResultSetHeader>(
         `

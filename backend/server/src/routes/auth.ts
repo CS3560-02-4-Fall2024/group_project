@@ -9,10 +9,9 @@ const router: Router = express.Router();
 
 // create patient acc
 router.post('/patient', (req: Request, res: Response) => {
-  console.log(req.body);
   const patient: Patient = req.body;
 
-  PatientTable.save(patient)
+  PatientTable.insert(patient)
     .then((value: Patient) => {
       res.json(value);
     })
