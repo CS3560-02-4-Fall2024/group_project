@@ -7,16 +7,21 @@ CREATE TABLE IF NOT EXISTS patients
   id              BINARY(16) PRIMARY KEY,
   name            VARCHAR(150) NOT NULL,
   phone	          VARCHAR(20) NOT NULL,
-  email           VARCHAR(150) NOT NULL
+  email           VARCHAR(150) NOT NULL UNIQUE,
+  dateOfBirth     DATE NOT NULL,
+  address         VARCHAR(150) NOT NULL,
+  insuranceCompany VARCHAR(150) NOT NULL,
+  passwordHash    VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS offices
 (
   id              BINARY(16) PRIMARY KEY,
   phone	          VARCHAR(20) NOT NULL,
-  email           VARCHAR(150) NOT NULL,
+  email           VARCHAR(150) NOT NULL UNIQUE,
   address         VARCHAR(150) NOT NULL,
-  numRooms        INT unsigned NOT NULL
+  numRooms        INT unsigned NOT NULL,
+  passwordHash    VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS dentists
@@ -41,7 +46,7 @@ CREATE TABLE IF NOT EXISTS appointments
     patientId BINARY(16) NOT NULL,
     dentistId BINARY(16) NOT NULL,
     appointmentTime DATETIME NOT NULL,
+    purpose         VARCHAR(255),
     FOREIGN KEY (patientId) REFERENCES patients(id),
     FOREIGN KEY (dentistId) REFERENCES dentists(id)
 );
-
