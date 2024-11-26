@@ -52,4 +52,17 @@ VALUES (?,?,?,?,?,?,?);
       );
     });
   }
+
+  static getByEmail(email: string): Promise<Patient> {
+    return new Promise<Patient>((resolve, reject) => {
+      db.query<Patient[]>(
+        'SELECT * FROM patients WHERE email = ?',
+        [email],
+        (err, res) => {
+          if (err) reject(err);
+          else resolve(res?.[0]);
+        },
+      );
+    });
+  }
 }
