@@ -1,8 +1,15 @@
-CREATE DATABASE IF NOT EXISTS groupProject;
+DROP DATABASE IF EXISTS groupProject;
+CREATE DATABASE groupProject;
 
 USE groupProject;
 
-CREATE TABLE IF NOT EXISTS patients
+DROP TABLE IF EXISTS patients;
+DROP TABLE IF EXISTS offices;
+DROP TABLE IF EXISTS dentists;
+DROP TABLE IF EXISTS availability;
+DROP TABLE IF EXISTS appointments;
+
+CREATE TABLE patients
 (
   id              BINARY(16) PRIMARY KEY,
   name            VARCHAR(150) NOT NULL,
@@ -14,7 +21,7 @@ CREATE TABLE IF NOT EXISTS patients
   passwordHash    VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS offices
+CREATE TABLE offices
 (
   id              BINARY(16) PRIMARY KEY,
   phone	          VARCHAR(20) NOT NULL,
@@ -24,7 +31,7 @@ CREATE TABLE IF NOT EXISTS offices
   passwordHash    VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS dentists
+CREATE TABLE dentists
 (
   id              BINARY(16) PRIMARY KEY,
   name            VARCHAR(150) NOT NULL,
@@ -33,19 +40,20 @@ CREATE TABLE IF NOT EXISTS dentists
   FOREIGN KEY (officeId) REFERENCES offices(id)
 );
 
-CREATE TABLE IF NOT EXISTS availability (
+CREATE TABLE availability (
     dentistId BINARY(16) NOT NULL,
     startTime DATETIME NOT NULL,
     endTime DATETIME NOT NULL,
     FOREIGN KEY (dentistId) REFERENCES dentists(id)
 );
 
-CREATE TABLE IF NOT EXISTS appointments
+CREATE TABLE appointments
 (
     id BINARY(16) PRIMARY KEY,
     patientId BINARY(16) NOT NULL,
     dentistId BINARY(16) NOT NULL,
-    appointmentTime DATETIME NOT NULL,
+    startTime DATETIME NOT NULL,
+    endTime   DATETIME NOT NULL,
     purpose         VARCHAR(255),
     FOREIGN KEY (patientId) REFERENCES patients(id),
     FOREIGN KEY (dentistId) REFERENCES dentists(id)

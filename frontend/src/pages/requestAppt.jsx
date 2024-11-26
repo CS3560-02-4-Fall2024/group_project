@@ -3,6 +3,7 @@ import NavBar from '../components/Navbar';
 import IconCalendar from '../assets/calendar-small-page.png'
 import { useNavigate } from 'react-router-dom';
 
+// TODO: add start and end time, and dentist select
 function RequestAppt() {
 
     const [patientName, setPatientName] = useState("");

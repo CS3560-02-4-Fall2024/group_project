@@ -45,7 +45,7 @@ function PastAppointments() {
               <div className="text-white font-bold text-4xl mt-4 mb-2 mr-48 underline">
                 Past Appointment
               </div>
-              <div class="h-3/4 overflow-y-scroll">
+              <div className="h-3/4 overflow-y-scroll">
                 <Appt />
                 <Appt />
                 <Appt />

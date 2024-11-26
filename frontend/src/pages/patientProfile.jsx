@@ -37,17 +37,17 @@ function PatientProfile() {
   return (
     <>
       {/*Background*/}
-      <div class="w-[100vw] h-[100vh] bg-dg">
+      <div className="w-[100vw] h-[100vh] bg-dg">
         <NavBar />
-        <div class="w-[100%] h-[80%] flex items-center justify-center">
+        <div className="w-[100%] h-[80%] flex items-center justify-center">
           {/*Light Green Block*/}
-          <div class="bg-g rounded-3xl flex justify-center px-6">
-            <div class="">
+          <div className="bg-g rounded-3xl flex justify-center px-6">
+            <div className="">
               {/*Name of Patient*/}
-              <div class="text-white text-center text-5xl font-bold mt-5 mb-1">
+              <div className="text-white text-center text-5xl font-bold mt-5 mb-1">
                 <p>{name}</p>
               </div>
-              <div class="text-nowrap text-white text-3xl">
+              <div className="text-nowrap text-white text-3xl">
                 {/*Phone Number Text*/}
                 <div>
                   <b>Phone Number: </b> {phone}
@@ -70,14 +70,14 @@ function PatientProfile() {
                 </div>
               </div>
               {/*View Past Appointments Button*/}
-              <div class="flex items-center justify-center mt-20">
-                <button onClick={viewPast} class="p-3 px-10 bg-dg text-white font-bold text-2xl rounded-xl hover:bg-[#587354]">
+              <div className="flex items-center justify-center mt-20">
+                <button onClick={viewPast} className="p-3 px-10 bg-dg text-white font-bold text-2xl rounded-xl hover:bg-[#587354]">
                   View Past Appointments
                 </button>
               </div>
               {/*Back to Home*/}
-              <div class="flex items-center justify-center mt-5 mb-5 text-white text-lg">
-                <button onClick={goHome} class="hover:text-[#587354]">
+              <div className="flex items-center justify-center mt-5 mb-5 text-white text-lg">
+                <button onClick={goHome} className="hover:text-[#587354]">
                   <p>Back To Home</p>
                 </button>
               </div>

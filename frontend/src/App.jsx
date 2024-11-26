@@ -1,6 +1,3 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './index.css'
 import AppointmentConfirmed from './pages/appointmentConfirmed.jsx'
 import DentistConfirmAcc from './pages/dentistConfirmAcc.jsx'
@@ -20,16 +17,14 @@ import WelcomePage from './pages/welcomePage.jsx'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<WelcomePage/>} />
           <Route path='/reqAppt' element={<RequestAppt/>} />
-          <Route path='/profile' element={<PatientProfile/>} />
-          <Route path='/login' element={<PatientLogin/>} />
+          <Route path='/patientProfile' element={<PatientProfile/>} />
+          <Route path='/patientLogin' element={<PatientLogin/>} />
           <Route path='/home' element={<PatientHome/>} />
           <Route path='/createAcc' element={<PatientCreateAcc/>} />
           <Route path='/editProfile' element={<EditPatientProfile/>} />
