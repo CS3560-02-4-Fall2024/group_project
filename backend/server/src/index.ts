@@ -31,3 +31,5 @@ export function doSomeStuff(
   return;
 }
 // TODO: more examples
+
+doSomeStuff('this', 'that', ['t', 'h', 'ose']);
