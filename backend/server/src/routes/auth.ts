@@ -1,6 +1,5 @@
-import express, {Router, Request, Response} from 'express';
-import {Patient, PatientTable} from '../models/patient';
-import { createNewPatient, authenticatePatient } from '../controllers/auth';
+import express, {Router} from 'express';
+import { createNewPatient, authenticatePatient, authorizePatient } from '../controllers/auth';
 
 const router: Router = express.Router();
 
@@ -13,6 +12,9 @@ router.post('/patient', createNewPatient, authenticatePatient);
 
 // login to dentist
 router.post('/patient/login', authenticatePatient);
+
+// authorize test
+router.get('/patient', authorizePatient);
 
 // create dentist
 
