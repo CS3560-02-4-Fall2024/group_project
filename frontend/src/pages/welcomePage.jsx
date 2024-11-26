@@ -6,7 +6,7 @@ function WelcomePage() {
   const navigate = useNavigate();
 
   const goPatient = () => {
-    navigate("/login");
+    navigate("/patientLogin");
   };
 
   const goDentist = () => {

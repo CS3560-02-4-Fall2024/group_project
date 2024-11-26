@@ -16,7 +16,7 @@ function Appt() {
   const navigate = useNavigate();
 
   const goProfile = () => {
-    navigate("/profile")
+    navigate("/patientProfile")
   }
   return(
     <div className="flex-flow rounded-xl mb-3 bg-g">

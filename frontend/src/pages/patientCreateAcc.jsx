@@ -15,7 +15,7 @@ function PatientCreateAcc() {
 
   {/*Button Functions*/}
   const goLogin = () => {
-    navigate("/login")
+    navigate("/patientLogin")
   };
 
   const goHome = () => {
