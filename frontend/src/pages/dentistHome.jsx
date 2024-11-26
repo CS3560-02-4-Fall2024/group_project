@@ -62,7 +62,7 @@ function DentistHome() {
       <>
         <div className="w-[100vw] h-[100vh] bg-dg">
           <Navbar />
-          <div class="text-left pl-5 pt-5 text-white text-7xl font-bold">
+          <div className="text-left pl-5 pt-5 text-white text-7xl font-bold">
             Welcome Dr. {dentistName}!
           </div>
           {/* Middle Container */}
@@ -78,7 +78,7 @@ function DentistHome() {
                 </select>
               </div>
               
-              <div class="h-4/5 overflow-y-scroll">
+              <div className="h-4/5 overflow-y-scroll">
                 <Appt />
                 <Appt />
                 <Appt />
