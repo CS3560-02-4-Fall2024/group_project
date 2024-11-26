@@ -45,7 +45,8 @@ CREATE TABLE IF NOT EXISTS appointments
     id BINARY(16) PRIMARY KEY,
     patientId BINARY(16) NOT NULL,
     dentistId BINARY(16) NOT NULL,
-    appointmentTime DATETIME NOT NULL,
+    startTime DATETIME NOT NULL,
+    endTime   DATETIME NOT NULL,
     purpose         VARCHAR(255),
     FOREIGN KEY (patientId) REFERENCES patients(id),
     FOREIGN KEY (dentistId) REFERENCES dentists(id)
