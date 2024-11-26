@@ -1,5 +1,6 @@
 import express, {Router, Request, Response} from 'express';
 import {Patient, PatientTable} from '../models/patient';
+import { createNewPatient } from '../controllers/auth';
 
 const router: Router = express.Router();
 
@@ -8,17 +9,7 @@ const router: Router = express.Router();
 // login to patient
 
 // create patient acc
-router.post('/patient', (req: Request, res: Response) => {
-  const patient: Patient = req.body;
-
-  PatientTable.insert(patient)
-    .then((value: Patient) => {
-      res.json(value);
-    })
-    .catch(err => {
-      res.status(400).json({error: err.code});
-    });
-});
+router.post('/patient', createNewPatient);
 
 // login to dentist
 
