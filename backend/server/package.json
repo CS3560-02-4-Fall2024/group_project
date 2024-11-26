@@ -1,7 +1,7 @@
 {
-  "name": "",
+  "name": "server",
   "version": "0.0.0",
-  "description": "",
+  "description": "server lmao",
   "main": "build/src/index.js",
   "types": "build/src/index.d.ts",
   "files": [
