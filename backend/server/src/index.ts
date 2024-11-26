@@ -1,35 +1,17 @@
-console.log('Try npm run lint/fix!');
+import express, {Express} from 'express';
+import dotenv from 'dotenv';
 
-const longString =
-  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ut aliquet diam.';
+import {router as auth} from './routes/auth';
 
-const trailing = 'Semicolon';
+const app: Express = express();
 
-const why = {am: 'I tabbed?'};
+app.use(express.json());
 
-const iWish = "I didn't have a trailing space...";
+app.use('/auth', auth);
 
-const sicilian = true;
+dotenv.config();
+const port = process.env.PORT;
 
-const vizzini = sicilian ? !sicilian : sicilian;
-
-const re = /foo {3}bar/;
-
-export function doSomeStuff(
-  withThis: string,
-  andThat: string,
-  andThose: string[],
-) {
-  //function on one line
-  if (!andThose.length) {
-    return false;
-  }
-  console.log(withThis);
-  console.log(andThat);
-  console.dir(andThose);
-  console.log(longString, trailing, why, iWish, vizzini, re);
-  return;
-}
-// TODO: more examples
-
-doSomeStuff('this', 'that', ['t', 'h', 'ose']);
+app.listen(port, () => {
+  console.log(`[server]: Server is running at http://localhost:${port}`);
+});
