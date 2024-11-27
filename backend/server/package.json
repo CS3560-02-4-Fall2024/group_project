@@ -14,7 +14,7 @@
     "lint": "gts lint",
     "clean": "gts clean",
     "compile": "tsc",
-    "fix": "gts fix",
+    "fix": "eslint --fix .",
     "build": "npm run lint && gts clean && tsc",
     "start": "npm run build && node build/src/index.js",
     "dev": "npx nodemon",
@@ -30,7 +30,7 @@
     "gts": "^6.0.2",
     "nodemon": "^3.1.7",
     "ts-node": "^10.9.2",
-    "typescript": "^5.1.6"
+    "typescript": "5.1.6"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
