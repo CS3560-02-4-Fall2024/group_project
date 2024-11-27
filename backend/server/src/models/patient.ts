@@ -12,6 +12,24 @@ export interface Patient extends RowDataPacket {
   passwordHash: string;
 }
 
+export class PatientView {
+  name: string;
+  phone: string;
+  email: string;
+  dateOfBirth: Date;
+  address: string;
+  insuranceCompany: string;
+
+  constructor(patient: Patient) {
+    this.name = patient.name;
+    this.phone = patient.phone;
+    this.email = patient.email;
+    this.dateOfBirth = patient.dateOfBirth;
+    this.address = patient.address;
+    this.insuranceCompany = patient.insuranceCompany;
+  }
+}
+
 export abstract class PatientTable {
   static insert(patient: Patient): Promise<Patient> {
     return new Promise((resolve, reject) => {
