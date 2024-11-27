@@ -2,8 +2,6 @@ import {Request, Response, NextFunction} from 'express';
 import {Patient, PatientTable} from '../models/patient';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-import dotenv from 'dotenv';
-// dotenv.config();
 
 const saltRounds = 10;
 
@@ -56,7 +54,7 @@ export const authenticatePatient = async (
         }
       });
     })
-    .catch((reason: any) => {
+    .catch(() => {
       res.sendStatus(403);
     });
 };
@@ -69,7 +67,7 @@ export const authorizePatient = (
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
 
-  if (token == null) return res.sendStatus(401);
+  if (!token) return res.sendStatus(401);
 
   jwt.verify(
     token,
@@ -77,8 +75,6 @@ export const authorizePatient = (
     (err: any, user: any) => {
       if (err || user.type !== 'patient' || req.body.email !== user.email)
         return res.sendStatus(403);
-
-      res.locals.user = user;
 
       return next();
     },
