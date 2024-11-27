@@ -1,20 +1,18 @@
 import express, {Router} from 'express';
-import { createNewPatient, authenticatePatient, authorizePatient } from '../controllers/auth';
+import {authenticatePatient} from '../controllers/auth';
+import { createPatient } from '../controllers/patient';
 
 const router: Router = express.Router();
 
 // TODO: implement user auth controllers
 
-// login to patient
-
 // create patient acc
-router.post('/patient', createNewPatient, authenticatePatient);
+router.post('/patient', createPatient, authenticatePatient);
 
-// login to dentist
+// login to patient
 router.post('/patient/login', authenticatePatient);
 
 // authorize test
-router.get('/patient', authorizePatient);
 
 // create dentist
 
