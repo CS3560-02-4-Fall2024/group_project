@@ -48,7 +48,6 @@ export const authenticatePatient = async (
             },
           );
           res.json({authToken: token});
-          next();
         } else {
           res.sendStatus(403);
         }
