@@ -23,7 +23,7 @@ export const createPatient = (
     });
 };
 
-export const getPatientProfileByEmail = (
+export const getPatientByEmail = (
   req: Request,
   res: Response,
   next: NextFunction,
