@@ -3,27 +3,6 @@ import {Patient, PatientTable} from '../models/patient';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 
-const saltRounds = 10;
-
-export const createNewPatient = (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
-  req.body.passwordHash = bcrypt.hashSync(req.body.password, saltRounds);
-
-  const patient: Patient = req.body;
-
-  PatientTable.insert(patient)
-    .then((value: Patient) => {
-      res.locals.patient = value;
-      next();
-    })
-    .catch(err => {
-      res.status(400).json({error: err.code});
-    });
-};
-
 export const authenticatePatient = async (
   req: Request,
   res: Response,

@@ -1,5 +1,27 @@
 import {Request, Response, NextFunction} from 'express';
 import {Patient, PatientTable, PatientView} from '../models/patient';
+import bcrypt from 'bcrypt';
+
+const saltRounds: number = Number(process.env.SALT_ROUNDS);
+
+export const createPatient = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  req.body.passwordHash = bcrypt.hashSync(req.body.password, saltRounds);
+
+  const patient: Patient = req.body;
+
+  PatientTable.insert(patient)
+    .then((value: Patient) => {
+      res.locals.patient = value;
+      next();
+    })
+    .catch(err => {
+      res.status(400).json({error: err.code});
+    });
+};
 
 export const getPatientProfileByEmail = (
   req: Request,
