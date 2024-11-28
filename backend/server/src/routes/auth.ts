@@ -1,6 +1,7 @@
 import express, {Router} from 'express';
-import {authenticatePatient} from '../controllers/auth';
+import {authenticatePatient, authenticateDentist} from '../controllers/auth';
 import { createPatient } from '../controllers/patient';
+import {createDentist} from '../controllers/dentist';
 
 const router: Router = express.Router();
 
@@ -14,6 +15,10 @@ router.post('/patient/login', authenticatePatient);
 
 // authorize test
 
-// create dentist
+// Create dentist acc
+router.post('/dentist', createDentist, authenticateDentist);
+
+// Login to dentist
+router.post('/dentist/login', authenticateDentist);
 
 export {router};
