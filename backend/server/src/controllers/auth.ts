@@ -32,8 +32,22 @@ export const authenticatePatient = async (
           res.sendStatus(403);
         }
       });
+      // if (password === value) {
+      //   const token: string = jwt.sign(
+      //     {email: email, type: 'patient'},
+      //     process.env.TOKEN_SECRET as string,
+      //     {
+      //       expiresIn: '1d',
+      //     },
+      //   );
+      //   res.json({authToken: token});
+      // } else {
+      //   console.log('boo boo');
+      //   res.sendStatus(403);
+      // }
     })
-    .catch(() => {
+    .catch(err => {
+      console.log(err);
       res.sendStatus(403);
     });
 };
