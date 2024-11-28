@@ -1,6 +1,6 @@
 import express, {Router} from 'express';
 import {authenticatePatient} from '../controllers/auth';
-import { createPatient } from '../controllers/patient';
+import {createPatient} from '../controllers/patient';
 
 const router: Router = express.Router();
 

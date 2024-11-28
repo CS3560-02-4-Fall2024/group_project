@@ -2,7 +2,7 @@ import {Request, Response, NextFunction} from 'express';
 import {Patient, PatientTable, PatientView} from '../models/patient';
 import bcrypt from 'bcrypt';
 
-const saltRounds: number = Number(process.env.SALT_ROUNDS);
+const saltRounds = Number(process.env.SALT_ROUNDS);
 
 export const createPatient = (
   req: Request,
@@ -35,7 +35,7 @@ export const getPatientByEmail = (
       return res.json(new PatientView(value));
     })
     .catch((reason: any) => {
-      if (reason == 'user not found') return res.sendStatus(400);
+      if (reason === 'user not found') return res.sendStatus(400);
       return res.sendStatus(500);
     });
 };
