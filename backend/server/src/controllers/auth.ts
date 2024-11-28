@@ -18,33 +18,34 @@ export const authenticatePatient = async (
       return value.passwordHash;
     })
     .then((value: string) => {
-      return bcrypt.compare(password, value).then((success: boolean) => {
-        if (success) {
-          const token: string = jwt.sign(
-            {email: email, type: 'patient'},
-            process.env.TOKEN_SECRET as string,
-            {
-              expiresIn: '1d',
-            },
-          );
-          res.json({authToken: token});
-        } else {
-          res.sendStatus(403);
-        }
-      });
-      // if (password === value) {
-      //   const token: string = jwt.sign(
-      //     {email: email, type: 'patient'},
-      //     process.env.TOKEN_SECRET as string,
-      //     {
-      //       expiresIn: '1d',
-      //     },
-      //   );
-      //   res.json({authToken: token});
-      // } else {
-      //   console.log('boo boo');
-      //   res.sendStatus(403);
-      // }
+      // return bcrypt.compare(password, value).then((success: boolean) => {
+      //   if (success) {
+      //     const token: string = jwt.sign(
+      //       {email: email, type: 'patient'},
+      //       process.env.TOKEN_SECRET as string,
+      //       {
+      //         expiresIn: '1d',
+      //       },
+      //     );
+      //     res.json({authToken: token});
+      //   } else {
+      //     res.sendStatus(403);
+      //   }
+      // });
+      console.log(password + ' ' + value);
+      if (password === value) {
+        const token: string = jwt.sign(
+          {email: email, type: 'patient'},
+          process.env.TOKEN_SECRET as string,
+          {
+            expiresIn: '1d',
+          },
+        );
+        res.json({authToken: token});
+      } else {
+        console.log('boo boo');
+        res.sendStatus(403);
+      }
     })
     .catch(err => {
       console.log(err);
