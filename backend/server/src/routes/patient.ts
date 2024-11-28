@@ -8,6 +8,7 @@ router.use(authorizePatient);
 
 router.get('/', getPatientByEmail);
 
+// might needa fix cuz i didnt actualy do it
 router.put('/addPatient', createPatient);
 
 export {router};
