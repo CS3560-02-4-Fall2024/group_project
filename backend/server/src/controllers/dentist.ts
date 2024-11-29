@@ -2,7 +2,7 @@ import {Request, Response, NextFunction} from 'express';
 import {Dentist, DentistTable, DentistView} from '../models/dentist';
 import bcrypt from 'bcrypt';
 
-const saltRounds: number = Number(process.env.SALT_ROUNDS);
+const saltRounds = Number(process.env.SALT_ROUNDS);
 
 export const createDentist = (
   req: Request,
@@ -28,14 +28,13 @@ export const getDentistById = (
   res: Response,
   next: NextFunction,
 ): any => {
-  const id: number = Number(req.params.id);
-
+  const id = Number(req.body.id);
   DentistTable.getById(id)
     .then((value: Dentist) => {
       return res.json(new DentistView(value));
     })
     .catch((reason: any) => {
-      if (reason == 'user not found') return res.sendStatus(400);
+      if (reason === 'user not found') return res.sendStatus(400);
       return res.sendStatus(500);
     });
 };

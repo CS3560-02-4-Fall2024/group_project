@@ -26,11 +26,7 @@ export abstract class DentistTable {
         INSERT INTO dentists (name, type, passwordHash) 
         VALUES (?,?,?);
         `,
-        [
-          dentist.name,
-          dentist.type,
-          dentist.passwordHash,
-        ],
+        [dentist.name, dentist.type, dentist.passwordHash],
         (err, res) => {
           if (err) reject(err);
           else
@@ -49,7 +45,7 @@ export abstract class DentistTable {
         [id],
         (err, res) => {
           if (err) reject(err);
-          else if (res.length == 0) reject('Dentist not found');
+          else if (res.length === 0) reject('Dentist not found');
           else resolve(res?.[0]);
         },
       );
@@ -63,7 +59,7 @@ export abstract class DentistTable {
         [name],
         (err, res) => {
           if (err) reject(err);
-          else if (res.length == 0) reject('Dentist not found');
+          else if (res.length === 0) reject('Dentist not found');
           else resolve(res?.[0]);
         },
       );

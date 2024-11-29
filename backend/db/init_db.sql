@@ -41,8 +41,7 @@ CREATE TABLE
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(150) NOT NULL,
     type VARCHAR(150) NOT NULL,
-    officeId INT NOT NULL,
-    FOREIGN KEY (officeId) REFERENCES offices (id)
+    passwordHash VARCHAR(255) NOT NULL
   );
 
 CREATE TABLE

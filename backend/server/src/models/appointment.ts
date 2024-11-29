@@ -2,7 +2,7 @@ import {ResultSetHeader, RowDataPacket} from 'mysql2';
 import {connection as db} from '../db';
 
 export interface Appointment extends RowDataPacket {
-  appointmentID: number;
+  id: number;
   patientID: number;
   dentistID: number;
   status: string;
@@ -38,7 +38,7 @@ export abstract class AppointmentTable {
       db.query<ResultSetHeader>(
         `
                 INSERT INTO appointments (patientID, dentistID, status, date, time, duration, purpose)
-                VALUES (?, ?, ?, ?, ?, ?, ?,);
+                VALUES (?, ?, ?, ?, ?, ?, ?);
                 `,
         [
           appointment.patientID,
@@ -75,9 +75,10 @@ export abstract class AppointmentTable {
   }
 
   static getByPatientId(patientID: number): Promise<Appointment[]> {
+    console.log('querying!');
     return new Promise<Appointment[]>((resolve, reject) => {
       db.query<Appointment[]>(
-        'SELECT * FROM appointmets WHERE patientID = ?',
+        'SELECT * FROM appointments WHERE patientID = ?',
         [patientID],
         (err, res) => {
           if (err) reject(err);
@@ -90,7 +91,7 @@ export abstract class AppointmentTable {
   static getByDentistId(dentistID: number): Promise<Appointment[]> {
     return new Promise<Appointment[]>((resolve, reject) => {
       db.query<Appointment[]>(
-        'SELECT * FROM appointmets WHERE dentistID = ?',
+        'SELECT * FROM appointments WHERE dentistID = ?',
         [dentistID],
         (err, res) => {
           if (err) reject(err);
