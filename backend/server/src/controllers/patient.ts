@@ -1,6 +1,7 @@
 import {Request, Response, NextFunction} from 'express';
 import {Patient, PatientTable, PatientView} from '../models/patient';
 import bcrypt from 'bcrypt';
+import {Appointment, AppointmentTable} from '../models/appointment';
 
 // removed type assignment :number cuz theres an error with tslint
 const saltRounds = Number(process.env.SALT_ROUNDS);
@@ -37,5 +38,34 @@ export const getPatientByEmail = (
     .catch((reason: any) => {
       if (reason === 'user not found') return res.sendStatus(400);
       return res.sendStatus(500);
+    });
+};
+
+export const getPatientAppt = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): any => {
+  const id = Number(req.body.id);
+  AppointmentTable.getByPatientId(id)
+    .then((value: Appointment[]) => {
+      return res.json(value);
+    })
+    .catch((reason: any) => {
+      if (reason === 'appts not found') return res.sendStatus(400);
+      return res.sendStatus(500);
+    });
+};
+
+export const postAppt = (req: Request, res: Response, next: NextFunction) => {
+  const appointment: Appointment = req.body.info;
+  console.log(appointment);
+  AppointmentTable.insert(appointment)
+    .then((value: Appointment) => {
+      res.locals.appointment = value;
+      next();
+    })
+    .catch(err => {
+      res.status(400).json(err);
     });
 };

@@ -32,7 +32,6 @@ export const authenticatePatient = async (
       //     res.sendStatus(403);
       //   }
       // });
-      console.log(password + ' ' + value);
       if (password === value) {
         const token: string = jwt.sign(
           {email: email, type: 'patient'},

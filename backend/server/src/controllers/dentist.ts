@@ -28,8 +28,7 @@ export const getDentistById = (
   res: Response,
   next: NextFunction,
 ): any => {
-  const id = Number(req.params.id);
-
+  const id = Number(req.body.id);
   DentistTable.getById(id)
     .then((value: Dentist) => {
       return res.json(new DentistView(value));
