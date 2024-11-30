@@ -65,4 +65,17 @@ export abstract class DentistTable {
       );
     });
   }
+
+  static getByType(type: string): Promise<Dentist[]> {
+    return new Promise<Dentist[]>((resolve, reject) => {
+      db.query<Dentist[]>(
+        'SELECT * FROM dentists WHERE type = ?',
+        [type],
+        (err, res) => {
+          if (err) reject(err);
+          else resolve(res);
+        },
+      );
+    });
+  }
 }

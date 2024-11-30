@@ -88,6 +88,32 @@ export abstract class AppointmentTable {
     });
   }
 
+  static cancelById(id: number): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      db.query(
+        'UPDATE appointments SET status = "Cancelled" WHERE id = ?',
+        [id],
+        (err, res) => {
+          if (err) reject(err);
+          else resolve();
+        },
+      );
+    });
+  }
+
+  static getPastApptsByPatientId(patientId: number): Promise<Appointment[]> {
+    return new Promise<Appointment[]>((resolve, reject) => {
+      db.query<Appointment[]>(
+        'SELECT * FROM appointments WHERE status = "Done" AND patientId = ?',
+        [patientId],
+        (err, res) => {
+          if (err) reject(err);
+          else resolve(res);
+        },
+      );
+    });
+  }
+
   static getByDentistId(dentistID: number): Promise<Appointment[]> {
     return new Promise<Appointment[]>((resolve, reject) => {
       db.query<Appointment[]>(

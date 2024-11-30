@@ -2,6 +2,7 @@ import {Request, Response, NextFunction} from 'express';
 import {Patient, PatientTable, PatientView} from '../models/patient';
 import bcrypt from 'bcrypt';
 import {Appointment, AppointmentTable} from '../models/appointment';
+import {DentistTable} from '../models/dentist';
 
 // removed type assignment :number cuz theres an error with tslint
 const saltRounds = Number(process.env.SALT_ROUNDS);
@@ -59,7 +60,6 @@ export const getPatientAppt = (
 
 export const postAppt = (req: Request, res: Response, next: NextFunction) => {
   const appointment: Appointment = req.body.info;
-  console.log(appointment);
   AppointmentTable.insert(appointment)
     .then((value: Appointment) => {
       res.locals.appointment = value;
@@ -67,5 +67,52 @@ export const postAppt = (req: Request, res: Response, next: NextFunction) => {
     })
     .catch(err => {
       res.status(400).json(err);
+    });
+};
+
+export const cancelAppt = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): any => {
+  const {id} = req.body;
+
+  AppointmentTable.cancelById(id)
+    .then(() => {
+      res.sendStatus(200);
+    })
+    .catch((err: any) => {
+      res.status(500).json({error: err.message});
+    });
+};
+
+export const getPastAppts = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): any => {
+  const {id} = req.body;
+
+  AppointmentTable.getPastApptsByPatientId(id)
+    .then(appointments => {
+      res.json(appointments);
+    })
+    .catch((err: any) => {
+      res.status(500).json({error: err.message});
+    });
+};
+
+export const getDentistByType = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): any => {
+  const {type} = req.body;
+  DentistTable.getByType(type)
+    .then(dentists => {
+      res.json(dentists);
+    })
+    .catch((err: any) => {
+      res.status(500).json({error: err.message});
     });
 };
