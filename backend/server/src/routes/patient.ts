@@ -6,7 +6,7 @@ import {
   postAppt,
   cancelAppt,
   getPastAppts,
-  getDentistByType
+  getDentistByType,
 } from '../controllers/patient';
 
 const router: Router = express.Router();
@@ -19,10 +19,10 @@ router.get('/getAppts', getPatientAppt);
 
 router.post('/makeAppt', postAppt);
 
-router.delete('/cancelAppt', cancelAppt);
+router.put('/cancelAppt', cancelAppt);
 
 router.get('/getPastAppts', getPastAppts);
 
-router.post('/getDentistByType', getDentistByType);
+router.get('/getDentistByType', getDentistByType);
 
 export {router};

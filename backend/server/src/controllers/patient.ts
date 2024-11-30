@@ -60,7 +60,6 @@ export const getPatientAppt = (
 
 export const postAppt = (req: Request, res: Response, next: NextFunction) => {
   const appointment: Appointment = req.body.info;
-  console.log(appointment);
   AppointmentTable.insert(appointment)
     .then((value: Appointment) => {
       res.locals.appointment = value;
@@ -95,7 +94,7 @@ export const getPastAppts = (
   const {id} = req.body;
 
   AppointmentTable.getPastApptsByPatientId(id)
-    .then((appointments) => {
+    .then(appointments => {
       res.json(appointments);
     })
     .catch((err: any) => {
@@ -109,9 +108,8 @@ export const getDentistByType = (
   next: NextFunction,
 ): any => {
   const {type} = req.body;
-
   DentistTable.getByType(type)
-    .then((dentists) => {
+    .then(dentists => {
       res.json(dentists);
     })
     .catch((err: any) => {

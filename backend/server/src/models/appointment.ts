@@ -91,7 +91,7 @@ export abstract class AppointmentTable {
   static cancelById(id: number): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       db.query(
-        'DELETE FROM appointments WHERE id = ?',
+        'UPDATE appointments SET status = "Cancelled" WHERE id = ?',
         [id],
         (err, res) => {
           if (err) reject(err);

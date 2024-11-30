@@ -8,6 +8,6 @@ router.use(authorizeDentist);
 
 router.post('/create', createDentist);
 
-router.get('/:id', getDentistById);
+router.get('/', getDentistById);
 
 export {router};
