@@ -7,6 +7,8 @@ import {router as dentist} from './routes/dentist';
 
 const app: Express = express();
 
+const cors = require('cors');
+app.use(cors());
 app.use(express.json());
 
 app.use('/auth', auth);
