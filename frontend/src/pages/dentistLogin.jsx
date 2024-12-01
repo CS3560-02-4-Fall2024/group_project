@@ -16,11 +16,24 @@ function DentistLogin() {
       'password': password
     };
 
-    const returnJSON = {
-      'id': id
-    }
+    let url = 'http://localhost:3000/auth/dentist/login';
 
-    navigate("/dentistHome");
+    fetch(url, {
+      body: JSON.stringify(loginJSON),
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then((res) => {
+      return res.json();
+    }).then((res) => {
+      sessionStorage.setItem("id", id);
+      sessionStorage.setItem("authToken", res.authToken);
+      navigate("/home");
+    }).catch((err) => {
+      console.log(err);
+    });
+
   };
 
   const goCreate = () => {
