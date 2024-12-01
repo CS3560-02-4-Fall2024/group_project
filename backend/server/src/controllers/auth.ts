@@ -12,7 +12,6 @@ export const authenticatePatient = async (
 ) => {
   const email: string = req.body.email;
   const password: string = req.body.password;
-
   PatientTable.getByEmail(email)
     .then((value: Patient) => {
       return value.passwordHash;

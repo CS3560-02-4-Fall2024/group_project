@@ -1,7 +1,12 @@
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 function Navbar() {
     const navigate = useNavigate();
+
+    useEffect(() => {
+        console.log(sessionStorage.getItem("email") + " " + sessionStorage.getItem("authToken"));
+    }, []);
 
     const Logout = () => {
         navigate("/")
