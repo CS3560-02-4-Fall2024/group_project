@@ -15,26 +15,39 @@ function PatientCreateAcc() {
 
   {/*Button Functions*/}
   const goLogin = () => {
-    navigate("/patientLogin")
+    navigate("/patientLogin");
   };
 
-  const goHome = () => {
+  const createAcc = () => {
 
     // post this json to the db, return a success code and patient id to store in localstorage
     const createJSON = {
-      'name': '',
-      'password': '',
-      'email': '',
-      'phone': '',
-      'dob': '',
-      'insurance': '',
-      'address': ''
-    }
-    const returnJSON = {
-      'id': ''
+      'name': name,
+      'password': password,
+      'email': email,
+      'phone': number,
+      'dateOfBirth': dob,
+      'insuranceCompany': insurance,
+      'address': address
     }
 
-    navigate("/home")
+    const url = "http://localhost:3000/auth/patient";
+
+    fetch(url, {
+      body: JSON.stringify(createJSON),
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then((res) => {
+      return res.json();
+    }).then((res) => {
+      sessionStorage.setItem("email", email);
+      sessionStorage.setItem("authToken", res.authToken);
+      navigate("/home");
+    }).catch((err) => {
+      console.log(err);
+    });
     // also add storing date in fields ?
   };
   return (
@@ -57,7 +70,7 @@ function PatientCreateAcc() {
                 </div>
                 {/*Name Input Field*/}
                 <div className="flex items-center justify-center">
-                  <input className="p-2 w-80 rounded-md bg-tan text-left"></input>
+                  <input onChange={(e) => setName(e.target.value)} className="p-2 w-80 rounded-md bg-tan text-left"></input>
                 </div>
               </div>
               <div className="mx-4">
@@ -67,7 +80,7 @@ function PatientCreateAcc() {
                 </div>
                 {/*Name Input Field*/}
                 <div className="flex items-center justify-center">
-                  <input className="p-2 w-80 rounded-md bg-tan text-left"></input>
+                  <input onChange={(e) => setPassword(e.target.value)} type="password" className="p-2 w-80 rounded-md bg-tan text-left"></input>
                 </div>
               </div>
             </div>
@@ -80,7 +93,7 @@ function PatientCreateAcc() {
                 </div>
                 {/*Email Address Input Field*/}
                 <div className="flex items-center justify-center">
-                  <input className="p-2 w-80 rounded-md bg-tan text-left"></input>
+                  <input onChange={(e) => setEmail(e.target.value)} className="p-2 w-80 rounded-md bg-tan text-left"></input>
                 </div>
               </div>
               <div className="mx-4">
@@ -90,7 +103,7 @@ function PatientCreateAcc() {
                 </div>
                 {/*Phone Number Input Field*/}
                 <div className="flex items-center justify-center">
-                  <input className="p-2 w-80 rounded-md bg-tan text-left"></input>
+                  <input onChange={(e) => setNumber(e.target.value)} className="p-2 w-80 rounded-md bg-tan text-left"></input>
                 </div>
               </div>
             </div>
@@ -103,7 +116,7 @@ function PatientCreateAcc() {
                 </div>
                 {/*Date of Birth Input Field*/}
                 <div className="flex items-center justify-center">
-                  <input className="p-2 w-80 rounded-md bg-tan text-left"></input>
+                  <input onChange={(e) => setDob(e.target.value)} className="p-2 w-80 rounded-md bg-tan text-left"></input>
                 </div>
               </div>
               <div className="mx-4">
@@ -113,7 +126,7 @@ function PatientCreateAcc() {
                 </div>
                 {/*Insurance Company Input Field*/}
                 <div className="flex items-center justify-center">
-                  <input className="p-2 w-80 rounded-md bg-tan text-left"></input>
+                  <input onChange={(e) => setInsurance(e.target.value)} className="p-2 w-80 rounded-md bg-tan text-left"></input>
                 </div>
               </div>
             </div>
@@ -126,13 +139,13 @@ function PatientCreateAcc() {
                 </div>
                 {/*Address Input Field*/}
                 <div className="flex items-center justify-center">
-                  <input className="p-2 w-96 rounded-md bg-tan text-left"></input>
+                  <input onChange={(e) => setAddress(e.target.value)} className="p-2 w-96 rounded-md bg-tan text-left"></input>
                 </div>
               </div>
             </div>
             {/*Create Account Button*/}
             <div className="flex items-center justify-center mt-10">
-              <button onClick={goHome} className="p-3 px-10 bg-dg text-white font-bold text-2xl rounded-xl hover:bg-[#587354]">
+              <button onClick={createAcc} className="p-3 px-10 bg-dg text-white font-bold text-2xl rounded-xl hover:bg-[#587354]">
                 Create Account
               </button>
             </div>
