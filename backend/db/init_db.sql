@@ -57,8 +57,10 @@ CREATE TABLE
     id INT AUTO_INCREMENT PRIMARY KEY,
     patientId INT NOT NULL,
     dentistId INT NOT NULL,
-    startTime DATETIME NOT NULL,
-    endTime DATETIME NOT NULL,
+    status VARCHAR(150) NOT NULL,
+    date VARCHAR(150) NOT NULL,
+    time VARCHAR(150) NOT NULL,
+    duration INT NOT NULL,
     purpose VARCHAR(255),
     FOREIGN KEY (patientId) REFERENCES patients (id),
     FOREIGN KEY (dentistId) REFERENCES dentists (id)

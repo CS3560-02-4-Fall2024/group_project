@@ -6,10 +6,15 @@ function Navbar() {
 
     useEffect(() => {
         console.log(sessionStorage.getItem("email") + " " + sessionStorage.getItem("authToken"));
+        const storedEmail = sessionStorage.getItem("email");
+        if (storedEmail === 'undefined' || storedEmail === "" || storedEmail === null) {
+            navigate("/");
+        }
     }, []);
 
     const Logout = () => {
-        navigate("/")
+        sessionStorage.clear();
+        navigate("/");
     }
 
     return (<div className="h-[12vh] w-[100vw] bg-g float-left ml-0 pl-0 flex justify-center">

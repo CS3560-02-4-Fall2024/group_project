@@ -31,7 +31,7 @@ export const getPatientByEmail = (
   res: Response,
   next: NextFunction,
 ): any => {
-  const email: string = req.body.email;
+  const email: any = req.query.email;
   PatientTable.getByEmail(email)
     .then((value: Patient) => {
       return res.json(new PatientView(value));

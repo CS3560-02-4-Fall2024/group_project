@@ -66,7 +66,7 @@ export const authorizePatient = (
     token,
     process.env.TOKEN_SECRET as string,
     (err: any, user: any) => {
-      if (err || user.type !== 'patient' || req.body.email !== user.email)
+      if (err || user.type !== 'patient' /*|| req.body.email !== user.email */)
         return res.sendStatus(403);
 
       return next();
