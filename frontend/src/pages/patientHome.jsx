@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
 
@@ -130,18 +130,37 @@ function PatientInfo() {
 
   const navigate = useNavigate();
 
-  // query parameter is patient id
-  const query = {'id': ''};
+  useEffect(() => {
+    const storedEmail = sessionStorage.getItem("email");
 
-  // GET FROM DB
-  const patientJSON = {
-    'name': '',
-    'phone': '',
-    'email': '',
-    'address': '',
-    'dob': '',
-    'insurance': ''
-  }
+    // if not logged in, won't try to fetch user data
+    if (storedEmail === 'undefined' || storedEmail === "" || storedEmail === null) {
+      console.log('not logged in');
+    } else {
+      // generate api url
+      const reqEmail = sessionStorage.getItem("email").split("@");
+      const url = "http://localhost:3000/patient/?email=" + reqEmail[0] + "%40" + reqEmail[1];
+
+      // fetch user data
+      fetch(url, {
+        method: "GET",
+        headers: {
+          "Authorization": "Bearer " + sessionStorage.getItem("authToken")
+        }
+      }).then((res) => {
+        return res.json();
+      }).then((res) => {
+        setPatName(res.name);
+        setPatPhone(res.phone);
+        setPatEmail(res.email);
+        setPatAddy(res.address);
+        setPatDOB(res.dateOfBirth.substring(0,10));
+        setPatIns(res.insuranceCompany);
+      }).catch((err) => {
+        console.log(err);
+      });
+    }
+  }, []);
 
   const toEditProfile = () => {
     navigate("/editProfile");
@@ -161,7 +180,7 @@ function PatientInfo() {
           <p><b>Full Name: </b>{patName}</p>
           <p><b>Phone Number: </b>{patPhone}</p>
           <p><b>Email Address: </b>{patEmail}</p> 
-          <p><b>Address: </b>{patDOB}</p> 
+          <p><b>Address: </b>{patAddy}</p> 
           <p><b>Date of Birth: </b>{patDOB}</p>
           <p><b>Inurance Provider: </b>{patIns}</p>
         </div>

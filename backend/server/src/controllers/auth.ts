@@ -10,40 +10,49 @@ export const authenticatePatient = async (
   res: Response,
   next: NextFunction,
 ) => {
-  const email: string = req.body.email;
-  const password: string = req.body.password;
+  let email: string;
+  let password: string;
+  // if length is 0, then the previous req res cycle function was NOT createAcc
+  if (Object.keys(res.locals).length === 0) {
+    email = req.body.email;
+    password = req.body.password;
+  } else {
+    // this stuff came from createAcc function
+    email = res.locals.patient.email;
+    password = req.body.password;
+  }
   PatientTable.getByEmail(email)
     .then((value: Patient) => {
       return value.passwordHash;
     })
     .then((value: string) => {
-      // return bcrypt.compare(password, value).then((success: boolean) => {
-      //   if (success) {
-      //     const token: string = jwt.sign(
-      //       {email: email, type: 'patient'},
-      //       process.env.TOKEN_SECRET as string,
-      //       {
-      //         expiresIn: '1d',
-      //       },
-      //     );
-      //     res.json({authToken: token});
-      //   } else {
-      //     res.sendStatus(403);
-      //   }
-      // });
-      if (password === value) {
-        const token: string = jwt.sign(
-          {email: email, type: 'patient'},
-          process.env.TOKEN_SECRET as string,
-          {
-            expiresIn: '1d',
-          },
-        );
-        res.json({authToken: token});
-      } else {
-        console.log('boo boo');
-        res.sendStatus(403);
-      }
+      return bcrypt.compare(password, value).then((success: boolean) => {
+        if (success) {
+          const token: string = jwt.sign(
+            {email: email, type: 'patient'},
+            process.env.TOKEN_SECRET as string,
+            {
+              expiresIn: '1d',
+            },
+          );
+          res.json({authToken: token});
+        } else {
+          res.sendStatus(403);
+        }
+      });
+      // if (password === value) {
+      //   const token: string = jwt.sign(
+      //     {email: email, type: 'patient'},
+      //     process.env.TOKEN_SECRET as string,
+      //     {
+      //       expiresIn: '1d',
+      //     },
+      //   );
+      //   res.json({authToken: token});
+      // } else {
+      //   console.log('boo boo');
+      //   res.sendStatus(403);
+      // }
     })
     .catch(err => {
       console.log(err);
@@ -66,7 +75,7 @@ export const authorizePatient = (
     token,
     process.env.TOKEN_SECRET as string,
     (err: any, user: any) => {
-      if (err || user.type !== 'patient' || req.body.email !== user.email)
+      if (err || user.type !== 'patient' /*|| req.body.email !== user.email */)
         return res.sendStatus(403);
 
       return next();
