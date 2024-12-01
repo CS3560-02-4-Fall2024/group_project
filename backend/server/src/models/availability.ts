@@ -70,7 +70,6 @@ VALUES (?,?,?);
         [appointmentID],
         (err, res) => {
           if (err) reject(err);
-          else if (res.length === 0) reject('availability not found');
           else resolve(res?.[0]);
         },
       );
@@ -84,7 +83,6 @@ VALUES (?,?,?);
         [patientID],
         (err, res) => {
           if (err) reject(err);
-          else if (res.length === 0) reject('availability not found');
           else resolve(res?.[0]);
         },
       );
@@ -98,7 +96,6 @@ VALUES (?,?,?);
         [dentistID],
         (err, res) => {
           if (err) reject(err);
-          else if (res.length === 0) reject('availability not found');
           else resolve(res?.[0]);
         },
       );

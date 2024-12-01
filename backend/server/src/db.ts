@@ -3,15 +3,6 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-// const connection = mysql.createConnection({
-//   host: 'localhost',
-//   user: 'root',
-//   password: '',
-//   database: 'groupProject',
-// });
-
-// to use with aws rds, just uncomment all this shit
-
 const connection = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,

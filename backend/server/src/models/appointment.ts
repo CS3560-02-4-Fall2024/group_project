@@ -2,7 +2,7 @@ import {ResultSetHeader, RowDataPacket} from 'mysql2';
 import {connection as db} from '../db';
 
 export interface Appointment extends RowDataPacket {
-  id: number;
+  appointmentID: number;
   patientID: number;
   dentistID: number;
   status: string;
@@ -38,7 +38,7 @@ export abstract class AppointmentTable {
       db.query<ResultSetHeader>(
         `
                 INSERT INTO appointments (patientID, dentistID, status, date, time, duration, purpose)
-                VALUES (?, ?, ?, ?, ?, ?, ?);
+                VALUES (?, ?, ?, ?, ?, ?, ?,);
                 `,
         [
           appointment.patientID,
@@ -75,37 +75,10 @@ export abstract class AppointmentTable {
   }
 
   static getByPatientId(patientID: number): Promise<Appointment[]> {
-    console.log('querying!');
     return new Promise<Appointment[]>((resolve, reject) => {
       db.query<Appointment[]>(
         'SELECT * FROM appointments WHERE patientID = ?',
         [patientID],
-        (err, res) => {
-          if (err) reject(err);
-          else resolve(res);
-        },
-      );
-    });
-  }
-
-  static cancelById(id: number): Promise<void> {
-    return new Promise<void>((resolve, reject) => {
-      db.query(
-        'UPDATE appointments SET status = "Cancelled" WHERE id = ?',
-        [id],
-        (err, res) => {
-          if (err) reject(err);
-          else resolve();
-        },
-      );
-    });
-  }
-
-  static getPastApptsByPatientId(patientId: number): Promise<Appointment[]> {
-    return new Promise<Appointment[]>((resolve, reject) => {
-      db.query<Appointment[]>(
-        'SELECT * FROM appointments WHERE status = "Done" AND patientId = ?',
-        [patientId],
         (err, res) => {
           if (err) reject(err);
           else resolve(res);
@@ -119,6 +92,53 @@ export abstract class AppointmentTable {
       db.query<Appointment[]>(
         'SELECT * FROM appointments WHERE dentistID = ?',
         [dentistID],
+        (err, res) => {
+          if (err) reject(err);
+          else resolve(res);
+        },
+      );
+    });
+  }
+
+  static deleteById(id: number): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      db.query(
+        'DELETE FROM appointments WHERE appointmentID = ?',
+        [id],
+        (err, res) => {
+          if (err) reject(err);
+          else resolve();
+        },
+      );
+    });
+  }
+
+  static update(
+    id: number,
+    updatedData: Partial<Appointment>,
+  ): Promise<Appointment> {
+    return new Promise((resolve, reject) => {
+      const fields = Object.keys(updatedData)
+        .map(field => `${field} = ?`)
+        .join(', ');
+      const values = Object.values(updatedData);
+
+      db.query(
+        `UPDATE appointments SET ${fields} WHERE appointmentID = ?`,
+        [...values, id],
+        err => {
+          if (err) reject(err);
+          else this.getById(id).then(resolve).catch(reject);
+        },
+      );
+    });
+  }
+
+  static getByDate(date: string): Promise<Appointment[]> {
+    return new Promise((resolve, reject) => {
+      db.query<Appointment[] & RowDataPacket[]>(
+        'SELECT * FROM appointments WHERE date = ?',
+        [date],
         (err, res) => {
           if (err) reject(err);
           else resolve(res);

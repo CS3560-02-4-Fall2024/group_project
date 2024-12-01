@@ -17,24 +17,11 @@ function PatientLogin() {
         'password': password
       };
 
-      let url = 'http://localhost:3000/auth/patient/login';
+      const returnJSON = {
+        'id': ''
+      }
 
-      fetch(url, {
-        body: JSON.stringify(loginJSON),
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        }
-      }).then((res) => {
-        return res.json();
-      }).then((res) => {
-        sessionStorage.setItem("email", email);
-        sessionStorage.setItem("authToken", res.authToken);
-        navigate("/home");
-      }).catch((err) => {
-        console.log(err);
-      });
-
+      navigate("/home");
     };
 
     const goCreate = () => {
