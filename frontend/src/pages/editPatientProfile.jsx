@@ -1,7 +1,49 @@
 import NavBar from '../components/Navbar';
 import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 
 function EditPatientProfile() {
+
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [number, setNumber] = useState("");
+  const [dob, setDob] = useState("");
+  const [insurance, setInsurance] = useState("");
+  const [address, setAddress] = useState("");
+
+  useEffect(() => {
+    const storedEmail = sessionStorage.getItem("email");
+
+    // if not logged in, won't try to fetch user data
+    if (storedEmail === 'undefined' || storedEmail === "" || storedEmail === null) {
+      console.log('not logged in');
+    } else {
+      // generate api url
+      const reqEmail = sessionStorage.getItem("email").split("@");
+      const url = "http://localhost:3000/patient/?email=" + reqEmail[0] + "%40" + reqEmail[1];
+
+      // fetch user data
+      fetch(url, {
+        method: "GET",
+        headers: {
+          "Authorization": "Bearer " + sessionStorage.getItem("authToken")
+        }
+      }).then((res) => {
+        return res.json();
+      }).then((res) => {
+        setPatName(res.name);
+        setPatPhone(res.phone);
+        setPatEmail(res.email);
+        setPatAddy(res.address);
+        setPatDOB(res.dateOfBirth.substring(0,10));
+        setPatIns(res.insuranceCompany);
+      }).catch((err) => {
+        console.log(err);
+      });
+    }
+  }, []);
+
   const navigate = useNavigate();
 
   const goHome = () => {
@@ -9,8 +51,12 @@ function EditPatientProfile() {
   };
 
   const completeEdit = () => {
+    
+    
     navigate("/home");
-    // make the edits in db
+    
+
+
   };
 
   return (
@@ -35,7 +81,7 @@ function EditPatientProfile() {
                   </div>
                   {/*Name Input Field*/}
                   <div className="flex items-center justify-center">
-                    <input className="p-2 w-80 rounded-md bg-tan text-left"></input>
+                    <input placeholder={name} className="p-2 w-80 rounded-md bg-tan text-left"></input>
                   </div>
                 </div>
                 <div className="mx-4">
@@ -45,7 +91,7 @@ function EditPatientProfile() {
                   </div>
                   {/*Name Input Field*/}
                   <div className="flex items-center justify-center">
-                    <input className="p-2 w-80 rounded-md bg-tan text-left"></input>
+                    <input placeholder={password} className="p-2 w-80 rounded-md bg-tan text-left"></input>
                   </div>
                 </div>
               </div>
@@ -58,7 +104,7 @@ function EditPatientProfile() {
                   </div>
                   {/*Email Address Input Field*/}
                   <div className="flex items-center justify-center">
-                    <input className="p-2 w-80 rounded-md bg-tan text-left"></input>
+                    <input placeholder={email} className="p-2 w-80 rounded-md bg-tan text-left"></input>
                   </div>
                 </div>
                 <div className="mx-4">
@@ -68,7 +114,7 @@ function EditPatientProfile() {
                   </div>
                   {/*Phone Number Input Field*/}
                   <div className="flex items-center justify-center">
-                    <input className="p-2 w-80 rounded-md bg-tan text-left"></input>
+                    <input placeholder={number} className="p-2 w-80 rounded-md bg-tan text-left"></input>
                   </div>
                 </div>
               </div>
@@ -81,7 +127,7 @@ function EditPatientProfile() {
                   </div>
                   {/*Date of Birth Input Field*/}
                   <div className="flex items-center justify-center">
-                    <input className="p-2 w-80 rounded-md bg-tan text-left"></input>
+                    <input placeholder={dob} className="p-2 w-80 rounded-md bg-tan text-left"></input>
                   </div>
                 </div>
                 <div className="mx-4">
@@ -91,7 +137,7 @@ function EditPatientProfile() {
                   </div>
                   {/*Insurance Company Input Field*/}
                   <div className="flex items-center justify-center">
-                    <input className="p-2 w-80 rounded-md bg-tan text-left"></input>
+                    <input placeholder={insurance} className="p-2 w-80 rounded-md bg-tan text-left"></input>
                   </div>
                 </div>
               </div>
@@ -104,7 +150,7 @@ function EditPatientProfile() {
                   </div>
                   {/*Address Input Field*/}
                   <div className="flex items-center justify-center">
-                    <input className="p-2 w-96 rounded-md bg-tan text-left"></input>
+                    <input placeholder={address} className="p-2 w-96 rounded-md bg-tan text-left"></input>
                   </div>
                 </div>
               </div>
