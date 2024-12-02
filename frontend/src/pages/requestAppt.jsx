@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import NavBar from '../components/Navbar';
 import IconCalendar from '../assets/calendar-small-page.png'
 import { Navigate, useNavigate } from 'react-router-dom';
+import ApptConfirm from '../components/ApptConfirm';
 
 // TODO: add start and end time, and dentist select
 function RequestAppt() {
@@ -25,6 +26,8 @@ function RequestAppt() {
   const [currYear, setCurrYear] = useState((new Date()).getFullYear());
 
   const [calendarOpen, setCalendarOpen] = useState(false);
+
+  const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
     setCurrMonth(currDate.getMonth());
@@ -218,13 +221,14 @@ function RequestAppt() {
       console.log(res);
     })
 
-    navigate('/apptConfirm');
+    setSubmitted(true);
   };
 
   return (
     <>
       <NavBar />
-      {/* This is the form */}
+
+      { submitted ? <ApptConfirm date={date} time={time} /> :
       <div className='w-[100vw] h-[88vh] bg-dg flex flex-col items-center'>
         <div className='w-[38vw] h-[70vh] mt-auto mb-auto rounded-3xl bg-g flex flex-wrap overflow-y-scroll justify-evenly content-start py-8'>
           {/* Input Name */}
@@ -301,6 +305,7 @@ function RequestAppt() {
         {/* This is the Schedule Button */}
         <button onClick={postSchedule} className='w-[14vw] h-[7vh] bg-g hover:bg-[#587354] rounded-xl mb-12 mt-4 text-white font-bold text-3xl'>Schedule</button>
       </div>
+      }
     </>
   )
 }
