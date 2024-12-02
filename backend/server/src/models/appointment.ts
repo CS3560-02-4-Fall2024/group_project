@@ -117,8 +117,34 @@ export abstract class AppointmentTable {
   static getByDentistId(dentistID: number): Promise<Appointment[]> {
     return new Promise<Appointment[]>((resolve, reject) => {
       db.query<Appointment[]>(
-        'SELECT * FROM appointments WHERE dentistID = ?',
+        'SELECT * FROM appointments WHERE dentistID = ? AND status = "Done"',
         [dentistID],
+        (err, res) => {
+          if (err) reject(err);
+          else resolve(res);
+        },
+      );
+    });
+  }
+
+  static getByDentistIdScheduled(dentistID: number): Promise<Appointment[]> {
+    return new Promise<Appointment[]>((resolve, reject) => {
+      db.query<Appointment[]>(
+        'SELECT * FROM appointments WHERE dentistID = ? AND status = "Scheduled"',
+        [dentistID],
+        (err, res) => {
+          if (err) reject(err);
+          else resolve(res);
+        },
+      );
+    });
+  }
+
+  static getBofa(patientID: number, dentistID: number): Promise<Appointment[]> {
+    return new Promise<Appointment[]>((resolve, reject) => {
+      db.query<Appointment[]>(
+        'SELECT * FROM appointments WHERE patientID = ? AND dentistID = ? AND status = "Done"',
+        [patientID, dentistID],
         (err, res) => {
           if (err) reject(err);
           else resolve(res);

@@ -1,9 +1,11 @@
 import Navbar from "../components/Navbar"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 // generate each appt
-function Appt() {
+function Appt(props) {
+
+  const obj = props.obj;
 
   const [apptDate, setApptDate] = useState("12/30/24");
   const [apptTime, setApptTime] = useState("3:30 PM");
@@ -20,8 +22,8 @@ function Appt() {
   return(
     <div className="flex-flow rounded-xl mb-3 bg-g">
       <div className="pt-2 pl-3 pb-2 text-white text-xl">
-        <p className="font-bold">{apptDate} {apptTime}</p>
-        <p>{pastInfo}</p>
+        <p className="font-bold">Date: {obj.date} &emsp; Time: {obj.time}</p>
+        <p>{obj.purpose}</p>
       </div> 
     </div>
   )
@@ -31,9 +33,35 @@ function Appt() {
 function DentistViewPast() {
   const navigate = useNavigate();
 
+  const [appointments, setAppointments] = useState([]);
+
   const goHome = () => {
     navigate("/dentistHome");
   };
+
+  useEffect(() => {
+    const url = "http://localhost:3000/dentist/getBofa?patientId=" + sessionStorage.getItem("buttocks") + "&dentistId=" + sessionStorage.getItem("id");
+    fetch(url, {
+      method: "GET",
+      headers: {
+        "Authorization": "Bearer " + sessionStorage.getItem("authToken")
+      }
+    }).then((res) => {
+      return res.json();
+    }).then((res) => {
+      for (let i = 0; i < res.length; i++) {
+        setAppointments(prev => {
+          if (prev.length < res.length) {
+            return [...prev, res[i]];
+          } else {
+            return prev;
+          }
+        })
+      }
+    }).catch((err) => {
+      console.log(err);
+    });
+  }, [])
 
   return (
     <>
@@ -46,17 +74,9 @@ function DentistViewPast() {
               Past Appointment
             </div>
             <div className="h-3/4 overflow-y-scroll">
-              <Appt />
-              <Appt />
-              <Appt />
-              <Appt />
-              <Appt />
-              <Appt />
-              <Appt />
-              <Appt />
-              <Appt />
-              <Appt />
-              <Appt />
+              {appointments.map((obj) => (
+                    <Appt obj={obj}></Appt>
+              ))}
             </div>
             <div className="flex justify-center">
               <button onClick={goHome} className="bg-g hover:bg-[#587354] rounded-lg p-3 px-10 font-bold text-xl text-white mt-5">Back to Home</button>

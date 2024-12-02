@@ -156,7 +156,7 @@ export const authorizeDentist = (
     token,
     process.env.TOKEN_SECRET as string,
     (err: any, user: any) => {
-      if (err || user.type !== 'dentist' || req.body.id !== user.id)
+      if (err || user.type !== 'dentist' /*|| req.body.id !== user.id*/)
         return res.sendStatus(403);
 
       return next();

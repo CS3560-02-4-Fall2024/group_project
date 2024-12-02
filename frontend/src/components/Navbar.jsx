@@ -5,7 +5,7 @@ function Navbar() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        console.log(sessionStorage.getItem("email") + " dentistId: " + sessionStorage.getItem("id") + " authToken: " + sessionStorage.getItem("authToken"));
+        console.log(sessionStorage.getItem("email") + " dentistId: " + sessionStorage.getItem("id") + " authToken: " + sessionStorage.getItem("authToken") + " buttocks: " + sessionStorage.getItem("buttocks"));
         const storedEmail = sessionStorage.getItem("email");
         const storedId = sessionStorage.getItem("id");
         if ( (storedEmail === 'undefined' || storedEmail === "" || storedEmail === null) && (storedId === 'undefined' || storedId === "" || storedId === null) ) {
