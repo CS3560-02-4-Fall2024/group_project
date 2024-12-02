@@ -1,5 +1,4 @@
 import './index.css'
-import AppointmentConfirmed from './pages/appointmentConfirmed.jsx'
 import DentistConfirmAcc from './pages/dentistConfirmAcc.jsx'
 import DentistCreateAcc from './pages/dentistCreateAcc.jsx'
 import DentistHome from './pages/dentistHome.jsx'
@@ -33,7 +32,6 @@ function App() {
           <Route path='/dentistHome' element={<DentistHome/>} />
           <Route path='/dentistCreateAcc' element={<DentistCreateAcc/>} />
           <Route path='/dentistConfirm' element={<DentistConfirmAcc/>} />
-          <Route path='/apptConfirm' element={<AppointmentConfirmed/>} />
           <Route path='/pastAppt' element={<PastAppointments/>} />
         </Routes>
       </BrowserRouter>

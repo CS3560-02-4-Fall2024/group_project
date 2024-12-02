@@ -62,10 +62,11 @@ export const getPatientAppt = (
 
 export const postAppt = (req: Request, res: Response, next: NextFunction) => {
   const appointment: Appointment = req.body.info;
+  console.log(req.body);
+
   AppointmentTable.insert(appointment)
     .then((value: Appointment) => {
-      res.locals.appointment = value;
-      next();
+      res.json(value);
     })
     .catch(err => {
       res.status(400).json(err);
@@ -77,6 +78,8 @@ export const cancelAppt = (
   res: Response,
   next: NextFunction,
 ): any => {
+  console.log(req.body);
+
   const {id} = req.body;
 
   AppointmentTable.cancelById(id)

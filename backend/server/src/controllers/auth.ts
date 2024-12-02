@@ -78,6 +78,7 @@ export const authorizePatient = (
       if (err || user.type !== 'patient' /*|| req.body.email !== user.email */)
         return res.sendStatus(403);
 
+      res.locals.user = user;
       return next();
     },
   );
@@ -122,19 +123,6 @@ export const authenticateDentist = async (
           res.sendStatus(403);
         }
       });
-      //if (password === value) {
-      //  const token: string = jwt.sign(
-      //    {id: id, type: 'dentist'},
-      //    process.env.TOKEN_SECRET as string,
-      //    {
-      //      expiresIn: '1d',
-      //    },
-      //  );
-      //  res.json({authToken: token});
-      //} else {
-      //  console.log('boo boo');
-      //  res.sendStatus(403);
-      //}
     })
     .catch(() => {
       res.sendStatus(403);

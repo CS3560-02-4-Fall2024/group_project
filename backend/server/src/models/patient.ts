@@ -13,6 +13,7 @@ export interface Patient extends RowDataPacket {
 }
 
 export class PatientView {
+  id: number;
   name: string;
   phone: string;
   email: string;
@@ -21,6 +22,7 @@ export class PatientView {
   insuranceCompany: string;
 
   constructor(patient: Patient) {
+    this.id = patient.id;
     this.name = patient.name;
     this.phone = patient.phone;
     this.email = patient.email;

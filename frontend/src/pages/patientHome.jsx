@@ -3,52 +3,74 @@ import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
 
 // mini component to generate upcoming appointments
-function Appt() {
-
-  const [apptDate, setApptDate] = useState("12/30/24");
-  const [apptTime, setApptTime] = useState("3:30 PM");
-  const [dentistName, setPatName] = useState("Lebron Raymone James");
-  
-  const navigate = useNavigate();
-
-  const cancelAppt = () => {
-    console.log("kys")
-    //do something about cancelling
-  };
-
-  return (
-    <div className="flex-flow rounded-xl mb-3 bg-g w-[100%] twelve:w-[80%]">
-      <div className="pt-2 pl-3 text-white text-[.99vw]">
-        <p className="font-bold">{apptDate} {apptTime}</p>
-        <p><b>Dentist: </b>{dentistName}</p>
-      </div> 
-      <div className="flex justify-center">
-        <button onClick={cancelAppt} className="text-white hover:text-[#587354] rounded-lg font-bold text-[.92vw] mb-3">Cancel Appointment</button>
-      </div>
-    </div>
-  )
-}
 
 function UpcomingAppt() {
   const navigate = useNavigate();
 
-  const [appts, setAppts] = useState([]);
+  const [appointments, setAppointments] = useState([]);
 
-  // query parameter is patientId
-  const query = { 'id': ''};
+  useEffect(() => {
+    let url = 'http://localhost:3000/availability/patients';
+    fetch(url, {
+      method: "GET",
+      headers: {
+        "Authorization": "Bearer " + sessionStorage.getItem("authToken")
+      }
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log('appointments', res);
+        setAppointments(res);
+      })
+  }, [])
 
-  // GET FROM DB
-  const apptArray = [{
-    'date': '',
-    'time': '',
-    'name': '',
-    'phone': '',
-    'email': ''
-  }]
+  function Appointment({ date, time, dentistName, id }) {
+    const cancelAppt = () => {
+      const url = "http://localhost:3000/patient/cancelAppt";
+      console.log('id', id);
 
-  const reqAppt = () => {
-    navigate("/reqAppt");
-  };
+      fetch(url, {
+        body: JSON.stringify({ id: id }),
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + sessionStorage.getItem("authToken")
+        }
+      })
+        .then((res) => {
+          let url = 'http://localhost:3000/availability/patients';
+          fetch(url, {
+            method: "GET",
+            headers: {
+              "Authorization": "Bearer " + sessionStorage.getItem("authToken")
+            }
+          })
+            .then((res) => res.json())
+            .then((res) => {
+              console.log('appointments', res);
+              setAppointments(res);
+            })
+        }
+        )
+        .catch((err) => {
+          console.log(err);
+
+        })
+      //do something about cancelling
+    };
+
+    return (
+      <div className="flex-flow rounded-xl mb-3 bg-g w-[100%] twelve:w-[80%]">
+        <div className="pt-2 pl-3 text-white text-[.99vw]">
+          <p className="font-bold">{date} {time}</p>
+          <p><b>Dentist: </b>{dentistName}</p>
+        </div>
+        <div className="flex justify-center">
+          <button onClick={cancelAppt} className="text-white hover:text-[#587354] rounded-lg font-bold text-[.92vw] mb-3">Cancel Appointment</button>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="flex justify-center w-[50vw] h-[100%] bg-dg p-0">
@@ -57,30 +79,17 @@ function UpcomingAppt() {
           Upcoming Appointments
         </div>
         <div className="ml-16 w-[38vw] h-[60vh] overflow-y-scroll">
-          <Appt />
-          <Appt />
-          <Appt />
-          <Appt />
-          <Appt />
-          <Appt />
+          {appointments.map((value) => {
+            return (<Appointment date={value.date} time={value.time} dentistName={value.dentistName} id={value.id} key={value.id} />)
+          })}
         </div>
         <div className='flex justify-center text-white mt-10 mr-0 w-[41.3vw]'>
-          <button onClick={reqAppt} className="ml-16 py-3 px-5 bg-g rounded-xl hover:bg-[#587354] font-bold text-[1.5vw]">Request Appointment</button>
+          <button onClick={() => navigate("/reqAppt")} className="ml-16 py-3 px-5 bg-g rounded-xl hover:bg-[#587354] font-bold text-[1.5vw]">Request Appointment</button>
         </div>
       </div>
-      
-    </div>
-    
 
-  )
-}
-
-function RequestAppt() {
-  const navigate = useNavigate()
-  return (
-    <div>
-      Ur MOM
     </div>
+
 
   )
 }
@@ -108,7 +117,7 @@ function DentistOffice() {
         <div className="p-5 text-[1.19vw] text-white">
           <p><b>Phone Number: </b>{officePhone}</p>
           <p><b>Email Address: </b>{officeEmail}</p>
-          <p><b>Address: </b>{officeAddr}</p> 
+          <p><b>Address: </b>{officeAddr}</p>
         </div>
       </div>
     </div>
@@ -150,7 +159,7 @@ function PatientInfo() {
         setPatPhone(res.phone);
         setPatEmail(res.email);
         setPatAddy(res.address);
-        setPatDOB(res.dateOfBirth.substring(0,10));
+        setPatDOB(res.dateOfBirth.substring(0, 10));
         setPatIns(res.insuranceCompany);
       }).catch((err) => {
         console.log(err);
@@ -175,8 +184,8 @@ function PatientInfo() {
         <div className="p-5 text-[1.19vw] text-white">
           <p><b>Full Name: </b>{patName}</p>
           <p><b>Phone Number: </b>{patPhone}</p>
-          <p><b>Email Address: </b>{patEmail}</p> 
-          <p><b>Address: </b>{patAddy}</p> 
+          <p><b>Email Address: </b>{patEmail}</p>
+          <p><b>Address: </b>{patAddy}</p>
           <p><b>Date of Birth: </b>{patDOB}</p>
           <p><b>Inurance Provider: </b>{patIns}</p>
         </div>
@@ -184,7 +193,7 @@ function PatientInfo() {
           <button onClick={toEditProfile} className="hover:bg-[#587354] bg-dg px-3 py-3 font-bold text-white text-[.96vw] rounded-xl">Edit Profile</button>
         </div>
         <div className="flex justify-center">
-          <button onClick={toPastAppt} className="hover:bg-[#587354] bg-dg px-3 py-3 font-bold text-white text-[.96vw] rounded-xl mt-5 mb-5">View Past Appointments</button>          
+          <button onClick={toPastAppt} className="hover:bg-[#587354] bg-dg px-3 py-3 font-bold text-white text-[.96vw] rounded-xl mt-5 mb-5">View Past Appointments</button>
         </div>
       </div>
     </div>
@@ -194,23 +203,22 @@ function PatientInfo() {
 // main page component
 function PatientHome() {
 
-    return (
-      <>
-        <div className="w-[100vw] h-[100vh] bg-dg">
-          <Navbar />
-          <div className='w-[100vw] h-[88vh] flex justify-items'>
-            <div className="flex flex-col">
-              <DentistOffice />
-              <PatientInfo />
-            </div>
-            <div>
-              <UpcomingAppt />
-            </div>
+  return (
+    <>
+      <div className="w-[100vw] h-[100vh] bg-dg">
+        <Navbar />
+        <div className='w-[100vw] h-[88vh] flex justify-items'>
+          <div className="flex flex-col">
+            <DentistOffice />
+            <PatientInfo />
+          </div>
+          <div>
+            <UpcomingAppt />
           </div>
         </div>
-      </>
-    )
-  }
-  
-  export default PatientHome;
-  
+      </div>
+    </>
+  )
+}
+
+export default PatientHome;

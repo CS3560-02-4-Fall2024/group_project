@@ -41,8 +41,8 @@ export abstract class AppointmentTable {
                 VALUES (?, ?, ?, ?, ?, ?, ?);
                 `,
         [
-          appointment.patientID,
-          appointment.dentistID,
+          appointment.patientId,
+          appointment.dentistId,
           appointment.status,
           appointment.date,
           appointment.time,
@@ -63,7 +63,7 @@ export abstract class AppointmentTable {
   static getById(id: number): Promise<Appointment> {
     return new Promise<Appointment>((resolve, reject) => {
       db.query<Appointment[]>(
-        'SELECT * FROM appointments WHERE appointmentID = ?',
+        'SELECT * FROM appointments WHERE id = ?',
         [id],
         (err, res) => {
           if (err) reject(err);
@@ -89,15 +89,13 @@ export abstract class AppointmentTable {
   }
 
   static cancelById(id: number): Promise<void> {
+    console.log('deleting', id);
+
     return new Promise<void>((resolve, reject) => {
-      db.query(
-        'UPDATE appointments SET status = "Cancelled" WHERE id = ?',
-        [id],
-        (err, res) => {
-          if (err) reject(err);
-          else resolve();
-        },
-      );
+      db.query('DELETE FROM appointments WHERE id = ?', [id], (err, res) => {
+        if (err) reject(err);
+        else resolve();
+      });
     });
   }
 
