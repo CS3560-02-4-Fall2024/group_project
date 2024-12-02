@@ -89,41 +89,52 @@ export const authenticateDentist = async (
   res: Response,
   next: NextFunction,
 ) => {
-  const id: number = req.body.id;
-  const password: string = req.body.password;
+  //const id: number = req.body.id;
+  //const password: string = req.body.password;
+
+  let id: number;
+  let password: string;
+
+  if (Object.keys(res.locals).length === 0) {
+    id = req.body.id;
+    password = req.body.password;
+  } else {
+    id = res.locals.dentist.id;
+    password = req.body.password;
+  }
 
   DentistTable.getById(id)
     .then((value: Dentist) => {
       return value.passwordHash;
     })
     .then((value: string) => {
-      // return bcrypt.compare(password, value).then((success: boolean) => {
-      //   if (success) {
-      //     const token: string = jwt.sign(
-      //       {id: id, type: 'dentist'},
-      //       process.env.TOKEN_SECRET as string,
-      //       {
-      //         expiresIn: '1d',
-      //       },
-      //     );
-      //     res.json({authToken: token});
-      //   } else {
-      //     res.sendStatus(403);
-      //   }
-      // });
-      if (password === value) {
-        const token: string = jwt.sign(
-          {id: id, type: 'dentist'},
-          process.env.TOKEN_SECRET as string,
-          {
-            expiresIn: '1d',
-          },
-        );
-        res.json({authToken: token});
-      } else {
-        console.log('boo boo');
-        res.sendStatus(403);
-      }
+      return bcrypt.compare(password, value).then((success: boolean) => {
+        if (success) {
+          const token: string = jwt.sign(
+            {id: id, type: 'dentist'},
+            process.env.TOKEN_SECRET as string,
+            {
+              expiresIn: '1d',
+            },
+          );
+          res.json({authToken: token});
+        } else {
+          res.sendStatus(403);
+        }
+      });
+      //if (password === value) {
+      //  const token: string = jwt.sign(
+      //    {id: id, type: 'dentist'},
+      //    process.env.TOKEN_SECRET as string,
+      //    {
+      //      expiresIn: '1d',
+      //    },
+      //  );
+      //  res.json({authToken: token});
+      //} else {
+      //  console.log('boo boo');
+      //  res.sendStatus(403);
+      //}
     })
     .catch(() => {
       res.sendStatus(403);

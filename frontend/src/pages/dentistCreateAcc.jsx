@@ -7,7 +7,6 @@ function DentistCreateAcc() {
   const [name, setName] = useState("");
   const [type, setType] = useState("");
   const [password, setPassword] = useState("");
-  const [id, setId] = useState("");
   
   const goLogin = () => {
     navigate("/dentistLogin")
@@ -22,10 +21,6 @@ function DentistCreateAcc() {
       'password': password
     }
 
-    const returnJSON = {
-      'id': id
-    }
-
     const url = "http://localhost:3000/auth/dentist";
 
     fetch(url, {
@@ -38,13 +33,11 @@ function DentistCreateAcc() {
       return res.json();
     }).then((res) => {
       sessionStorage.setItem("authToken", res.authToken);
+      sessionStorage.setItem("id", res.id);
       navigate("/dentistConfirm")
     }).catch((err) => {
       console.log(err);
     });
-    
-    //store info in db
-
   }
 
   return (

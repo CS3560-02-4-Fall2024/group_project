@@ -12,7 +12,6 @@ export const createDentist = (
   req.body.passwordHash = bcrypt.hashSync(req.body.password, saltRounds);
 
   const dentist: Dentist = req.body;
-
   DentistTable.insert(dentist)
     .then((value: Dentist) => {
       res.locals.dentist = value;
