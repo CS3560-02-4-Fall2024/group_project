@@ -66,7 +66,7 @@ function DentistLogin() {
             </div>
             {/*Password Input Field*/}
             <div className="flex items-center justify-center">
-              <input onChange={(e) => setPassword(e.target.value)} className="p-2 w-80 rounded-md bg-tan text-left"></input>
+              <input onChange={(e) => setPassword(e.target.value)} type="password" className="p-2 w-80 rounded-md bg-tan text-left"></input>
             </div>
             {/*Login Button*/}
             <div className="flex items-center justify-center mt-10">

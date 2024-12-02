@@ -32,6 +32,7 @@ function DentistCreateAcc() {
     }).then((res) => {
       return res.json();
     }).then((res) => {
+      console.log(res)
       sessionStorage.setItem("authToken", res.authToken);
       sessionStorage.setItem("id", res.id);
       navigate("/dentistConfirm")

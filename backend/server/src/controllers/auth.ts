@@ -117,7 +117,7 @@ export const authenticateDentist = async (
               expiresIn: '1d',
             },
           );
-          res.json({authToken: token});
+          res.json({authToken: token, id: id});
         } else {
           res.sendStatus(403);
         }
