@@ -39,16 +39,17 @@ CREATE TABLE
 CREATE TABLE
   dentists (
     id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(150) NOT NULL UNIQUE,
     name VARCHAR(150) NOT NULL,
     type VARCHAR(150) NOT NULL,
     passwordHash VARCHAR(255) NOT NULL
   );
 
+-- This shit wrong lmao
 CREATE TABLE
   availability (
     dentistId INT NOT NULL,
-    startTime DATETIME NOT NULL,
-    endTime DATETIME NOT NULL,
+    timeSlot DATETIME NOT NULL,
     FOREIGN KEY (dentistId) REFERENCES dentists (id)
   );
 
