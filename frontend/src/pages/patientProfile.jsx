@@ -1,30 +1,38 @@
 import NavBar from '../components/Navbar';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function PatientProfile() {
   const navigate = useNavigate();
 
-  const [name, setName] = useState("Lebron Raymone James");
-  const [phone, setPhone] = useState("(626) 731-3956");
-  const [email, setEmail] = useState("lbj@gmail.com");
-  const [dob, setDob] = useState("07-31-2003");
-  const [insurance, setInsurance] = useState("Aetna");
-  const [address, setAddress] = useState("1234 Lebron Rd, Pomona, CA 91768");
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [dob, setDob] = useState("");
+  const [insurance, setInsurance] = useState("");
+  const [address, setAddress] = useState("");
 
-  // TODO: make useEffect to get info on first render
-  // db query parameter
-  const query = { 'id': '' };
-
-  // return
-  const patientJSON = {
-    'name': '',
-    'phone': '',
-    'email': '',
-    'dob': '',
-    'insurance': '',
-    'address': ''
-  }
+  useEffect(() => {
+    const currId = sessionStorage.getItem("buttocks");
+    const url = "http://localhost:3000/dentist/getPatientById?id=" + currId;
+    fetch(url, {
+      method: "GET",
+      headers: {
+        "Authorization": "Bearer " + sessionStorage.getItem("authToken")
+      }
+    }).then((res) => {
+      return res.json();
+    }).then((res) => {
+      setName(res.name);
+      setPhone(res.phone);
+      setEmail(res.email);
+      setDob(res.dateOfBirth.substring(0,10));
+      setInsurance(res.insuranceCompany);
+      setAddress(res.address);
+    }).catch((err) => {
+      console.log(err);
+    })
+  }, [])
 
   const goHome = () => {
     navigate("/dentistHome")
