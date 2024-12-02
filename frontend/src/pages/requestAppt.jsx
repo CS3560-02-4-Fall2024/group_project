@@ -6,12 +6,14 @@ import { useNavigate } from 'react-router-dom';
 // TODO: add start and end time, and dentist select
 function RequestAppt() {
 
+    const [patID, setPatID] = useState();
     const [patientName, setPatientName] = useState("");
     const [dentistType, setDentistType] = useState("");
     const [dentistName, setDentistName] = useState("");
     const [date, setDate] = useState("");
     const [time, setTime] = useState("");
     const [purpose, setPurpose] = useState("");
+    const [allTimes, setAllTimes] = useState([]);
 
     const [currDate, setCurrDate] = useState(new Date());
     const [currMonth, setCurrMonth] = useState((new Date()).getMonth());
@@ -22,6 +24,21 @@ function RequestAppt() {
     useEffect(() => {
       setCurrMonth(currDate.getMonth());
       setCurrYear(currDate.getFullYear());
+      const reqEmail = sessionStorage.getItem("email").split("@");
+      const url = "http://localhost:3000/patient/?email=" + reqEmail[0] + "%40" + reqEmail[1];
+      fetch(url, {
+        method: "GET",
+        headers: {
+          "Authorization": "Bearer " + sessionStorage.getItem("authToken")
+        }
+      }).then((res) => {
+        return res.json();
+      }).then((res) => {
+        setPatientName(res.name);
+        setPatID(res.id);
+      }).catch((err) => {
+        console.log(err);
+      });
     }, [])
 
     const MONTHS = [
@@ -88,7 +105,13 @@ function RequestAppt() {
             }
 
             col.onclick = () => {
-              setDate((currMonth + 1) + "/" + col.textContent + "/" + currYear);
+              // this code is goated wit all da sauce
+              // someones gotta hire after the see this oen
+              if (col.textContent.length < 2) {
+                setDate(currYear + "-" + (currMonth + 1) + "-0" + col.textContent);
+              } else {
+                setDate(currYear + "-" + (currMonth + 1) + "-" + col.textContent);
+              }
             }
 
             row.appendChild(col);
@@ -106,6 +129,7 @@ function RequestAppt() {
 
     // everytime the date is picked, render in the available times for that day
     useEffect(() => {
+      console.log(date);
       // query for available times given a date
       const query = {
         'date': ''
@@ -113,6 +137,87 @@ function RequestAppt() {
       // return an array of appts with their ids and their times
       const returnJSON = [{'apptid': '', 'time': ''}, {}, {}]
     }, [date])
+
+    useEffect(() => {
+      let poopoo = "";
+      if (dentistType === "Oral Surgeon") {
+        poopoo = "Oral%20Surgeon";
+      } else {
+        poopoo = dentistType;
+      }
+      const url = "http://localhost:3000/patient/getDentistByType?type=" + poopoo;
+      fetch(url, {
+        method: "GET",
+        headers: {
+          "Authorization": "Bearer " + sessionStorage.getItem("authToken")
+        }
+      }).then((res) => {
+        return res.json();
+      }).then((res => {
+        console.log("new names dropped chat");
+        const daTypes = document.getElementById('daTypes');
+
+        while (daTypes.firstChild) {
+          daTypes.removeChild(daTypes.lastChild);
+        }
+
+        for (let i = 0; i < res.length; i++) {
+          var option = document.createElement("option");
+          option.text = res[i].name;
+          option.value = res[i].name;
+          daTypes.appendChild(option);
+        }
+      })).catch((err) => {
+        console.log(err);
+      });
+    }, [dentistType]);
+
+    useEffect(() => {
+      console.log(dentistName + ' hehehe');
+      const reqName = dentistName.split(" ");
+      console.log(dentistName)
+      const url = "http://localhost:3000/patient/getDentistByName?name=" + reqName[0] + "%20" + reqName[1];
+
+      fetch(url, {
+        method: "GET",
+        headers: {
+          "Authorization": "Bearer " + sessionStorage.getItem("authToken")
+        }
+      }).then((res) => {
+        return res.json();
+      }).then((res) => {
+        console.log("hi");
+        const url2 = "http://localhost:3000/patient/getIdAndDate?dentistId=" + res.id + "&date=" + date.substring(0,10);
+        console.log(url2);
+        fetch(url2, {
+          method: "GET",
+          headers: {
+            "Authorization": "Bearer " + sessionStorage.getItem("authToken")
+          }
+        }).then((res) => {
+          return res.json();
+        }).then((res) => {
+          console.log(res);
+          const fuckface = document.getElementById("shitface");
+
+          while (fuckface.firstChild) {
+            fuckface.removeChild(fuckface.lastChild);
+          }
+  
+          for (let i = 0; i < res.length; i++) {
+            var option = document.createElement("option");
+            option.text = res[i].time;
+            option.value = res[i].time;
+            fuckface.appendChild(option);
+          }
+
+        }).catch((err) => {
+          console.log(err);
+        })
+      }).catch((err) => {
+        console.log(err);
+      })
+    }, [dentistName]);
 
     const navigate = useNavigate();
 
@@ -138,19 +243,21 @@ function RequestAppt() {
           <div className='w-[100vw] h-[88vh] bg-dg flex flex-col items-center'>
             <div className='w-[38vw] h-[70vh] mt-auto mb-auto rounded-3xl bg-g flex flex-wrap overflow-y-scroll justify-evenly content-start py-8'>
               {/* Input Name */}
-              <input onChange={(e) => setPatientName(e.target.value)} placeholder='Enter Name' className='w-[35%] h-8 fourkay:w-[40%] rounded-lg mb-12 pl-2'></input>
+              <input onChange={(e) => setPatientName(e.target.value)} placeholder={patientName} className='w-[35%] h-8 fourkay:w-[40%] rounded-lg mb-12 pl-2'></input>
 
               {/* Select Dentist Type */}
               <select onChange={(e) => setDentistType(e.target.value)} className='w-[35%] h-8 fourkay:w-[40%] rounded-lg mb-12' >
                 <option value="" disabled selected >Select Dentist Type</option>
-                <option value="orthodontist" >Orthodontist</option>
-                <option value="surgeon" >Oral Surgeon</option>
-                <option value="general" >General Cleaning</option>
+                <option value="Orthodontist" >Orthodontist</option>
+                <option value="Oral Surgeon" >Oral Surgeon</option>
+                <option value="Hygenist" >Hygenist</option>
               </select>
 
                 {/* Select Dentist (+ an invisible field to keep the structure) */}
                 <select className='w-[35%] fourkay:w-[40%] h-8 invisible mb-12'></select>
-                <select onChange={(e) => setDentistName(e.target.value)} className='w-[35%] fourkay:w-[40%] h-8 rounded-lg mb-12'>
+                <select id="daTypes" onChange={(e) => {
+                  console.log(e);
+                  setDentistName(e.target.value)} } className='w-[35%] fourkay:w-[40%] h-8 rounded-lg mb-12'>
                   <option value="" disabled selected >Select Dentist Name</option>
                 </select>
 
@@ -159,7 +266,9 @@ function RequestAppt() {
                   <button  onClick={toggleCalendar} className='w-1/6 h-full hover:bg-[#587354] flex justify-center items-center'><img src={IconCalendar} className='w-[60%] h-auto'></img></button>
                 </div>
 
-                <input onChange={(e) => setTime(e.target.value)} placeholder='HH:MM' className='w-[35%] h-8 fourkay:w-[40%] rounded-lg pl-2' ></input>
+                <select id='shitface' onChange={(e) => setTime(e.target.value)} className='w-[35%] h-8 fourkay:w-[40%] rounded-lg pl-2' >
+                  <option value="" disabled selected >Select Time</option>
+                </select>
 
                 <div id="calender-header" className={`flex flex-row flex-wrap content-start w-[250px] h-[190px] mt-2 border-2 border-black rounded-md overflow-hidden ${calendarOpen ? '' : 'invisible'}`} >
                   <div className='flex flex-row w-full h-[15%] justify-between'>
