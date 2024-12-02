@@ -42,6 +42,9 @@ function PatientCreateAcc() {
     }).then((res) => {
       return res.json();
     }).then((res) => {
+      if (res.error) {
+        throw "invalid account creation"
+      }
       sessionStorage.setItem("email", email);
       sessionStorage.setItem("authToken", res.authToken);
       navigate("/home");
