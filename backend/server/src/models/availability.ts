@@ -2,30 +2,24 @@ import {ResultSetHeader, RowDataPacket} from 'mysql2';
 import {connection as db} from '../db';
 
 export interface Availability extends RowDataPacket {
-  availabilityID: number;
-  appointmentID: number;
-  patientID: number;
+  id: number;
   dentistID: number;
+  time: string;
   date: Date;
-  timeSlot: string;
-  isBooked: boolean;
+  status: string;
 }
 
 export class AvailabilityView {
-  appointmentID: number;
-  patientID: number;
   dentistID: number;
+  time: string;
   date: Date;
-  timeSlot: string;
-  isBooked: boolean;
+  status: string;
 
   constructor(availability: Availability) {
-    this.appointmentID = availability.appointmentID;
-    this.patientID = availability.patientID;
     this.dentistID = availability.dentistID;
+    this.time = availability.time;
     this.date = availability.date;
-    this.timeSlot = availability.timeSlot;
-    this.isBooked = availability.isBooked;
+    this.status = availability.status;
   }
 }
 
@@ -105,15 +99,32 @@ VALUES (?,?,?);
     });
   }
 
-  static getByDentistID(dentistID: number): Promise<Availability> {
-    return new Promise<Availability>((resolve, reject) => {
+  static getByDentistID(dentistID: number): Promise<Availability[]> {
+    return new Promise<Availability[]>((resolve, reject) => {
       db.query<Availability[]>(
-        'SELECT * FROM availability WHERE dentistID = ?',
+        'SELECT * FROM availability WHERE dentistId = ?',
         [dentistID],
         (err, res) => {
           if (err) reject(err);
           else if (res.length === 0) reject('availability not found');
-          else resolve(res?.[0]);
+          else resolve(res);
+        },
+      );
+    });
+  }
+
+  static getIdAndDate(
+    dentistID: number,
+    date: string,
+  ): Promise<Availability[]> {
+    return new Promise<Availability[]>((resolve, reject) => {
+      db.query<Availability[]>(
+        'SELECT * FROM availability WHERE dentistId = ? and date LIKE ?',
+        [dentistID, '' + date + '%'],
+        (err, res) => {
+          if (err) reject(err);
+          else if (res.length === 0) reject('availability not found');
+          else resolve(res);
         },
       );
     });
