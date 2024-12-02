@@ -5,9 +5,10 @@ function Navbar() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        console.log(sessionStorage.getItem("email") + " " + sessionStorage.getItem("authToken"));
+        console.log(sessionStorage.getItem("email") + " dentistId: " + sessionStorage.getItem("id") + " authToken: " + sessionStorage.getItem("authToken"));
         const storedEmail = sessionStorage.getItem("email");
-        if (storedEmail === 'undefined' || storedEmail === "" || storedEmail === null) {
+        const storedId = sessionStorage.getItem("id");
+        if ( (storedEmail === 'undefined' || storedEmail === "" || storedEmail === null) && (storedId === 'undefined' || storedId === "" || storedId === null) ) {
             navigate("/");
         }
     }, []);

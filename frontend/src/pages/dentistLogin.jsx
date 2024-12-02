@@ -27,9 +27,9 @@ function DentistLogin() {
     }).then((res) => {
       return res.json();
     }).then((res) => {
-      sessionStorage.setItem("id", id);
+      sessionStorage.setItem("id", res.id);
       sessionStorage.setItem("authToken", res.authToken);
-      navigate("/home");
+      navigate("/dentistHome");
     }).catch((err) => {
       console.log(err);
     });
