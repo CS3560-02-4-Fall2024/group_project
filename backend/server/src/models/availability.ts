@@ -4,7 +4,6 @@ import {connection as db} from '../db';
 export interface Availability extends RowDataPacket {
   availabilityID: number;
   appointmentID: number;
-  patientID: number;
   dentistID: number;
   date: Date;
   timeSlot: string;
@@ -21,7 +20,6 @@ export class AvailabilityView {
 
   constructor(availability: Availability) {
     this.appointmentID = availability.appointmentID;
-    this.patientID = availability.patientID;
     this.dentistID = availability.dentistID;
     this.date = availability.date;
     this.timeSlot = availability.timeSlot;
@@ -68,20 +66,6 @@ VALUES (?,?,?);
       db.query<Availability[]>(
         'SELECT * FROM availability WHERE appointmentID = ?',
         [appointmentID],
-        (err, res) => {
-          if (err) reject(err);
-          else if (res.length === 0) reject('availability not found');
-          else resolve(res?.[0]);
-        },
-      );
-    });
-  }
-
-  static getByPatientId(patientID: number): Promise<Availability> {
-    return new Promise<Availability>((resolve, reject) => {
-      db.query<Availability[]>(
-        'SELECT * FROM availability WHERE patientID = ?',
-        [patientID],
         (err, res) => {
           if (err) reject(err);
           else if (res.length === 0) reject('availability not found');
