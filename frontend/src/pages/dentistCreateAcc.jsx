@@ -7,6 +7,7 @@ function DentistCreateAcc() {
   const [name, setName] = useState("");
   const [type, setType] = useState("");
   const [password, setPassword] = useState("");
+  const [id, setId] = useState("");
   
   const goLogin = () => {
     navigate("/dentistLogin")
@@ -22,11 +23,28 @@ function DentistCreateAcc() {
     }
 
     const returnJSON = {
-      'id': ''
+      'id': id
     }
 
-    navigate("/dentistConfirm")
+    const url = "http://localhost:3000/auth/dentist";
+
+    fetch(url, {
+      body: JSON.stringify(infoJSON),
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then((res) => {
+      return res.json();
+    }).then((res) => {
+      sessionStorage.setItem("authToken", res.authToken);
+      navigate("/dentistConfirm")
+    }).catch((err) => {
+      console.log(err);
+    });
+    
     //store info in db
+
   }
 
   return (
@@ -46,7 +64,7 @@ function DentistCreateAcc() {
             </div>
             {/*Name Input Field*/}
             <div className="flex items-center justify-center">
-              <input className="p-2 w-80 rounded-md bg-tan text-left"></input>
+              <input onChange={(e) => setName(e.target.value)} className="p-2 w-80 rounded-md bg-tan text-left"></input>
             </div>
             {/*Dentist Type Text*/}
             <div className="text-white text-xl mt-3 ml-2 mb-1">
@@ -54,7 +72,7 @@ function DentistCreateAcc() {
             </div>
             {/*Dentist Type InputField*/}
             <div className="flex items-center justify-center">
-              <input className="p-2 w-80 rounded-md bg-tan text-left"></input>
+              <input onChange={(e) => setType(e.target.value)} className="p-2 w-80 rounded-md bg-tan text-left"></input>
             </div>
             {/*Password Text*/}
             <div className="text-white text-xl mt-3 ml-2 mb-1">
@@ -62,7 +80,7 @@ function DentistCreateAcc() {
             </div>
             {/*Password Input Field*/}
             <div className="flex items-center justify-center">
-              <input className="p-2 w-80 rounded-md bg-tan text-left"></input>
+              <input onChange={(e) => setPassword(e.target.value)} type="password" className="p-2 w-80 rounded-md bg-tan text-left"></input>
             </div>
             {/*Create Account Button*/}
             <div className="flex items-center justify-center mt-10">
