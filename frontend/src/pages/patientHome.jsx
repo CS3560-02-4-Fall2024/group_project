@@ -121,12 +121,12 @@ function DentistOffice() {
 
 function PatientInfo() {
 
-  const [patName, setPatName] = useState("Lebron James");
-  const [patPhone, setPatPhone] = useState("877-478-7452");
-  const [patEmail, setPatEmail] = useState("kars4kids@hotmail.com");
-  const [patAddy, setPatAddy] = useState("123 Sesame St., Santa Monica");
-  const [patDOB, setPatDOB] = useState("12/30/1984");
-  const [patIns, setPatIns] = useState("State Farm");
+  const [patName, setPatName] = useState("");
+  const [patPhone, setPatPhone] = useState("");
+  const [patEmail, setPatEmail] = useState("");
+  const [patAddy, setPatAddy] = useState("");
+  const [patDOB, setPatDOB] = useState("");
+  const [patIns, setPatIns] = useState("");
 
   const navigate = useNavigate();
 

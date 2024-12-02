@@ -20,34 +20,54 @@ function PatientCreateAcc() {
 
   const createAcc = () => {
 
-    // post this json to the db, return a success code and patient id to store in localstorage
-    const createJSON = {
-      'name': name,
-      'password': password,
-      'email': email,
-      'phone': number,
-      'dateOfBirth': dob,
-      'insuranceCompany': insurance,
-      'address': address
+    if (name === "") {
+      
+    } else if (password.length < 8) {
+
+    } else if (email.indexOf("@") < 0) {
+
+    } else if (number === "") {
+
+    } else if (dob === "") {
+
+    } else if (insurance === "") {
+
+    } else if (address === "") {
+
+    } else {
+      
+      // JSON containing all patient info
+      const createJSON = {
+        'name': name,
+        'password': password,
+        'email': email,
+        'phone': number,
+        'dateOfBirth': dob,
+        'insuranceCompany': insurance,
+        'address': address
+      }
+
+      // backend url
+      const url = "http://localhost:3000/auth/patient";
+
+      fetch(url, {
+        body: JSON.stringify(createJSON),
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }).then((res) => {
+        return res.json();
+      }).then((res) => {
+        sessionStorage.setItem("email", email);
+        sessionStorage.setItem("authToken", res.authToken);
+        navigate("/home");
+      }).catch((err) => {
+        console.log(err);
+      });
     }
 
-    const url = "http://localhost:3000/auth/patient";
-
-    fetch(url, {
-      body: JSON.stringify(createJSON),
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    }).then((res) => {
-      return res.json();
-    }).then((res) => {
-      sessionStorage.setItem("email", email);
-      sessionStorage.setItem("authToken", res.authToken);
-      navigate("/home");
-    }).catch((err) => {
-      console.log(err);
-    });
+    
     // also add storing date in fields ?
   };
   return (
