@@ -7,9 +7,7 @@ function Appt() {
 
   const [apptDate, setApptDate] = useState("12/30/24");
   const [apptTime, setApptTime] = useState("3:30 PM");
-  const [patName, setPatName] = useState("Lebron Raymone James");
-  const [patPhone, setPatPhone] = useState("(626) 731-3955");
-  const [patEmail, setPatEmail] = useState("lbj@gmail.com");
+  const [dentistName, setPatName] = useState("Lebron Raymone James");
   
   const navigate = useNavigate();
 
@@ -22,9 +20,7 @@ function Appt() {
     <div className="flex-flow rounded-xl mb-3 bg-g w-[100%] twelve:w-[80%]">
       <div className="pt-2 pl-3 text-white text-[.99vw]">
         <p className="font-bold">{apptDate} {apptTime}</p>
-        <p>{patName}</p>
-        <p>{patPhone}</p>
-        <p>{patEmail}</p>
+        <p><b>Dentist: </b>{dentistName}</p>
       </div> 
       <div className="flex justify-center">
         <button onClick={cancelAppt} className="text-white hover:text-[#587354] rounded-lg font-bold text-[.92vw] mb-3">Cancel Appointment</button>
@@ -185,10 +181,10 @@ function PatientInfo() {
           <p><b>Inurance Provider: </b>{patIns}</p>
         </div>
         <div className="flex justify-center">
-          <button onClick={toEditProfile} className="w-[6.4vw] hover:bg-[#587354] bg-dg px-3 py-3 font-bold text-white text-[.96vw] rounded-xl">Edit Profile</button>
+          <button onClick={toEditProfile} className="hover:bg-[#587354] bg-dg px-3 py-3 font-bold text-white text-[.96vw] rounded-xl">Edit Profile</button>
         </div>
         <div className="flex justify-center">
-          <button onClick={toPastAppt} className="w-[12.4vw] hover:bg-[#587354] bg-dg px-3 py-3 font-bold text-white text-[.96vw] rounded-xl mt-5 mb-5">View Past Appointments</button>          
+          <button onClick={toPastAppt} className="hover:bg-[#587354] bg-dg px-3 py-3 font-bold text-white text-[.96vw] rounded-xl mt-5 mb-5">View Past Appointments</button>          
         </div>
       </div>
     </div>
