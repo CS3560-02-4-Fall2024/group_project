@@ -86,7 +86,10 @@ VALUES (?,?,?,?,?,?,?);
     });
   }
 
-  static updateByEmail(email: string, updates: Partial<Patient>): Promise<Patient>{
+  static updateByEmail(
+    email: string,
+    updates: Partial<Patient>,
+  ): Promise<Patient> {
     const fields = Object.keys(updates);
     const values = Object.values(updates);
     const setClause = fields.map(field => `${field} = ?`).join(', ');
@@ -100,8 +103,8 @@ VALUES (?,?,?,?,?,?,?);
           else if (res.affectedRows === 0) reject('user not found');
           else
             this.getByEmail(email)
-            .then(patient => resolve(patient!))
-            .catch(reject);
+              .then(patient => resolve(patient!))
+              .catch(reject);
         },
       );
     });
