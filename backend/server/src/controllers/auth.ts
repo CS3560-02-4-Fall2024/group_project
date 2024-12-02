@@ -78,6 +78,7 @@ export const authorizePatient = (
       if (err || user.type !== 'patient' /*|| req.body.email !== user.email */)
         return res.sendStatus(403);
 
+      res.locals.user = user;
       return next();
     },
   );

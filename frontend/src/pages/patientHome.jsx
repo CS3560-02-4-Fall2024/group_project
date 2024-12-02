@@ -33,7 +33,17 @@ function UpcomingAppt() {
 
   useEffect(() => {
     let url = 'http://localhost:3000/availability/patients';
-    fetch('')
+    fetch(url, {
+      method: "GET",
+      headers: {
+        "Authorization": "Bearer " + sessionStorage.getItem("authToken")
+      }
+    })
+    .then((res) => res.json())
+    .then((res) => {
+      console.log('appointments', res);
+      setAppointments(res);
+    })
   },[])
   // GET FROM DB
   const apptArray = [{
