@@ -77,6 +77,8 @@ export const cancelAppt = (
   res: Response,
   next: NextFunction,
 ): any => {
+  console.log(req.body);
+
   const {id} = req.body;
 
   AppointmentTable.cancelById(id)

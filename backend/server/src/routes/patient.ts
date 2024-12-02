@@ -22,7 +22,7 @@ router.get('/getAppts', getPatientAppt);
 
 router.post('/makeAppt', postAppt);
 
-router.put('/cancelAppt', cancelAppt);
+router.delete('/cancelAppt', cancelAppt);
 
 router.get('/getPastAppts', getPastAppts);
 
