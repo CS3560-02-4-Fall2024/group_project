@@ -46,9 +46,11 @@ CREATE TABLE
 
 CREATE TABLE
   availability (
+    id INT AUTO_INCREMENT PRIMARY KEY,
     dentistId INT NOT NULL,
-    startTime DATETIME NOT NULL,
-    endTime DATETIME NOT NULL,
+    time TIME NOT NULL,
+    date DATETIME NOT NULL,
+    status VARCHAR(150) NOT NULL,
     FOREIGN KEY (dentistId) REFERENCES dentists (id)
   );
 
