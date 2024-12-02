@@ -85,4 +85,25 @@ VALUES (?,?,?,?,?,?,?);
       );
     });
   }
+
+  static updateByEmail(email: string, updates: Partial<Patient>): Promise<Patient>{
+    const fields = Object.keys(updates);
+    const values = Object.values(updates);
+    const setClause = fields.map(field => `${field} = ?`).join(', ');
+
+    return new Promise((resolve, reject) => {
+      db.query<ResultSetHeader>(
+        `UPDATE patients SET ${setClause} WHERE id = ?`,
+        [...values, email],
+        (err, res) => {
+          if (err) reject(err);
+          else if (res.affectedRows === 0) reject('user not found');
+          else
+            this.getByEmail(email)
+            .then(patient => resolve(patient!))
+            .catch(reject);
+        },
+      );
+    });
+  }
 }

@@ -116,3 +116,21 @@ export const getDentistByType = (
       res.status(500).json({error: err.message});
     });
 };
+
+export const editProfile = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): any => {
+  const email: string = req.body.email;
+  const updates: Partial<Patient> = req.body.updates;
+
+  PatientTable.updateByEmail(email, updates)
+    .then(updatedPatient => {
+      res.json(new PatientView(updatedPatient));
+    })
+    .catch((reason: any) => {
+      if (reason === 'user not found') return res.sendStatus(404);
+      return res.status(500).json({error: reason});
+    });
+};
