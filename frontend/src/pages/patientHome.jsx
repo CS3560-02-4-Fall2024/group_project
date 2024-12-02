@@ -3,11 +3,8 @@ import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
 
 // mini component to generate upcoming appointments
-function Appt() {
+function Appointment({date, time, dentistName}) {
 
-  const [apptDate, setApptDate] = useState("12/30/24");
-  const [apptTime, setApptTime] = useState("3:30 PM");
-  const [dentistName, setPatName] = useState("Lebron Raymone James");
   
   const navigate = useNavigate();
 
@@ -19,7 +16,7 @@ function Appt() {
   return (
     <div className="flex-flow rounded-xl mb-3 bg-g w-[100%] twelve:w-[80%]">
       <div className="pt-2 pl-3 text-white text-[.99vw]">
-        <p className="font-bold">{apptDate} {apptTime}</p>
+        <p className="font-bold">{date} {time}</p>
         <p><b>Dentist: </b>{dentistName}</p>
       </div> 
       <div className="flex justify-center">
@@ -32,11 +29,12 @@ function Appt() {
 function UpcomingAppt() {
   const navigate = useNavigate();
 
-  const [appts, setAppts] = useState([]);
+  const [appointments, setAppointments] = useState([]);
 
-  // query parameter is patientId
-  const query = { 'id': ''};
-
+  useEffect(() => {
+    let url = 'http://localhost:3000/availability/patients';
+    fetch('')
+  },[])
   // GET FROM DB
   const apptArray = [{
     'date': '',
@@ -57,12 +55,7 @@ function UpcomingAppt() {
           Upcoming Appointments
         </div>
         <div className="ml-16 w-[38vw] h-[60vh] overflow-y-scroll">
-          <Appt />
-          <Appt />
-          <Appt />
-          <Appt />
-          <Appt />
-          <Appt />
+          <Appointment date={"2024-12-6"} time={"9:30 AM"} dentistName={"lebron"} />
         </div>
         <div className='flex justify-center text-white mt-10 mr-0 w-[41.3vw]'>
           <button onClick={reqAppt} className="ml-16 py-3 px-5 bg-g rounded-xl hover:bg-[#587354] font-bold text-[1.5vw]">Request Appointment</button>
@@ -71,16 +64,6 @@ function UpcomingAppt() {
       
     </div>
     
-
-  )
-}
-
-function RequestAppt() {
-  const navigate = useNavigate()
-  return (
-    <div>
-      Ur MOM
-    </div>
 
   )
 }

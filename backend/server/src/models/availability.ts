@@ -63,6 +63,20 @@ VALUES (?,?,?);
     });
   }
 
+  static getByEmail(email: string): Promise<Availability[]> {
+    return new Promise<Availability[]>((resolve, reject) => {
+      db.query<Availability[]>(
+        'SELECT appointments.* FROM appointments JOIN patients ON appointments.patientId WHERE patients.email = ?',
+        [email],
+        (err, res) => {
+          if (err) reject(err);
+          else if (res.length === 0) reject('availability not found');
+          else resolve(res);
+        },
+      );
+    });
+  }
+
   static getByAppointmentID(appointmentID: number): Promise<Availability> {
     return new Promise<Availability>((resolve, reject) => {
       db.query<Availability[]>(
