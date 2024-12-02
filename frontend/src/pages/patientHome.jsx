@@ -46,6 +46,40 @@ function UpcomingAppt() {
     'email': ''
   }]
 
+  useEffect(() => {
+    const url = "http://localhost:3000/patient/?email=" + sessionStorage.getItem("email");
+    fetch(url, {
+      method: "GET",
+      headers: {
+        "Authorization": "Bearer " + sessionStorage.getItem("authToken")
+      }
+    }).then((res) => {
+      return res.json();
+    }).then((res) => {
+      console.log(res);
+      const id = res.id;
+      const url2 = "http://localhost:3000/patient/getAppts?id=" + id;
+      fetch(url2, {
+        method: "GET",
+        headers: {
+          "Authorization": "Bearer " + sessionStorage.getItem("authToken")
+        }
+      }).then((res) => {
+        return res.json();
+      }).then((res) => {
+        setAppts(res);
+      }).catch((err) => {
+        console.log(err);
+      })
+    }).catch((err) => {
+      console.log(err);
+    });
+  }, []);
+
+  useEffect(() => {
+    console.log(appts + "hileo");
+  }, [appts]);
+
   const reqAppt = () => {
     navigate("/reqAppt");
   };

@@ -47,7 +47,7 @@ export const getPatientAppt = (
   res: Response,
   next: NextFunction,
 ): any => {
-  const id = Number(req.body.id);
+  const id = Number(req.query.id);
   AppointmentTable.getByPatientId(id)
     .then((value: Appointment[]) => {
       return res.json(value);
@@ -59,10 +59,11 @@ export const getPatientAppt = (
 };
 
 export const postAppt = (req: Request, res: Response, next: NextFunction) => {
-  const appointment: Appointment = req.body.info;
+  const appointment: Appointment = req.body;
   AppointmentTable.insert(appointment)
     .then((value: Appointment) => {
       res.locals.appointment = value;
+      res.status(200).json(value);
       next();
     })
     .catch(err => {

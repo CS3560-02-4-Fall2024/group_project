@@ -63,7 +63,7 @@ export abstract class AppointmentTable {
   static getById(id: number): Promise<Appointment> {
     return new Promise<Appointment>((resolve, reject) => {
       db.query<Appointment[]>(
-        'SELECT * FROM appointments WHERE appointmentID = ?',
+        'SELECT * FROM appointments WHERE id = ?',
         [id],
         (err, res) => {
           if (err) reject(err);
