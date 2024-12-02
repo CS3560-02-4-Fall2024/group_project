@@ -62,10 +62,11 @@ export const getPatientAppt = (
 
 export const postAppt = (req: Request, res: Response, next: NextFunction) => {
   const appointment: Appointment = req.body.info;
+  console.log(req.body);
+
   AppointmentTable.insert(appointment)
     .then((value: Appointment) => {
-      res.locals.appointment = value;
-      next();
+      res.json(value);
     })
     .catch(err => {
       res.status(400).json(err);

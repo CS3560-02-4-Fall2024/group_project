@@ -1,15 +1,16 @@
 import { useState, useEffect } from 'react';
 import NavBar from '../components/Navbar';
 import IconCalendar from '../assets/calendar-small-page.png'
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 // TODO: add start and end time, and dentist select
 function RequestAppt() {
+  const navigate = useNavigate();
 
-  const [patID, setPatID] = useState();
+  const [patientId, setPatientId] = useState();
   const [patientName, setPatientName] = useState("");
   const [dentistType, setDentistType] = useState("");
-  const [dentistName, setDentistName] = useState("");
+  const [dentistId, setDentistName] = useState("");
 
   // list of all dentist of a specific type
   const [dentistOptions, setDentistOptions] = useState([]);
@@ -39,7 +40,7 @@ function RequestAppt() {
       return res.json();
     }).then((res) => {
       setPatientName(res.name);
-      setPatID(res.id);
+      setPatientId(res.id);
     }).catch((err) => {
       console.log(err);
     });
@@ -166,10 +167,7 @@ function RequestAppt() {
 
   // displays available time
   useEffect(() => {
-    if (!dentistName) return;
-    const reqName = dentistName.split(" ");
-    const url = "http://localhost:3000/patient/getDentistByName?name=" + reqName[0] + "%20" + reqName[1];
-
+    const url = "http://localhost:3000/patient/getAvailabilities?dentistId=" + dentistId;
     fetch(url, {
       method: "GET",
       headers: {
@@ -178,53 +176,49 @@ function RequestAppt() {
     }).then((res) => {
       return res.json();
     }).then((res) => {
-      // ideally route should get all availability, and day by day
-      // is handled in front end
-      if (!res.id) throw "no dentist id"
-      const url2 = "http://localhost:3000/patient/getAvailabilities?dentistId=" + res.id;
-      fetch(url2, {
-        method: "GET",
-        headers: {
-          "Authorization": "Bearer " + sessionStorage.getItem("authToken")
+      console.log(res);
+      console.log(date);
+
+      // let me die fr
+      const timeOptions = res.filter((value) => {
+        if (value.date.split("T")[0] == date) {
+          return true;
         }
-      }).then((res) => {
-        return res.json();
-      }).then((res) => {
-        console.log(res);
-        console.log(date);
+      })
 
-        // let me die fr
-        const timeOptions = res.filter((value) => {
-          if (value.date.split("T")[0] == date) {
-            return true;
-          }
-        })
-
-        setAllTimes(timeOptions);
-      }).catch((err) => {
+      setAllTimes(timeOptions);
+    })
+      .catch((err) => {
         console.log(err);
       })
-    }).catch((err) => {
-      console.log(err);
-    })
-    // should also run when date changes with current behavior
-  }, [dentistName, date]);
+  }, [dentistId, date]);
 
-  const navigate = useNavigate();
-
-  const Schedule = () => {
-
-    // post a appt into db
+  const postSchedule = async () => {
     const detailsJSON = {
-      'id': '', //patientId
-      'name': '', //dentistName (and then you gotta get the id for the appt table)
-      'type': '',
-      'date': '',
-      'time': '',
-      'purpose': ''
+      patientId: patientId,
+      dentistId: dentistId,
+      status: 'scheduled',
+      date: date,
+      time: time,
+      duration: '30',
+      purpose: purpose,
     }
-    navigate("/apptConfirm")
-    //do database storing shit
+    
+    const url = "http://localhost:3000/patient/makeAppt";
+    await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + sessionStorage.getItem("authToken")
+      },
+      body: JSON.stringify({info: detailsJSON})
+    })
+    .then((res) => res.json())
+    .then((res) => {
+      console.log(res);
+    })
+
+    navigate('/apptConfirm');
   };
 
   return (
@@ -253,7 +247,7 @@ function RequestAppt() {
             {dentistOptions.map((value) => {
               // ideally value should be value.id because we should be 
               // getting dentists by id instead of name.
-              return (<option value={value.name} key={value.id}>{value.name}</option>)
+              return (<option value={value.id} key={value.id}>{value.name}</option>)
             })}
           </select>
 
@@ -305,7 +299,7 @@ function RequestAppt() {
         </div>
 
         {/* This is the Schedule Button */}
-        <button onClick={Schedule} className='w-[14vw] h-[7vh] bg-g hover:bg-[#587354] rounded-xl mb-12 mt-4 text-white font-bold text-3xl'>Schedule</button>
+        <button onClick={postSchedule} className='w-[14vw] h-[7vh] bg-g hover:bg-[#587354] rounded-xl mb-12 mt-4 text-white font-bold text-3xl'>Schedule</button>
       </div>
     </>
   )
