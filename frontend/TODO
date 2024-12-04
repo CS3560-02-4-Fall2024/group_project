@@ -1,0 +1,4 @@
+1. move pages into patient and dentist directory
+2. make services dir and custom hooks for fetching the data
+3. change calendar
+4. make dentist login by email

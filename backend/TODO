@@ -1,0 +1,5 @@
+1. Working availability.
+    - Set availability status
+    - Sort ascending on return
+2. Implement CRUD for all 4 models
+3. Make patient not be able to schedule appointments on top of each other.
