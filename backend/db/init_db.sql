@@ -42,17 +42,20 @@ CREATE TABLE
     dentistId INT NOT NULL,
     timeSlot DATETIME NOT NULL,
     status ENUM ('available', 'unavailable') NOT NULL DEFAULT 'available',
-    FOREIGN KEY (dentistId) REFERENCES dentists (id)
+    FOREIGN KEY (dentistId) REFERENCES dentists (id),
+    UNIQUE (dentistId, timeSlot)
   );
 
+DROP TABLE appointments;
 CREATE TABLE
   appointments (
     id INT AUTO_INCREMENT PRIMARY KEY,
     patientId INT NOT NULL,
     dentistId INT NOT NULL,
-    status VARCHAR(150) NOT NULL,
     timeSlot DATETIME NOT NULL,
     purpose VARCHAR(255),
     FOREIGN KEY (patientId) REFERENCES patients (id),
-    FOREIGN KEY (dentistId) REFERENCES dentists (id)
+    FOREIGN KEY (dentistId) REFERENCES dentists (id),
+    UNIQUE (patientId, timeSlot),
+    UNIQUE (dentistId, timeSlot)
   );
