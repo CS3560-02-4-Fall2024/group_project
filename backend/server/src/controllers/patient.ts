@@ -21,6 +21,23 @@ export const createPatient = (
     });
 };
 
+export const getPatientById = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): any => {
+  const id: number = Number(req.params.id);
+
+  PatientTable.getById(id)
+    .then((value: Patient) => {
+      return res.json(new PatientView(value));
+    })
+    .catch((reason: any) => {
+      if (reason === 'user not found') return res.sendStatus(400);
+      return res.sendStatus(500);
+    });
+};
+
 export const getPatientByEmail = (
   req: Request,
   res: Response,

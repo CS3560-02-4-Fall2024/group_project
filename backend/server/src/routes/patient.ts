@@ -4,6 +4,7 @@ import {
   createPatient,
   deletePatient,
   getPatientByEmail,
+  getPatientById,
   updatePatient,
 } from '../controllers/patient';
 
@@ -12,6 +13,8 @@ const router: Router = express.Router();
 router.post('/', createPatient);
 
 router.get('/', getPatientByEmail);
+
+router.get('/:id', getPatientById);
 
 router.put('/:id', updatePatient);
 
