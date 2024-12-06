@@ -51,7 +51,7 @@ export const authorizePatient = (
     token,
     process.env.TOKEN_SECRET as string,
     (err: any, user: any) => {
-      if (err || user.type !== 'patient' || user.id !== Number(req.params.id))
+      if (err || user.type !== 'patient')
         return res.sendStatus(403);
 
       res.locals.user = user;
@@ -128,7 +128,7 @@ export const authorizeDentist = (
     token,
     process.env.TOKEN_SECRET as string,
     (err: any, user: any) => {
-      if (err || user.type !== 'dentist' || user.id !== Number(req.params.id))
+      if (err || user.type !== 'dentist')
         return res.sendStatus(403);
 
       return next();
