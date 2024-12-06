@@ -3,8 +3,7 @@ import {
   authenticatePatient,
   authenticateDentist,
 } from '../controllers/auth';
-import {createPatient} from '../controllers/patient';
-import {createDentist} from '../controllers/dentist';
+import {createPatient, createDentist} from '../controllers/auth';
 
 const router: Router = express.Router();
 

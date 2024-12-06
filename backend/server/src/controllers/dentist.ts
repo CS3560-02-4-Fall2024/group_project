@@ -1,27 +1,5 @@
 import {Request, Response, NextFunction} from 'express';
 import {Dentist, DentistTable, DentistView} from '../models/dentist';
-import bcrypt from 'bcrypt';
-import {Appointment, AppointmentTable} from '../models/appointment';
-import {Patient, PatientTable} from '../models/patient';
-
-const saltRounds = Number(process.env.SALT_ROUNDS);
-
-export const createDentist = (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
-  const dentist: Dentist = req.body;
-  dentist.passwordHash = bcrypt.hashSync(dentist.password, saltRounds);
-
-  DentistTable.insert(dentist)
-    .then((value: Dentist) => {
-      next();
-    })
-    .catch(err => {
-      res.status(400).json(err);
-    });
-};
 
 export const getDentistById = (
   req: Request,

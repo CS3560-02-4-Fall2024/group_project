@@ -1,9 +1,7 @@
 import express, {Router} from 'express';
 import {authorizePatient} from '../controllers/auth';
 import {
-  createPatient,
   deletePatient,
-  getPatientByEmail,
   getPatientById,
   updatePatient,
 } from '../controllers/patient';

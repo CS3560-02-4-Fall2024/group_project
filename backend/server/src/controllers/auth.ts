@@ -14,26 +14,27 @@ export const authenticatePatient = async (
 
   PatientTable.getByEmail(email)
     .then((value: Patient) => {
-      return bcrypt.compare(password, value.passwordHash).then((success: boolean) => {
-        if (success) {
-          const token: string = jwt.sign(
-            {id: value.id, email: email, type: 'patient'},
-            process.env.TOKEN_SECRET as string,
-            {
-              expiresIn: '1d',
-            },
-          );
-          res.json({authToken: token});
-        } else {
-          res.sendStatus(403);
-        }
-      });
+      return bcrypt
+        .compare(password, value.passwordHash)
+        .then((success: boolean) => {
+          if (success) {
+            const token: string = jwt.sign(
+              {id: value.id, email: email, type: 'patient'},
+              process.env.TOKEN_SECRET as string,
+              {
+                expiresIn: '1d',
+              },
+            );
+            res.json({authToken: token});
+          } else {
+            res.sendStatus(403);
+          }
+        });
     })
     .catch(() => {
       res.sendStatus(403);
     });
 };
-
 
 // Authorize Patient
 export const authorizePatient = (
@@ -59,6 +60,26 @@ export const authorizePatient = (
   );
 };
 
+export const createPatient = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const patient: Patient = req.body;
+  patient.passwordHash = bcrypt.hashSync(
+    patient.password,
+    Number(process.env.SALT_ROUNDS),
+  );
+
+  PatientTable.insert(patient)
+    .then((value: Patient) => {
+      next();
+    })
+    .catch(err => {
+      res.status(400).json({error: err.code});
+    });
+};
+
 // Authenticate Dentist by ID
 export const authenticateDentist = async (
   req: Request,
@@ -70,20 +91,22 @@ export const authenticateDentist = async (
 
   DentistTable.getByEmail(email)
     .then((value: Dentist) => {
-      return bcrypt.compare(password, value.passwordHash).then((success: boolean) => {
-        if (success) {
-          const token: string = jwt.sign(
-            {id: value.id, email: email, type: 'dentist'},
-            process.env.TOKEN_SECRET as string,
-            {
-              expiresIn: '1d',
-            },
-          );
-          res.json({authToken: token});
-        } else {
-          res.sendStatus(403);
-        }
-      });
+      return bcrypt
+        .compare(password, value.passwordHash)
+        .then((success: boolean) => {
+          if (success) {
+            const token: string = jwt.sign(
+              {id: value.id, email: email, type: 'dentist'},
+              process.env.TOKEN_SECRET as string,
+              {
+                expiresIn: '1d',
+              },
+            );
+            res.json({authToken: token});
+          } else {
+            res.sendStatus(403);
+          }
+        });
     })
     .catch(() => {
       res.sendStatus(403);
@@ -111,4 +134,24 @@ export const authorizeDentist = (
       return next();
     },
   );
+};
+
+export const createDentist = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const dentist: Dentist = req.body;
+  dentist.passwordHash = bcrypt.hashSync(
+    dentist.password,
+    Number(process.env.SALT_ROUNDS),
+  );
+
+  DentistTable.insert(dentist)
+    .then((value: Dentist) => {
+      next();
+    })
+    .catch(err => {
+      res.status(400).json(err);
+    });
 };

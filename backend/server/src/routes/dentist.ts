@@ -1,7 +1,6 @@
 import express, {Router} from 'express';
 import {authorizeDentist} from '../controllers/auth';
 import {
-  createDentist,
   deleteDentist,
   getDentistById,
   updateDentist,
