@@ -56,9 +56,7 @@ VALUES (?, ?, ?, ?);
       db.query<Appointment[]>(
         'SELECT * FROM appointments WHERE id = ?',
         [id],
-        (err, res) => {
-          if (err) reject(err);
-          else if (res.length === 0) reject('Appointment not found');
+        (err, res) => { if (err) reject(err); else if (res.length === 0) reject('Appointment not found');
           else {
             resolve(res?.[0]);
           }
@@ -80,25 +78,12 @@ VALUES (?, ?, ?, ?);
     });
   }
 
-  static cancelById(id: number): Promise<void> {
-    return new Promise<void>((resolve, reject) => {
-      db.query('DELETE FROM appointments WHERE id = ?', [id], (err, res) => {
+  static delete(id: number): Promise<number> {
+    return new Promise<number>((resolve, reject) => {
+      db.query<ResultSetHeader>('DELETE FROM appointments WHERE id = ?', [id], (err, res) => {
         if (err) reject(err);
-        else resolve();
+        else resolve(res.affectedRows);
       });
-    });
-  }
-
-  static getPastApptsByPatientId(patientId: number): Promise<Appointment[]> {
-    return new Promise<Appointment[]>((resolve, reject) => {
-      db.query<Appointment[]>(
-        'SELECT * FROM appointments WHERE status = "Done" AND patientId = ?',
-        [patientId],
-        (err, res) => {
-          if (err) reject(err);
-          else resolve(res);
-        },
-      );
     });
   }
 
@@ -107,32 +92,6 @@ VALUES (?, ?, ?, ?);
       db.query<Appointment[]>(
         'SELECT * FROM appointments WHERE dentistID = ? AND status = "Done"',
         [dentistID],
-        (err, res) => {
-          if (err) reject(err);
-          else resolve(res);
-        },
-      );
-    });
-  }
-
-  static getByDentistIdScheduled(dentistID: number): Promise<Appointment[]> {
-    return new Promise<Appointment[]>((resolve, reject) => {
-      db.query<Appointment[]>(
-        'SELECT * FROM appointments WHERE dentistID = ? AND status = "Scheduled"',
-        [dentistID],
-        (err, res) => {
-          if (err) reject(err);
-          else resolve(res);
-        },
-      );
-    });
-  }
-
-  static getBofa(patientID: number, dentistID: number): Promise<Appointment[]> {
-    return new Promise<Appointment[]>((resolve, reject) => {
-      db.query<Appointment[]>(
-        'SELECT * FROM appointments WHERE patientID = ? AND dentistID = ? AND status = "Done"',
-        [patientID, dentistID],
         (err, res) => {
           if (err) reject(err);
           else resolve(res);

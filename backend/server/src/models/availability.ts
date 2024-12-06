@@ -72,13 +72,17 @@ VALUES (?,?,?);
     dentistId: number,
     timeSlot: String,
   ): Promise<Availability> {
+    console.log('dentstId: ', dentistId);
+    console.log('timeSlot: ', timeSlot);
+    
+    
     return new Promise<Availability>((resolve, reject) => {
       db.query<Availability[]>(
         'SELECT * FROM availability WHERE dentistId = ? AND timeSlot = ?',
         [dentistId, timeSlot.slice(0, 19)],
         (err, res) => {
           if (err) reject(err);
-          else if (res.length === 0) reject('doctor not found');
+          else if (res.length === 0) reject('availability slot not found');
           else resolve(res[0]);
         },
       );
