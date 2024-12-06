@@ -10,8 +10,8 @@ import {createDentist} from '../controllers/dentist';
 
 const router: Router = express.Router();
 
-router.post('/patient', createPatient, authenticatePatient);
+router.post('/patient/signup', createPatient, authenticatePatient);
 
-router.post('/patient/login', authorizePatient);
+router.post('/patient/login', authenticatePatient);
 
 export {router};

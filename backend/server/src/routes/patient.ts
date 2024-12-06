@@ -10,7 +10,7 @@ import {
 
 const router: Router = express.Router();
 
-router.get('/', getPatientByEmail);
+router.use('/:id', authorizePatient);
 
 router.get('/:id', getPatientById);
 

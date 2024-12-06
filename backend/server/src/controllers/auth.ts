@@ -50,9 +50,7 @@ export const authorizePatient = (
     token,
     process.env.TOKEN_SECRET as string,
     (err: any, user: any) => {
-      console.log('jwt user: ', user);
-      
-      if (err || user.type !== 'patient' /*|| req.body.email !== user.email */)
+      if (err || user.type !== 'patient' || user.id !== Number(req.params.id))
         return res.sendStatus(403);
 
       res.locals.user = user;
