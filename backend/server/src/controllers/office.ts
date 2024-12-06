@@ -33,11 +33,7 @@ export const updateOffice = (
   next: NextFunction,
 ): any => {
   const officeId = Number(req.params.id);
-  console.log('id: ', officeId);
-  
   const newOffice: Office = req.body;
-  console.log('office: ', newOffice);
-  
 
   if (!officeId) return res.sendStatus(400);
 

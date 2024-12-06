@@ -10,7 +10,6 @@ export const bookAppointment = async (
   const appointment: Appointment = req.body;
   const dentistId: number = appointment.dentistId;
   const timeSlot: Date = appointment.timeSlot;
-  console.log('timeSlot: ', timeSlot);
 
   AvailabilityTable.updateAvailability(
     dentistId,
@@ -29,10 +28,4 @@ export const bookAppointment = async (
     .catch(err => {
       res.json(err);
     });
-
-  // AppointmentTable.insert(appointment)
-  // .then((value: Appointment) => {
-  //     console.log('working insert: ', value);
-  // })
-  // .catch(err => res.status(400).send('y tho'));
 };

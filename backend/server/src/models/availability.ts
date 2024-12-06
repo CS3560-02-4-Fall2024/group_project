@@ -72,15 +72,11 @@ VALUES (?,?,?);
     dentistId: number,
     timeSlot: String,
   ): Promise<Availability> {
-    console.log('long query timeslot', timeSlot);
-
     return new Promise<Availability>((resolve, reject) => {
       db.query<Availability[]>(
         'SELECT * FROM availability WHERE dentistId = ? AND timeSlot = ?',
         [dentistId, timeSlot.slice(0, 19)],
         (err, res) => {
-          console.log('long query res: ', res);
-
           if (err) reject(err);
           else if (res.length === 0) reject('doctor not found');
           else resolve(res[0]);
@@ -108,8 +104,6 @@ UPDATE availability SET status = 'unavailable' WHERE id = ?
     timeSlot: String,
     status: string,
   ) {
-    console.log('update availability');
-
     return new Promise<Availability>((resolve, reject) => {
       db.query<ResultSetHeader>(
         `
@@ -117,14 +111,10 @@ UPDATE availability SET status = ? WHERE dentistId = ? AND timeSlot = ?
 `,
         [status, dentistId, timeSlot.slice(0, 19)],
         (err, res) => {
-          console.log('avail', res);
-
           if (err) reject(err);
           else {
             this.getByDentistIDAndTimeSlot(dentistId, timeSlot)
               .then((value: Availability) => {
-                console.log('long query res1: ', value);
-                
                 resolve(value!);
               })
               .catch(reject);
