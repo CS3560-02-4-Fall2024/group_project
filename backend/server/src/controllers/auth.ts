@@ -131,6 +131,7 @@ export const authorizeDentist = (
       if (err || user.type !== 'dentist')
         return res.sendStatus(403);
 
+      res.locals.user = user;
       return next();
     },
   );
