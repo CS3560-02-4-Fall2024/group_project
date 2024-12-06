@@ -33,7 +33,7 @@ export const updateOffice = (
   req: Request,
   res: Response,
   next: NextFunction,
-) => {
+): any => {
   const officeId = Number(req.params.id);
   console.log('id: ', officeId);
   
@@ -41,9 +41,9 @@ export const updateOffice = (
   console.log('office: ', newOffice);
   
 
-  if (!officeId) res.sendStatus(400);
+  if (!officeId) return res.sendStatus(400);
 
-  OfficeTable.update(officeId, newOffice)
+  return OfficeTable.update(officeId, newOffice)
     .then((value: Office) => {
       res.json(value);
     })
@@ -56,12 +56,12 @@ export const deleteOffice = (
   req: Request,
   res: Response,
   next: NextFunction,
-) => {
+): any => {
   const officeId = Number(req.params.id);
 
-  if (!officeId) res.sendStatus(400);
+  if (!officeId) return res.sendStatus(400).send('provide valid id');
 
-  OfficeTable.deleteById(officeId)
+  return OfficeTable.delete(officeId)
     .then((value: number) => {
       res.json({deleted: value});
     })

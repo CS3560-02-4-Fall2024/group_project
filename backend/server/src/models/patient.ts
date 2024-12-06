@@ -87,4 +87,45 @@ VALUES (?,?,?,?,?,?,?);
       );
     });
   }
+
+  static update(id: number, patient: Patient) {
+    return new Promise<Patient>((resolve, reject) => {
+      db.query<Patient[]>(
+        `
+UPDATE patients SET name = ?, phone = ?, email = ?, dateOfBirth = ?, address = ?, insuranceCompany = ?
+WHERE id = ?;
+`,
+        [
+          patient.name,
+          patient.phone,
+          patient.email,
+          patient.dateOfBirth,
+          patient.address,
+          patient.insuranceCompany,
+          id,
+        ],
+        (err, res) => {
+          if (err) reject(err);
+          else {
+            this.getById(id)
+            .then((value: Patient) => resolve(value!))
+            .catch(reject);
+          }
+        }
+      );
+    });
+  }
+
+  static delete(id: number) {
+    return new Promise<number>((resolve, reject) => {
+      db.query<ResultSetHeader>(
+        'DELETE FROM patients WHERE id = ?',
+        [id],
+        (err, res) => {
+          if (err) reject(err);
+          else resolve(res.affectedRows);
+        },
+      );
+    });
+  }
 }

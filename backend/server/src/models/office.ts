@@ -92,7 +92,7 @@ UPDATE offices SET phone = ?, email = ?, address = ?, rooms = ? WHERE id = ?;
     });
   }
 
-  static deleteById(id: number): Promise<number> {
+  static delete(id: number): Promise<number> {
     return new Promise<number>((resolve, reject) => {
       db.query<ResultSetHeader>(
         'DELETE FROM offices WHERE id = ?',
