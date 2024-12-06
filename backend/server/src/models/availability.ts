@@ -9,11 +9,13 @@ export interface Availability extends RowDataPacket {
 }
 
 export class AvailabilityView {
+  id: number;
   dentistId: number;
   timeSlot: Date;
   status: string;
 
   constructor(availability: Availability) {
+    this.id = availability.id;
     this.dentistId = availability.dentistId;
     this.timeSlot = availability.timeSlot;
     this.status = availability.status;
@@ -25,7 +27,7 @@ export abstract class AvailabilityTable {
     return new Promise((resolve, reject) => {
       db.query<ResultSetHeader>(
         `
-INSERT INTO availability (dentistId, startTime, status) 
+INSERT INTO availability (dentistId, timeSlot, status) 
 VALUES (?,?,?);
 `,
         [
@@ -51,7 +53,6 @@ VALUES (?,?,?);
         [availabilityId],
         (err, res) => {
           if (err) reject(err);
-          else if (res.length === 0) reject('availability not found');
           else resolve(res?.[0]);
         },
       );
@@ -65,21 +66,36 @@ VALUES (?,?,?);
         [dentistId],
         (err, res) => {
           if (err) reject(err);
-          else if (res.length === 0) reject('availability not found');
           else resolve(res);
         },
       );
     });
   }
 
-  static delete(dentistId: number, start: Date, end: Date): Promise<number> {
+  static book(availabilityId: number): Promise<number> {
+    return new Promise<number>((resolve, reject) => {
+      db.query<ResultSetHeader>(
+`
+UPDATE availability SET status = 'unavailable' WHERE id = ?
+`,
+        [availabilityId],
+        (err, res) => {
+          if (err) reject(err);
+          else resolve(res.affectedRows);
+        }
+      )
+    })
+  }
+
+  static delete(dentistId: number, start: String, end: String): Promise<number> {
+    
     return new Promise<number>((resolve, reject) => {
       db.query<ResultSetHeader>(
 `
 DELETE FROM availability WHERE dentistId = ?
 AND timeSlot BETWEEN ? AND ?
 `,
-        [dentistId, start, end],
+        [dentistId, start.slice(0, 19), end.slice(0, 19)],
         (err, res) => {
           if (err) reject(err);
           else resolve(res.affectedRows);
