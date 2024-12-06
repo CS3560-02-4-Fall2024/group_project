@@ -14,7 +14,7 @@ export const createPatient = (
 
   PatientTable.insert(patient)
     .then((value: Patient) => {
-      res.json(new PatientView(value));
+      next();
     })
     .catch(err => {
       res.status(400).json({error: err.code});

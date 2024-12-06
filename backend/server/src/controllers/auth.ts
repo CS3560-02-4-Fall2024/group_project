@@ -4,32 +4,20 @@ import {Dentist, DentistTable} from '../models/dentist';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 
-// Authenticate Patient
 export const authenticatePatient = async (
   req: Request,
   res: Response,
   next: NextFunction,
 ) => {
-  let email: string;
-  let password: string;
-  // if length is 0, then the previous req res cycle function was NOT createAcc
-  if (Object.keys(res.locals).length === 0) {
-    email = req.body.email;
-    password = req.body.password;
-  } else {
-    // this stuff came from createAcc function
-    email = res.locals.patient.email;
-    password = req.body.password;
-  }
+  const email: string = req.body.email;
+  const password: string = req.body.password;
+
   PatientTable.getByEmail(email)
     .then((value: Patient) => {
-      return value.passwordHash;
-    })
-    .then((value: string) => {
-      return bcrypt.compare(password, value).then((success: boolean) => {
+      return bcrypt.compare(password, value.passwordHash).then((success: boolean) => {
         if (success) {
           const token: string = jwt.sign(
-            {email: email, type: 'patient'},
+            {id: value.id, email: email, type: 'patient'},
             process.env.TOKEN_SECRET as string,
             {
               expiresIn: '1d',
@@ -40,25 +28,12 @@ export const authenticatePatient = async (
           res.sendStatus(403);
         }
       });
-      // if (password === value) {
-      //   const token: string = jwt.sign(
-      //     {email: email, type: 'patient'},
-      //     process.env.TOKEN_SECRET as string,
-      //     {
-      //       expiresIn: '1d',
-      //     },
-      //   );
-      //   res.json({authToken: token});
-      // } else {
-      //   console.log('boo boo');
-      //   res.sendStatus(403);
-      // }
     })
-    .catch(err => {
-      console.log(err);
+    .catch(() => {
       res.sendStatus(403);
     });
 };
+
 
 // Authorize Patient
 export const authorizePatient = (
@@ -75,6 +50,8 @@ export const authorizePatient = (
     token,
     process.env.TOKEN_SECRET as string,
     (err: any, user: any) => {
+      console.log('jwt user: ', user);
+      
       if (err || user.type !== 'patient' /*|| req.body.email !== user.email */)
         return res.sendStatus(403);
 

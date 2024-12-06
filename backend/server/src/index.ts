@@ -13,7 +13,7 @@ const cors = require('cors');
 app.use(cors());
 app.use(express.json());
 
-// app.use('/auth', auth);
+app.use('/auth', auth);
 app.use('/patient', patient);
 app.use('/dentist', dentist);
 // app.use('/availability', availability);
