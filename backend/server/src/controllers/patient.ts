@@ -8,6 +8,8 @@ export const getPatientById = (
 ): any => {
   const id: number = Number(req.params.id);
 
+  if (id !== res.locals.user.id) return res.sendStatus(403);
+
   PatientTable.getById(id)
     .then((value: Patient) => {
       return res.json(new PatientView(value));
@@ -42,7 +44,7 @@ export const updatePatient = (
   const id: number = Number(req.params.id);
   const newPatient: Patient = req.body;
 
-  if (!id) return res.status(400).send('provide valid id');
+  if (id !== res.locals.user.id) return res.sendStatus(403);
 
   PatientTable.update(id, newPatient)
     .then((value: Patient) => {
@@ -60,7 +62,7 @@ export const deletePatient = (
 ): any => {
   const id: number = Number(req.params.id);
 
-  if (!id) return res.status(400).send('provide valid id');
+  if (id !== res.locals.user.id) return res.sendStatus(403);
 
   PatientTable.delete(id)
     .then((value: number) => {

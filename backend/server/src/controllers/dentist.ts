@@ -7,6 +7,9 @@ export const getDentistById = (
   next: NextFunction,
 ): any => {
   const id = Number(req.params.id);
+
+  if (id !== res.locals.user.id) return res.sendStatus(403);
+
   DentistTable.getById(id)
     .then((value: Dentist) => {
       return res.json(new DentistView(value));
@@ -25,7 +28,7 @@ export const updateDentist = (
   const id: number = Number(req.params.id);
   const newDentist: Dentist = req.body;
 
-  if (!id) return res.status(400).send('provide valid id');
+  if (id !== res.locals.user.id) return res.sendStatus(403);
 
   DentistTable.update(id, newDentist)
   .then((value: Dentist) => {
@@ -43,7 +46,7 @@ export const deleteDentist = (
 ): any => {
   const id: number = Number(req.params.id);
 
-  if (!id) return res.status(400).send('provide valid id');
+  if (id !== res.locals.user.id) return res.sendStatus(403);
 
   DentistTable.delete(id)
     .then((value: number) => {

@@ -8,7 +8,7 @@ import {
 
 const router: Router = express.Router();
 
-router.use('/:id', authorizePatient);
+router.use(authorizePatient);
 
 router.get('/:id', getPatientById);
 

@@ -1,6 +1,6 @@
 import {Request, Response, NextFunction} from 'express';
-import {Patient, PatientTable} from '../models/patient';
-import {Dentist, DentistTable} from '../models/dentist';
+import {Patient, PatientTable, PatientView} from '../models/patient';
+import {Dentist, DentistTable, DentistView} from '../models/dentist';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 
@@ -25,7 +25,7 @@ export const authenticatePatient = async (
                 expiresIn: '1d',
               },
             );
-            res.json({authToken: token});
+            res.json({authToken: token, user: new PatientView(value)});
           } else {
             res.sendStatus(403);
           }
@@ -102,7 +102,7 @@ export const authenticateDentist = async (
                 expiresIn: '1d',
               },
             );
-            res.json({authToken: token});
+            res.json({authToken: token, user: new DentistView(value)});
           } else {
             res.sendStatus(403);
           }

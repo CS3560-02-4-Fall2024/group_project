@@ -72,4 +72,19 @@ VALUES (?,?,?);
     });
   }
 
+  static delete(dentistId: number, start: Date, end: Date): Promise<number> {
+    return new Promise<number>((resolve, reject) => {
+      db.query<ResultSetHeader>(
+`
+DELETE FROM availability WHERE dentistId = ?
+AND timeSlot BETWEEN ? AND ?
+`,
+        [dentistId, start, end],
+        (err, res) => {
+          if (err) reject(err);
+          else resolve(res.affectedRows);
+        }
+      )
+    })
+  }
 }

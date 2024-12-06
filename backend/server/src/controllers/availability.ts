@@ -1,8 +1,14 @@
 import {Request, Response, NextFunction} from 'express';
-import {AvailabilityTable} from '../models/availability';
+import {Availability, AvailabilityTable} from '../models/availability';
 
 export const createAvailability = (
   req: Request,
   res: Response,
   next: NextFunction,
-): any => {}
+): any => {
+  const availability: Availability = req.body;
+
+  AvailabilityTable.insert(availability)
+  .then((value: Availability) => res.json(value))
+  .catch((err) => res.status(400).json(err));
+}
