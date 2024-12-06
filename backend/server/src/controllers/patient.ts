@@ -57,7 +57,7 @@ export const getPatientByEmail = (
 export const updatePatient = (
   req: Request,
   res: Response,
-  nest: NextFunction,
+  next: NextFunction,
 ): any => {
   const id: number = Number(req.params.id);
   const newPatient: Patient = req.body.patient;
@@ -76,7 +76,7 @@ export const updatePatient = (
 export const deletePatient = (
   req: Request,
   res: Response,
-  nest: NextFunction,
+  next: NextFunction,
 ): any => {
   const id: number = Number(req.params.id);
 

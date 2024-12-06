@@ -2,27 +2,19 @@ import express, {Router} from 'express';
 import {authorizeDentist} from '../controllers/auth';
 import {
   createDentist,
-  getBofa,
-  getDentistAppts,
+  deleteDentist,
   getDentistById,
-  getPatientById,
-  getScheduled,
+  updateDentist,
 } from '../controllers/dentist';
 
 const router: Router = express.Router();
 
-router.use(authorizeDentist);
+router.post('/', createDentist);
 
-router.post('/create', createDentist);
+router.get('/:id', getDentistById);
 
-router.get('/', getDentistById);
+router.put('/:id', updateDentist);
 
-router.get('/getUpcoming', getDentistAppts);
-
-router.get('/getDone', getScheduled);
-
-router.get('/getPatientById', getPatientById);
-
-router.get('/getBofa', getBofa);
+router.delete('/:id', deleteDentist);
 
 export {router};
