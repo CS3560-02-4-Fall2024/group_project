@@ -11,8 +11,8 @@ export const createDentist = (
   res: Response,
   next: NextFunction,
 ) => {
-  const dentist: Dentist = req.body.dentist;
-  dentist.passwordHash = bcrypt.hashSync(req.body.dentist.password, saltRounds);
+  const dentist: Dentist = req.body;
+  dentist.passwordHash = bcrypt.hashSync(dentist.password, saltRounds);
 
   DentistTable.insert(dentist)
     .then((value: Dentist) => {
@@ -45,7 +45,7 @@ export const updateDentist = (
   next: NextFunction,
 ): any => {
   const id: number = Number(req.params.id);
-  const newDentist: Dentist = req.body.dentist;
+  const newDentist: Dentist = req.body;
 
   if (!id) return res.status(400).send('provide valid id');
 

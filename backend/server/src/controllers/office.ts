@@ -6,9 +6,7 @@ export const createOffice = (
   res: Response,
   next: NextFunction,
 ) => {
-  const office: Office = req.body.office;
-  console.log('received: ', office);
-  
+  const office: Office = req.body;
 
   OfficeTable.insert(office)
     .then((value: Office) => {
@@ -37,7 +35,7 @@ export const updateOffice = (
   const officeId = Number(req.params.id);
   console.log('id: ', officeId);
   
-  const newOffice: Office = req.body.office;
+  const newOffice: Office = req.body;
   console.log('office: ', newOffice);
   
 

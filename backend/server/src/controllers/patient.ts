@@ -9,7 +9,7 @@ export const createPatient = (
   res: Response,
   next: NextFunction,
 ) => {
-  const patient: Patient = req.body.patient;
+  const patient: Patient = req.body;
   patient.passwordHash = bcrypt.hashSync(patient.password, saltRounds);
 
   PatientTable.insert(patient)
@@ -60,13 +60,13 @@ export const updatePatient = (
   next: NextFunction,
 ): any => {
   const id: number = Number(req.params.id);
-  const newPatient: Patient = req.body.patient;
+  const newPatient: Patient = req.body;
 
   if (!id) return res.status(400).send('provide valid id');
 
   PatientTable.update(id, newPatient)
     .then((value: Patient) => {
-      res.json(value);
+      res.json(new PatientView(value));
     })
     .catch(err => {
       res.status(400).json(err);
