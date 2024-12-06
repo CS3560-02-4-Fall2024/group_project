@@ -3,31 +3,24 @@ import {connection as db} from '../db';
 
 export interface Appointment extends RowDataPacket {
   id: number;
-  patientID: number;
-  dentistID: number;
-  status: string;
-  date: Date;
-  time: string;
-  duration: number;
+  patientId: number;
+  dentistId: number;
+  timeSlot: Date;
   purpose: string;
 }
 
 export class AppointmentView {
-  patientID: number;
-  dentistID: number;
-  status: string;
-  date: Date;
-  time: string;
-  duration: number;
+  id: number;
+  patientId: number;
+  dentistId: number;
+  timeSlot: Date;
   purpose: string;
 
   constructor(appointment: Appointment) {
-    this.patientID = appointment.patientID;
-    this.dentistID = appointment.dentistID;
-    this.status = appointment.status;
-    this.date = appointment.date;
-    this.time = appointment.time;
-    this.duration = appointment.duration;
+    this.id = appointment.id;
+    this.patientId = appointment.patientId;
+    this.dentistId = appointment.dentistId;
+    this.timeSlot = appointment.timeSlot;
     this.purpose = appointment.purpose;
   }
 }
@@ -36,25 +29,23 @@ export abstract class AppointmentTable {
   static insert(appointment: Appointment): Promise<Appointment> {
     return new Promise((resolve, reject) => {
       db.query<ResultSetHeader>(
-        `
-                INSERT INTO appointments (patientID, dentistID, status, date, time, duration, purpose)
-                VALUES (?, ?, ?, ?, ?, ?, ?);
-                `,
+`
+INSERT INTO appointments (patientID, dentistID, timeSlot, purpose)
+VALUES (?, ?, ?, ?);
+`,
         [
           appointment.patientId,
           appointment.dentistId,
-          appointment.status,
-          appointment.date,
-          appointment.time,
-          appointment.duration,
+          appointment.timeSlot,
           appointment.purpose,
         ],
         (err, res) => {
           if (err) reject(err);
-          else
+          else{
             this.getById(res.insertId)
               .then((newAppointment: Appointment) => resolve(newAppointment!))
               .catch(reject);
+          }
         },
       );
     });
@@ -68,14 +59,15 @@ export abstract class AppointmentTable {
         (err, res) => {
           if (err) reject(err);
           else if (res.length === 0) reject('Appointment not found');
-          else resolve(res[0]);
+          else {
+            resolve(res?.[0]);
+          }
         },
       );
     });
   }
 
   static getByPatientId(patientID: number): Promise<Appointment[]> {
-    console.log('querying!');
     return new Promise<Appointment[]>((resolve, reject) => {
       db.query<Appointment[]>(
         'SELECT * FROM appointments WHERE patientID = ?',
@@ -89,8 +81,6 @@ export abstract class AppointmentTable {
   }
 
   static cancelById(id: number): Promise<void> {
-    console.log('deleting', id);
-
     return new Promise<void>((resolve, reject) => {
       db.query('DELETE FROM appointments WHERE id = ?', [id], (err, res) => {
         if (err) reject(err);

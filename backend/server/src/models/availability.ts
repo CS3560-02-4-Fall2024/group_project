@@ -30,11 +30,7 @@ export abstract class AvailabilityTable {
 INSERT INTO availability (dentistId, timeSlot, status) 
 VALUES (?,?,?);
 `,
-        [
-          availability.dentistId,
-          availability.timeSlot,
-          availability.status,
-        ],
+        [availability.dentistId, availability.timeSlot, availability.status],
         (err, res) => {
           if (err) reject(err);
           else
@@ -72,26 +68,80 @@ VALUES (?,?,?);
     });
   }
 
+  static getByDentistIDAndTimeSlot(
+    dentistId: number,
+    timeSlot: String,
+  ): Promise<Availability> {
+    console.log('long query timeslot', timeSlot);
+
+    return new Promise<Availability>((resolve, reject) => {
+      db.query<Availability[]>(
+        'SELECT * FROM availability WHERE dentistId = ? AND timeSlot = ?',
+        [dentistId, timeSlot.slice(0, 19)],
+        (err, res) => {
+          console.log('long query res: ', res);
+
+          if (err) reject(err);
+          else if (res.length === 0) reject('doctor not found');
+          else resolve(res[0]);
+        },
+      );
+    });
+  }
   static book(availabilityId: number): Promise<number> {
     return new Promise<number>((resolve, reject) => {
       db.query<ResultSetHeader>(
-`
+        `
 UPDATE availability SET status = 'unavailable' WHERE id = ?
 `,
         [availabilityId],
         (err, res) => {
           if (err) reject(err);
           else resolve(res.affectedRows);
-        }
-      )
-    })
+        },
+      );
+    });
   }
 
-  static delete(dentistId: number, start: String, end: String): Promise<number> {
-    
+  static updateAvailability(
+    dentistId: number,
+    timeSlot: String,
+    status: string,
+  ) {
+    console.log('update availability');
+
+    return new Promise<Availability>((resolve, reject) => {
+      db.query<ResultSetHeader>(
+        `
+UPDATE availability SET status = ? WHERE dentistId = ? AND timeSlot = ?
+`,
+        [status, dentistId, timeSlot.slice(0, 19)],
+        (err, res) => {
+          console.log('avail', res);
+
+          if (err) reject(err);
+          else {
+            this.getByDentistIDAndTimeSlot(dentistId, timeSlot)
+              .then((value: Availability) => {
+                console.log('long query res1: ', value);
+                
+                resolve(value!);
+              })
+              .catch(reject);
+          }
+        },
+      );
+    });
+  }
+
+  static delete(
+    dentistId: number,
+    start: String,
+    end: String,
+  ): Promise<number> {
     return new Promise<number>((resolve, reject) => {
       db.query<ResultSetHeader>(
-`
+        `
 DELETE FROM availability WHERE dentistId = ?
 AND timeSlot BETWEEN ? AND ?
 `,
@@ -99,8 +149,8 @@ AND timeSlot BETWEEN ? AND ?
         (err, res) => {
           if (err) reject(err);
           else resolve(res.affectedRows);
-        }
-      )
-    })
+        },
+      );
+    });
   }
 }
