@@ -65,35 +65,21 @@ export const authenticateDentist = async (
   res: Response,
   next: NextFunction,
 ) => {
-  //const id: number = req.body.id;
-  //const password: string = req.body.password;
+  const email: string = req.body.email;
+  const password: string = req.body.password;
 
-  let id: number;
-  let password: string;
-
-  if (Object.keys(res.locals).length === 0) {
-    id = req.body.id;
-    password = req.body.password;
-  } else {
-    id = res.locals.dentist.id;
-    password = req.body.password;
-  }
-
-  DentistTable.getById(id)
+  DentistTable.getByEmail(email)
     .then((value: Dentist) => {
-      return value.passwordHash;
-    })
-    .then((value: string) => {
-      return bcrypt.compare(password, value).then((success: boolean) => {
+      return bcrypt.compare(password, value.passwordHash).then((success: boolean) => {
         if (success) {
           const token: string = jwt.sign(
-            {id: id, type: 'dentist'},
+            {id: value.id, email: email, type: 'dentist'},
             process.env.TOKEN_SECRET as string,
             {
               expiresIn: '1d',
             },
           );
-          res.json({authToken: token, id: id});
+          res.json({authToken: token});
         } else {
           res.sendStatus(403);
         }
@@ -119,7 +105,7 @@ export const authorizeDentist = (
     token,
     process.env.TOKEN_SECRET as string,
     (err: any, user: any) => {
-      if (err || user.type !== 'dentist' /*|| req.body.id !== user.id*/)
+      if (err || user.type !== 'dentist' || user.id !== Number(req.params.id))
         return res.sendStatus(403);
 
       return next();

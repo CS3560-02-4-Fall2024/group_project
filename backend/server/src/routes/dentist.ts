@@ -9,7 +9,7 @@ import {
 
 const router: Router = express.Router();
 
-router.post('/', createDentist);
+router.use('/:id', authorizeDentist);
 
 router.get('/:id', getDentistById);
 
