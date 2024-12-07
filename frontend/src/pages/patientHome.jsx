@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
 import { getUser, isSignedIn } from "../services/auth";
-import { getAppointments } from "../services/appointments";
+import { cancelAppointment, getAppointments } from "../services/appointments";
 import { getDentist } from "../services/dentist";
 
 // mini component to generate upcoming appointments
@@ -11,27 +11,32 @@ function UpcomingAppt() {
   const navigate = useNavigate();
 
   const [appointments, setAppointments] = useState([]);
+  const [deleted, setDeleted] = useState(0);
 
   // get appointments
   useEffect(() => {
     getAppointments('patient')
-    .then((value) => {
-      setAppointments(value);
-    })
-  }, [])
+      .then((value) => {
+        setAppointments(value);
+      })
+  }, [deleted])
 
   function Appointment({ timeSlot, dentistId, purpose, id }) {
     const date = new Date(timeSlot);
     const [dentist, setDentist] = useState();
 
-    useEffect(()=> {
+    useEffect(() => {
       getDentist(dentistId)
-      .then((value) => setDentist(value))
-      .catch((err) => console.log(err));
-    },[])
-    
-    const cancelAppt = () => {
-      console.log('trying to cancel appt');
+        .then((value) => setDentist(value))
+        .catch((err) => console.log(err));
+    }, [])
+
+    const handleCancelAppointment = () => {
+      cancelAppointment(id)
+        .then((val) => {
+          setDeleted((state) => state + val.deleted);
+        })
+        .catch((err) => console.log(err))
     };
 
     return (
@@ -42,7 +47,7 @@ function UpcomingAppt() {
           <p>{purpose}</p>
         </div>
         <div className="flex justify-center">
-          <button onClick={cancelAppt} className="text-white hover:text-[#587354] rounded-lg font-bold text-[.92vw] mb-3">Cancel Appointment</button>
+          <button onClick={handleCancelAppointment} className="text-white hover:text-[#587354] rounded-lg font-bold text-[.92vw] mb-3">Cancel Appointment</button>
         </div>
       </div>
     )
@@ -55,9 +60,11 @@ function UpcomingAppt() {
           Upcoming Appointments
         </div>
         <div className="ml-16 w-[38vw] h-[60vh] overflow-y-scroll">
-          {appointments.map((elem) => {
-            return (<Appointment timeSlot={elem.timeSlot} dentistId={elem.dentistId} purpose={elem.purpose} id={elem.id} key={elem.id} />)
-          })}
+          {appointments
+            .sort((a, b) => new Date(a) - new Date(b))
+            .map((elem) => {
+              return (<Appointment timeSlot={elem.timeSlot} dentistId={elem.dentistId} purpose={elem.purpose} id={elem.id} key={elem.id} />)
+            })}
         </div>
         <div className='flex justify-center text-white mt-10 mr-0 w-[41.3vw]'>
           <button onClick={() => navigate("/reqAppt")} className="ml-16 py-3 px-5 bg-g rounded-xl hover:bg-[#587354] font-bold text-[1.5vw]">Request Appointment</button>

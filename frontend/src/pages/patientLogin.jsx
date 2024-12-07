@@ -30,10 +30,7 @@ function PatientLogin() {
       // });
       signIn('patient', email, password)
       .then((value) => {
-        console.log('signin res: ', value);
-        
         if (value) {
-          console.log('nav to /patientHome')
           navigate('/patientHome');
         } else {
           setEmail('');
