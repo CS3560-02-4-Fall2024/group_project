@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
+import Appointment from "../components/Appointment";
 import { useNavigate } from "react-router-dom";
 import { getUser, isSignedIn } from "../services/auth";
 import { cancelAppointment, getAppointments } from "../services/appointments";
@@ -21,38 +22,6 @@ function UpcomingAppt() {
       })
   }, [deleted])
 
-  function Appointment({ timeSlot, dentistId, purpose, id }) {
-    const date = new Date(timeSlot);
-    const [dentist, setDentist] = useState();
-
-    useEffect(() => {
-      getDentist(dentistId)
-        .then((value) => setDentist(value))
-        .catch((err) => console.log(err));
-    }, [])
-
-    const handleCancelAppointment = () => {
-      cancelAppointment(id)
-        .then((val) => {
-          setDeleted((state) => state + val.deleted);
-        })
-        .catch((err) => console.log(err))
-    };
-
-    return (
-      <div className="flex-flow rounded-xl mb-3 bg-g w-[100%] twelve:w-[80%]">
-        <div className="pt-2 pl-3 text-white text-[.99vw]">
-          <p className="font-bold">{date.toString()}</p>
-          <p><b>Dentist: </b>{dentist && dentist.name}</p>
-          <p>{purpose}</p>
-        </div>
-        <div className="flex justify-center">
-          <button onClick={handleCancelAppointment} className="text-white hover:text-[#587354] rounded-lg font-bold text-[.92vw] mb-3">Cancel Appointment</button>
-        </div>
-      </div>
-    )
-  }
-
   return (
     <div className="flex justify-center w-[50vw] h-[100%] bg-dg p-0">
       <div className="flex-flow">
@@ -61,7 +30,8 @@ function UpcomingAppt() {
         </div>
         <div className="ml-16 w-[38vw] h-[60vh] overflow-y-scroll">
           {appointments
-            .sort((a, b) => new Date(a) - new Date(b))
+            .filter((elem) => new Date(elem.timeSlot) >= Date.now())
+            .sort((a, b) => new Date(a.timeSlot) - new Date(b.timeSlot))
             .map((elem) => {
               return (<Appointment timeSlot={elem.timeSlot} dentistId={elem.dentistId} purpose={elem.purpose} id={elem.id} key={elem.id} />)
             })}

@@ -1,72 +1,48 @@
 import Navbar from "../components/Navbar"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
-// generate each appt
-function Appt() {
-
-  const [apptDate, setApptDate] = useState("12/30/24");
-  const [apptTime, setApptTime] = useState("3:30 PM");
-  const [pastInfo, setPastInfo] = useState("Root Canal or like cavities filling or some");
-
-  return(
-    <div className="flex-flow rounded-xl mb-3 bg-g">
-      <div className="pt-2 pl-3 pb-2 text-white text-xl">
-        <p className="font-bold">{apptDate} {apptTime}</p>
-        <p>{pastInfo}</p>
-      </div> 
-    </div>
-  )
-}
+import { getAppointments } from "../services/appointments";
+import Appointment from "../components/Appointment";
 
 // main page component
 function PastAppointments() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const [appointments, setAppointments] = useState([]);
 
-    // useEffect to get an array of patient past appts 
-  const query = {
-    'id': '' // patientId
-  }
-  const returnJSON = [
-    { 'apptId': '', 'date': '', 'time': '', 'purpose': '' }
-  ]
+  useEffect(() => {
+    getAppointments('patient')
+      .then((value) => {
+        setAppointments(value);
+      })
+  }, [])
 
-    const goHome = () => {
-      navigate("/home");
-    };
-
-    return (
-      <>
-        <div className="w-[100vw] h-[100vh] bg-dg">
-          <Navbar />
-          {/* Middle Container */}
-          <div className='w-[100vw] h-[88vh] flex justify-center'>
-            <div className="flex-flow">
-              <div className="text-white font-bold text-4xl mt-4 mb-2 mr-48 underline">
-                Past Appointment
-              </div>
-              <div className="h-3/4 overflow-y-scroll">
-                <Appt />
-                <Appt />
-                <Appt />
-                <Appt />
-                <Appt />
-                <Appt />
-                <Appt />
-                <Appt />
-                <Appt />
-                <Appt />
-              </div>
-              <div className="flex justify-center">
-                <button onClick={goHome} className="bg-g hover:bg-[#587354] rounded-lg p-3 px-10 font-bold text-xl text-white mt-5">Back to Home</button>
-              </div>
+  return (
+    <>
+      <div className="w-[100vw] h-[100vh] bg-dg">
+        <Navbar />
+        {/* Middle Container */}
+        <div className='w-[100vw] h-[88vh] flex justify-center'>
+          <div className="flex-flow">
+            <div className="text-white font-bold text-4xl mt-4 mb-2 mr-48 underline">
+              Past Appointment
+            </div>
+            <div className="h-3/4 overflow-y-scroll">
+              {appointments
+                .filter((elem) => new Date(elem.timeSlot) < Date.now())
+                .sort((a, b) => new Date(a.timeSlot) - new Date(b.timeSlot))
+                .map((elem) => {
+                  return (<Appointment timeSlot={elem.timeSlot} dentistId={elem.dentistId} purpose={elem.purpose} id={elem.id} key={elem.id} />)
+                })}
+            </div>
+            <div className="flex justify-center">
+              <button onClick={() => navigate('/patientHome')} className="bg-g hover:bg-[#587354] rounded-lg p-3 px-10 font-bold text-xl text-white mt-5">Back to Home</button>
             </div>
           </div>
         </div>
-          
-      </>
-    )
-  }
-  
-  export default PastAppointments
-  
+      </div>
+
+    </>
+  )
+}
+
+export default PastAppointments
