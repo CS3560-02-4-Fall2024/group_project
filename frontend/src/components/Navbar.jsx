@@ -1,20 +1,18 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { isSignedIn, logOut } from "../services/auth";
 
 function Navbar() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        console.log(sessionStorage.getItem("email") + " dentistId: " + sessionStorage.getItem("id") + " authToken: " + sessionStorage.getItem("authToken") + " buttocks: " + sessionStorage.getItem("buttocks"));
-        const storedEmail = sessionStorage.getItem("email");
-        const storedId = sessionStorage.getItem("id");
-        if ( (storedEmail === 'undefined' || storedEmail === "" || storedEmail === null) && (storedId === 'undefined' || storedId === "" || storedId === null) ) {
+        if (!isSignedIn()) {
             navigate("/");
         }
     }, []);
 
     const Logout = () => {
-        sessionStorage.clear();
+        logOut();
         navigate("/");
     }
 

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
+import { getUser, isSignedIn } from "../services/auth";
 
 // mini component to generate upcoming appointments
 
@@ -9,54 +10,14 @@ function UpcomingAppt() {
 
   const [appointments, setAppointments] = useState([]);
 
+  // get appointments
   useEffect(() => {
-    let url = 'http://localhost:3000/availability/patients';
-    fetch(url, {
-      method: "GET",
-      headers: {
-        "Authorization": "Bearer " + sessionStorage.getItem("authToken")
-      }
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        console.log('appointments', res);
-        setAppointments(res);
-      })
+    setAppointments(['balls']);
   }, [])
 
   function Appointment({ date, time, dentistName, id }) {
     const cancelAppt = () => {
-      const url = "http://localhost:3000/patient/cancelAppt";
-      console.log('id', id);
-
-      fetch(url, {
-        body: JSON.stringify({ id: id }),
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer " + sessionStorage.getItem("authToken")
-        }
-      })
-        .then((res) => {
-          let url = 'http://localhost:3000/availability/patients';
-          fetch(url, {
-            method: "GET",
-            headers: {
-              "Authorization": "Bearer " + sessionStorage.getItem("authToken")
-            }
-          })
-            .then((res) => res.json())
-            .then((res) => {
-              console.log('appointments', res);
-              setAppointments(res);
-            })
-        }
-        )
-        .catch((err) => {
-          console.log(err);
-
-        })
-      //do something about cancelling
+      console.log('trying to cancel appt');
     };
 
     return (
@@ -94,78 +55,12 @@ function UpcomingAppt() {
   )
 }
 
-function DentistOffice() {
-
-  // useState variables to get via the db
-  const [officePhone, setOfficePhone] = useState("626-731-3955");
-  const [officeEmail, setOfficeEmail] = useState("ckchung@ccp.edu");
-  const [officeAddr, setOfficeAddr] = useState("9501 Lemon Ave, Temple City");
-
-  // GET FROM DB (we only have one office, otherwise idk what parameter to use to query unless we make another class attribute to patient)
-  const info = {
-    'phone': "hi",
-    'email': "hi",
-    'address': "hi"
-  };
-
-  return (
-    <div className="flex-flow items-center justify-center w-[50vw]">
-      <div className="ml-16 flex text-white font-bold text-[1.75vw] mt-4 mb-2 underline">
-        Dentist Office Information
-      </div>
-      <div className="ml-16 flex-flow bg-g rounded-xl">
-        <div className="p-5 text-[1.19vw] text-white">
-          <p><b>Phone Number: </b>{officePhone}</p>
-          <p><b>Email Address: </b>{officeEmail}</p>
-          <p><b>Address: </b>{officeAddr}</p>
-        </div>
-      </div>
-    </div>
-  )
-}
-
 function PatientInfo() {
 
-  const [patName, setPatName] = useState("Lebron James");
-  const [patPhone, setPatPhone] = useState("877-478-7452");
-  const [patEmail, setPatEmail] = useState("kars4kids@hotmail.com");
-  const [patAddy, setPatAddy] = useState("123 Sesame St., Santa Monica");
-  const [patDOB, setPatDOB] = useState("12/30/1984");
-  const [patIns, setPatIns] = useState("State Farm");
+  const user = getUser();
+  console.log('user data: ', user);
 
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const storedEmail = sessionStorage.getItem("email");
-
-    // if not logged in, won't try to fetch user data
-    if (storedEmail === 'undefined' || storedEmail === "" || storedEmail === null) {
-      console.log('not logged in');
-    } else {
-      // generate api url
-      const reqEmail = sessionStorage.getItem("email").split("@");
-      const url = "http://localhost:3000/patient/?email=" + reqEmail[0] + "%40" + reqEmail[1];
-
-      // fetch user data
-      fetch(url, {
-        method: "GET",
-        headers: {
-          "Authorization": "Bearer " + sessionStorage.getItem("authToken")
-        }
-      }).then((res) => {
-        return res.json();
-      }).then((res) => {
-        setPatName(res.name);
-        setPatPhone(res.phone);
-        setPatEmail(res.email);
-        setPatAddy(res.address);
-        setPatDOB(res.dateOfBirth.substring(0, 10));
-        setPatIns(res.insuranceCompany);
-      }).catch((err) => {
-        console.log(err);
-      });
-    }
-  }, []);
 
   const toEditProfile = () => {
     navigate("/editProfile");
@@ -182,12 +77,12 @@ function PatientInfo() {
       </div>
       <div className="ml-16 flex-flow bg-g rounded-xl">
         <div className="p-5 text-[1.19vw] text-white">
-          <p><b>Full Name: </b>{patName}</p>
-          <p><b>Phone Number: </b>{patPhone}</p>
-          <p><b>Email Address: </b>{patEmail}</p>
-          <p><b>Address: </b>{patAddy}</p>
-          <p><b>Date of Birth: </b>{patDOB}</p>
-          <p><b>Inurance Provider: </b>{patIns}</p>
+          <p><b>Full Name: </b>{user.name}</p>
+          <p><b>Phone Number: </b>{user.phone}</p>
+          <p><b>Email Address: </b>{user.email}</p>
+          <p><b>Address: </b>{user.address}</p>
+          <p><b>Date of Birth: </b>{user.dateOfBirth.slice(0, 10)}</p>
+          <p><b>Inurance Provider: </b>{user.insuranceCompany}</p>
         </div>
         <div className="flex justify-center">
           <button onClick={toEditProfile} className="hover:bg-[#587354] bg-dg px-3 py-3 font-bold text-white text-[.96vw] rounded-xl">Edit Profile</button>
@@ -209,7 +104,6 @@ function PatientHome() {
         <Navbar />
         <div className='w-[100vw] h-[88vh] flex justify-items'>
           <div className="flex flex-col">
-            <DentistOffice />
             <PatientInfo />
           </div>
           <div>

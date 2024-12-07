@@ -24,7 +24,7 @@ function App() {
           <Route path='/reqAppt' element={<RequestAppt/>} />
           <Route path='/patientProfile' element={<PatientProfile/>} />
           <Route path='/patientLogin' element={<PatientLogin/>} />
-          <Route path='/home' element={<PatientHome/>} />
+          <Route path='/patientHome' element={<PatientHome/>} />
           <Route path='/createAcc' element={<PatientCreateAcc/>} />
           <Route path='/editProfile' element={<EditPatientProfile/>} />
           <Route path='/dentistPast' element={<DentistViewPast/>} />

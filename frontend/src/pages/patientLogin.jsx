@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { signIn } from "../services/auth";
 
 function PatientLogin() {
 
@@ -10,31 +11,35 @@ function PatientLogin() {
 
     {/*Button Fucntions*/}
     const Login = () => {
-      
-      // post this json and return patient id for localstorage
-      const loginJSON = {
-        'email': email,
-        'password': password
-      };
+      // let url = 'http://localhost:3000/auth/patient/login';
 
-      let url = 'http://localhost:3000/auth/patient/login';
-
-      fetch(url, {
-        body: JSON.stringify(loginJSON),
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
+      // fetch(url, {
+      //   body: JSON.stringify(loginJSON),
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json"
+      //   }
+      // }).then((res) => {
+      //   return res.json();
+      // }).then((res) => {
+      //   sessionStorage.setItem("email", email);
+      //   sessionStorage.setItem("authToken", res.authToken);
+      //   navigate("/home");
+      // }).catch((err) => {
+      //   console.log(err);
+      // });
+      signIn('patient', email, password)
+      .then((value) => {
+        console.log('signin res: ', value);
+        
+        if (value) {
+          console.log('nav to /patientHome')
+          navigate('/patientHome');
+        } else {
+          setEmail('');
+          setPassword('');
         }
-      }).then((res) => {
-        return res.json();
-      }).then((res) => {
-        sessionStorage.setItem("email", email);
-        sessionStorage.setItem("authToken", res.authToken);
-        navigate("/home");
-      }).catch((err) => {
-        console.log(err);
       });
-
     };
 
     const goCreate = () => {
