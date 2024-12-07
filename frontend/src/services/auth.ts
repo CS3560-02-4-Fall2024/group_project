@@ -1,6 +1,7 @@
 import { baseUrl } from "./constants";
+import { userType } from "./types";
 
-export function signIn(userType: 'dentist' | 'patient', email: string, password: string): Promise<boolean> {
+export function signIn(userType: userType, email: string, password: string): Promise<boolean> {
     return fetch(`${baseUrl}/auth/${userType}/login`, {
         method: 'POST',
         headers: {
@@ -34,4 +35,8 @@ export function logOut(): void {
 
 export function getUser(): any {
     return JSON.parse(localStorage.getItem('user') || '');
+}
+
+export function getAuthToken(): string {
+    return localStorage.getItem('authToken') || '';
 }

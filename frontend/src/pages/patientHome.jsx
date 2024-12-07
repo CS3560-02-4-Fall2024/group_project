@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
 import { getUser, isSignedIn } from "../services/auth";
+import { getAppointments } from "../services/appointments";
+import { getDentist } from "../services/dentist";
 
 // mini component to generate upcoming appointments
 
@@ -12,10 +14,22 @@ function UpcomingAppt() {
 
   // get appointments
   useEffect(() => {
-    setAppointments(['balls']);
+    getAppointments('patient')
+    .then((value) => {
+      setAppointments(value);
+    })
   }, [])
 
-  function Appointment({ date, time, dentistName, id }) {
+  function Appointment({ timeSlot, dentistId, purpose, id }) {
+    const date = new Date(timeSlot);
+    const [dentist, setDentist] = useState();
+
+    useEffect(()=> {
+      getDentist(dentistId)
+      .then((value) => setDentist(value))
+      .catch((err) => console.log(err));
+    },[])
+    
     const cancelAppt = () => {
       console.log('trying to cancel appt');
     };
@@ -23,8 +37,9 @@ function UpcomingAppt() {
     return (
       <div className="flex-flow rounded-xl mb-3 bg-g w-[100%] twelve:w-[80%]">
         <div className="pt-2 pl-3 text-white text-[.99vw]">
-          <p className="font-bold">{date} {time}</p>
-          <p><b>Dentist: </b>{dentistName}</p>
+          <p className="font-bold">{date.toString()}</p>
+          <p><b>Dentist: </b>{dentist && dentist.name}</p>
+          <p>{purpose}</p>
         </div>
         <div className="flex justify-center">
           <button onClick={cancelAppt} className="text-white hover:text-[#587354] rounded-lg font-bold text-[.92vw] mb-3">Cancel Appointment</button>
@@ -40,8 +55,8 @@ function UpcomingAppt() {
           Upcoming Appointments
         </div>
         <div className="ml-16 w-[38vw] h-[60vh] overflow-y-scroll">
-          {appointments.map((value) => {
-            return (<Appointment date={value.date} time={value.time} dentistName={value.dentistName} id={value.id} key={value.id} />)
+          {appointments.map((elem) => {
+            return (<Appointment timeSlot={elem.timeSlot} dentistId={elem.dentistId} purpose={elem.purpose} id={elem.id} key={elem.id} />)
           })}
         </div>
         <div className='flex justify-center text-white mt-10 mr-0 w-[41.3vw]'>
@@ -58,7 +73,6 @@ function UpcomingAppt() {
 function PatientInfo() {
 
   const user = getUser();
-  console.log('user data: ', user);
 
   const navigate = useNavigate();
 
