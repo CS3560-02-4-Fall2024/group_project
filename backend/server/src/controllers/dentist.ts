@@ -8,8 +8,6 @@ export const getDentistById = (
 ): any => {
   const id = Number(req.params.id);
 
-  if (id !== res.locals.user.id) return res.sendStatus(403);
-
   DentistTable.getById(id)
     .then((value: Dentist) => {
       return res.json(new DentistView(value));
