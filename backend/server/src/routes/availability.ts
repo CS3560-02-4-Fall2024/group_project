@@ -4,7 +4,7 @@ import { authorizeDentist, authorizePatient } from '../controllers/auth';
 
 const router: Router = express.Router();
 
-router.get('/', getAvailability);
+router.get('/:dentistId', getAvailability);
 
 router.post('/', authorizeDentist, createAvailability);
 

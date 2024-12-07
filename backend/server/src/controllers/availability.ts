@@ -27,7 +27,7 @@ export const getAvailability = (
   res: Response,
   next: NextFunction,
 ): any => {
-  const dentistId: number = Number(req.body.dentistId);
+  const dentistId: number = Number(req.params.dentistId);
 
   AvailabilityTable.getByDentistID(dentistId)
   .then((value: Availability[]) => {

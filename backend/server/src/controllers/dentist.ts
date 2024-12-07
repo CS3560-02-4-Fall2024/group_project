@@ -21,7 +21,7 @@ export const getDentistById = (
 export const getDentists = (req: Request, res: Response, next: NextFunction) => {
   DentistTable.getAll()
     .then((value: Dentist[]) => {
-      res.json(value);
+      res.json(value.map(elem => new DentistView(elem)));
     })
     .catch(err => {
       res.status(400).json(err);

@@ -22,7 +22,7 @@ export default function ApptConfirm({date, time}) {
           </div>
           {/*Go back to login button*/}
           <div className="flex items-center justify-center mt-10">
-              <button onClick={() => navigate('/home')} className="p-3 px-10 bg-dg text-white font-bold text-2xl rounded-xl hover:bg-[#587354]">
+              <button onClick={() => navigate('/patientHome')} className="p-3 px-10 bg-dg text-white font-bold text-2xl rounded-xl hover:bg-[#587354]">
                 Return Home
               </button>
             </div>

@@ -9,11 +9,13 @@ export const bookAppointment = async (
 ) => {
   const appointment: Appointment = req.body;
   const dentistId: number = appointment.dentistId;
-  const timeSlot: Date = appointment.timeSlot;
+  const timeSlot: string = appointment.timeSlot;
+  console.log('timeslot', timeSlot);
+  
 
   AvailabilityTable.updateAvailability(
     dentistId,
-    String(timeSlot),
+    timeSlot,
     'unavailable',
   )
     .then((value: Availability) => {

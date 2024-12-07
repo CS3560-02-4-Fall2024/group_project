@@ -5,7 +5,7 @@ export interface Appointment extends RowDataPacket {
   id: number;
   patientId: number;
   dentistId: number;
-  timeSlot: Date;
+  timeSlot: string;
   purpose: string;
 }
 
@@ -13,7 +13,7 @@ export class AppointmentView {
   id: number;
   patientId: number;
   dentistId: number;
-  timeSlot: Date;
+  timeSlot: string;
   purpose: string;
 
   constructor(appointment: Appointment) {
