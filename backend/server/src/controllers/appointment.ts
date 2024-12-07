@@ -51,6 +51,34 @@ export const getAppointment = (
     });
 };
 
+export const getAppointments = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): any => {
+    const userId: number = res.locals.user.id;
+    const userType: string = res.locals.user.type;
+
+    if (userType === 'patient') {
+        AppointmentTable.getByPatientId(userId)
+        .then((value: Appointment[]) => {
+            res.json(value);
+        })
+        .catch(err => res.status(400).json(err));
+    }
+    else if (userType === 'dentist') {
+        AppointmentTable.getByDentistId(userId)
+        .then((value: Appointment[]) => {
+            res.json(value);
+        })
+        .catch(err => res.status(400).json(err));
+    }
+    else {
+        res.status(400).json({message: 'invalid user type'})
+    }
+}
+
+
 export const cancelAppointment = async (
   req: Request,
   res: Response,

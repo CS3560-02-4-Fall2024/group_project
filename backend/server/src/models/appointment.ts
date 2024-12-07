@@ -90,7 +90,7 @@ VALUES (?, ?, ?, ?);
   static getByDentistId(dentistID: number): Promise<Appointment[]> {
     return new Promise<Appointment[]>((resolve, reject) => {
       db.query<Appointment[]>(
-        'SELECT * FROM appointments WHERE dentistID = ? AND status = "Done"',
+        'SELECT * FROM appointments WHERE dentistId = ?',
         [dentistID],
         (err, res) => {
           if (err) reject(err);

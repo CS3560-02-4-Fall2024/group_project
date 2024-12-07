@@ -7,4 +7,5 @@ const router: Router = express.Router();
 router.post('/', authorizePatient, bookAppointment);
 
 router.delete('/:appointmentId', authorizePatient, cancelAppointment);
+
 export {router}

@@ -5,10 +5,13 @@ import {
   getDentistById,
   updateDentist,
 } from '../controllers/dentist';
+import { getAppointments } from '../controllers/appointment';
 
 const router: Router = express.Router();
 
 router.use(authorizeDentist);
+
+router.get('/appointments', getAppointments);
 
 router.get('/:id', getDentistById);
 
