@@ -18,6 +18,16 @@ export const getDentistById = (
     });
 };
 
+export const getDentists = (req: Request, res: Response, next: NextFunction) => {
+  DentistTable.getAll()
+    .then((value: Dentist[]) => {
+      res.json(value);
+    })
+    .catch(err => {
+      res.status(400).json(err);
+    });
+};
+
 export const updateDentist = (
   req: Request,
   res: Response,

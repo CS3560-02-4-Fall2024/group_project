@@ -52,6 +52,18 @@ VALUES (?,?,?,?,?);
       );
     });
   }
+  
+  static getAll(): Promise<Dentist[]> {
+    return new Promise<Dentist[]>((resolve, reject) => {
+      db.query<Dentist[]>(
+        'SELECT * FROM dentists',
+        (err: any, res: Dentist[]) => {
+          if (err) reject(err);
+          else resolve(res);
+        },
+      );
+    });
+  }
 
   static getById(id: number): Promise<Dentist> {
     return new Promise<Dentist>((resolve, reject) => {
